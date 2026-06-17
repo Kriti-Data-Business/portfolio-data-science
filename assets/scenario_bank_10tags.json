@@ -1,0 +1,677 @@
+{
+  "CREDIT_REPORT_INACCURATE": {
+    "tag": "CREDIT_REPORT_INACCURATE",
+    "data_quality_ok": true,
+    "data_quality_issues": [],
+    "canonical_definition": "Complaints where the primary issue is inaccurate or incomplete information reported on the consumer's credit report.",
+    "include_when": [
+      "Narratives that clearly describe incorrect tradelines, collections, or personal information appearing on a credit report.",
+      "Consumer is primarily disputing the accuracy or ownership of information, not the underlying account terms."
+    ],
+    "exclude_when": [
+      "Do NOT use this tag when the main problem is how a lender handled a credit application or denial — use a credit application / denial tag instead.",
+      "Do NOT use this tag when the complaint is primarily about identity theft account resolution with the bank rather than the credit reporting agency."
+    ],
+    "scenarios": [
+      {
+        "name": "Account does not belong to consumer",
+        "description": "Consumer finds one or more accounts on their credit report that they do not recognize and believes the tradeline belongs to another person or is the result of identity theft. The dispute focuses on removal of the incorrect tradeline from all credit bureaus.",
+        "case_ids_used": ["CFPB_CR_1001", "CFPB_CR_1002", "CFPB_CR_1003"],
+        "n_cases_supporting": 3,
+        "key_phrases": [
+          "account on my report that is not mine",
+          "never opened this credit card",
+          "collection agency reporting a debt I don't owe",
+          "fraudulent account listed under my name"
+        ],
+        "services_represented": ["Credit reporting"],
+        "neighbour_check_passed": true,
+        "overlap_risk": "none",
+        "overlap_note": ""
+      },
+      {
+        "name": "Paid debt still reported as owing",
+        "description": "Consumer previously paid or settled a debt, but the credit report still shows an outstanding balance or an open collection. The focus is on updating the status to paid, settled, or closed and correcting past-due notations.",
+        "case_ids_used": ["CFPB_CR_1010", "CFPB_CR_1011", "CFPB_CR_1012"],
+        "n_cases_supporting": 3,
+        "key_phrases": [
+          "paid this account in full",
+          "should show zero balance",
+          "still reporting as past due after settlement",
+          "closed account marked as open"
+        ],
+        "services_represented": ["Credit reporting"],
+        "neighbour_check_passed": true,
+        "overlap_risk": "none",
+        "overlap_note": ""
+      },
+      {
+        "name": "Personal information incorrect on file",
+        "description": "Consumer reports inaccurate personal information such as addresses, name variations, or Social Security number fragments appearing on the credit report. The main concern is correcting these identifiers to prevent mis‑matching with other people's accounts.",
+        "case_ids_used": ["CFPB_CR_1020", "CFPB_CR_1021", "CFPB_CR_1022"],
+        "n_cases_supporting": 3,
+        "key_phrases": [
+          "wrong address on my credit file",
+          "name spelled incorrectly on report",
+          "incorrect social security number digits",
+          "mixing my file with someone else"
+        ],
+        "services_represented": ["Credit reporting"],
+        "neighbour_check_passed": true,
+        "overlap_risk": "none",
+        "overlap_note": ""
+      }
+    ],
+    "distinction_rules": {},
+    "pool_sufficient": true,
+    "pool_gaps": [],
+    "n_scenarios_generated": 3,
+    "recommended_synthetic_per_scenario": 8
+  },
+
+  "CREDIT_CARD_FEES": {
+    "tag": "CREDIT_CARD_FEES",
+    "data_quality_ok": true,
+    "data_quality_issues": [],
+    "canonical_definition": "Complaints where the primary issue is unexpected or unfair fees charged on a credit card account.",
+    "include_when": [
+      "Narratives focused on late fees, annual fees, over-limit fees, or other charges the consumer did not expect or understand.",
+      "Consumer is primarily contesting the amount, timing, or disclosure of the fee rather than a transaction dispute."
+    ],
+    "exclude_when": [
+      "Do NOT use this tag when the core issue is an unauthorized transaction — use a card transaction / fraud tag instead.",
+      "Do NOT use this tag when the problem centers on credit limit decreases rather than the fee itself."
+    ],
+    "scenarios": [
+      {
+        "name": "Autopay failed and late fee added",
+        "description": "Consumer believes they set up automatic payments, but a payment was missed and a late fee was charged. The dispute centers on why autopay failed, whether the bank notification was adequate, and whether the late fee should be reversed.",
+        "case_ids_used": ["CFPB_CC_2001", "CFPB_CC_2002", "CFPB_CC_2003"],
+        "n_cases_supporting": 3,
+        "key_phrases": [
+          "autopay was set up for full balance",
+          "late fee charged even though payment was scheduled",
+          "bank blames a system error for missed payment",
+          "never notified there was a problem with autopay"
+        ],
+        "services_represented": ["Credit card"],
+        "neighbour_check_passed": true,
+        "overlap_risk": "none",
+        "overlap_note": ""
+      },
+      {
+        "name": "Annual fee not clearly disclosed",
+        "description": "Consumer is surprised by an annual fee on their credit card, claiming it was not clearly disclosed at account opening or in promotional materials. The complaint typically asks for reversal of the fee and sometimes closure of the account.",
+        "case_ids_used": ["CFPB_CC_2010", "CFPB_CC_2011", "CFPB_CC_2012"],
+        "n_cases_supporting": 3,
+        "key_phrases": [
+          "did not know there was an annual fee",
+          "sales agent never mentioned yearly charge",
+          "fee appeared after the first year with no warning",
+          "promotional offer did not mention annual fee"
+        ],
+        "services_represented": ["Credit card"],
+        "neighbour_check_passed": true,
+        "overlap_risk": "none",
+        "overlap_note": ""
+      },
+      {
+        "name": "Stacked fees after small overdraft",
+        "description": "Consumer briefly exceeded their credit limit or was a small amount past due and the issuer applied multiple stacked fees (over-limit, late, returned payment). The concern is that the total fees are disproportionate to the underlying issue.",
+        "case_ids_used": ["CFPB_CC_2020", "CFPB_CC_2021", "CFPB_CC_2022"],
+        "n_cases_supporting": 3,
+        "key_phrases": [
+          "charged several fees for one mistake",
+          "fees much higher than the amount overdue",
+          "over-limit and late fee at the same time",
+          "penalty fees snowballed from a small balance"
+        ],
+        "services_represented": ["Credit card"],
+        "neighbour_check_passed": true,
+        "overlap_risk": "none",
+        "overlap_note": ""
+      }
+    ],
+    "distinction_rules": {},
+    "pool_sufficient": true,
+    "pool_gaps": [],
+    "n_scenarios_generated": 3,
+    "recommended_synthetic_per_scenario": 8
+  },
+
+  "MORTGAGE_PAYMENT_PROBLEMS": {
+    "tag": "MORTGAGE_PAYMENT_PROBLEMS",
+    "data_quality_ok": true,
+    "data_quality_issues": [],
+    "canonical_definition": "Complaints where the primary issue is making or processing mortgage payments, including misapplied payments and servicing errors.",
+    "include_when": [
+      "Narratives focused on payments being misapplied, rejected, or credited late.",
+      "Consumer is primarily concerned about delinquency status, fees, or credit reporting resulting from payment handling."
+    ],
+    "exclude_when": [
+      "Do NOT use this tag when the main issue is loan origination or underwriting — use a mortgage origination tag instead.",
+      "Do NOT use this tag when the complaint is primarily about escrow analysis or insurance, not the payment posting itself."
+    ],
+    "scenarios": [
+      {
+        "name": "Payment applied to wrong account",
+        "description": "Consumer's mortgage payment is applied to the wrong loan or to another customer's account. The servicer is slow to correct the error and the consumer receives delinquency notices or negative credit reporting.",
+        "case_ids_used": ["CFPB_MG_3001", "CFPB_MG_3002", "CFPB_MG_3003"],
+        "n_cases_supporting": 3,
+        "key_phrases": [
+          "payment was applied to a different loan",
+          "told my account showed no payment received",
+          "servicer misapplied my funds",
+          "had to provide proof of cleared check"
+        ],
+        "services_represented": ["Mortgage"],
+        "neighbour_check_passed": true,
+        "overlap_risk": "none",
+        "overlap_note": ""
+      },
+      {
+        "name": "Online payment system failure",
+        "description": "Consumer attempts to pay through the servicer's website or app but the system is down, rejects the payment, or processes it late. Late fees or delinquency result even though the consumer attempted to pay on time.",
+        "case_ids_used": ["CFPB_MG_3010", "CFPB_MG_3011", "CFPB_MG_3012"],
+        "n_cases_supporting": 3,
+        "key_phrases": [
+          "website would not accept my payment",
+          "online system error caused a late fee",
+          "payment pending status for several days",
+          "servicer blames technical issue for delay"
+        ],
+        "services_represented": ["Mortgage"],
+        "neighbour_check_passed": true,
+        "overlap_risk": "none",
+        "overlap_note": ""
+      },
+      {
+        "name": "Unexpected change to payment amount",
+        "description": "Consumer's monthly payment increases due to changes in escrow or adjustable rate, but the explanation is unclear. The complaint centers on lack of notice or transparency about why the payment amount changed.",
+        "case_ids_used": ["CFPB_MG_3020", "CFPB_MG_3021", "CFPB_MG_3022"],
+        "n_cases_supporting": 3,
+        "key_phrases": [
+          "mortgage payment went up with no explanation",
+          "escrow change not clearly described",
+          "bill suddenly increased by several hundred dollars",
+          "no notice before payment amount changed"
+        ],
+        "services_represented": ["Mortgage"],
+        "neighbour_check_passed": true,
+        "overlap_risk": "none",
+        "overlap_note": ""
+      }
+    ],
+    "distinction_rules": {},
+    "pool_sufficient": true,
+    "pool_gaps": [],
+    "n_scenarios_generated": 3,
+    "recommended_synthetic_per_scenario": 8
+  },
+
+  "DEBT_COLLECTION_CALLS": {
+    "tag": "DEBT_COLLECTION_CALLS",
+    "data_quality_ok": true,
+    "data_quality_issues": [],
+    "canonical_definition": "Complaints where the primary issue is the frequency, timing, or harassment nature of debt collection calls.",
+    "include_when": [
+      "Narratives describing repeated or harassing calls from debt collectors.",
+      "Consumer is focused on call volume, time of day, or calls to work, family, or third parties."
+    ],
+    "exclude_when": [
+      "Do NOT use this tag when the main concern is whether the debt is owed — use a debt validity / right to collect tag instead.",
+      "Do NOT use this tag when the complaint is primarily about threatening language in a single call rather than repeated contact."
+    ],
+    "scenarios": [
+      {
+        "name": "Repeated calls after cease request",
+        "description": "Consumer explicitly asked the collector to stop calling or to communicate only in writing, but calls continued. The focus is on violation of the cease‑and‑desist request and disruption caused by the calls.",
+        "case_ids_used": ["CFPB_DC_4001", "CFPB_DC_4002", "CFPB_DC_4003"],
+        "n_cases_supporting": 3,
+        "key_phrases": [
+          "asked them to stop calling but they continue",
+          "requested communication only by mail",
+          "told them my employer does not allow calls",
+          "collector ignores my written request to cease contact"
+        ],
+        "services_represented": ["Debt collection"],
+        "neighbour_check_passed": true,
+        "overlap_risk": "none",
+        "overlap_note": ""
+      },
+      {
+        "name": "Calls to work or third parties",
+        "description": "Collector contacts the consumer at work or calls family, roommates, or neighbors about the debt. The complaint focuses on embarrassment, privacy issues, and possible violations of communication rules.",
+        "case_ids_used": ["CFPB_DC_4010", "CFPB_DC_4011", "CFPB_DC_4012"],
+        "n_cases_supporting": 3,
+        "key_phrases": [
+          "calling my workplace even after being told not to",
+          "contacted my relatives about this debt",
+          "left detailed messages with a third party",
+          "embarrassed me by disclosing the debt to others"
+        ],
+        "services_represented": ["Debt collection"],
+        "neighbour_check_passed": true,
+        "overlap_risk": "none",
+        "overlap_note": ""
+      },
+      {
+        "name": "High-frequency robocalls",
+        "description": "Consumer receives multiple automated or predictive dialer calls per day from a collector. Often there is no live agent or voicemail, just repeated attempts that feel harassing.",
+        "case_ids_used": ["CFPB_DC_4020", "CFPB_DC_4021", "CFPB_DC_4022"],
+        "n_cases_supporting": 3,
+        "key_phrases": [
+          "several calls every day from the same number",
+          "automated system hangs up when I answer",
+          "phone rings constantly about this debt",
+          "robocalls continue even late at night"
+        ],
+        "services_represented": ["Debt collection"],
+        "neighbour_check_passed": true,
+        "overlap_risk": "none",
+        "overlap_note": ""
+      }
+    ],
+    "distinction_rules": {},
+    "pool_sufficient": true,
+    "pool_gaps": [],
+    "n_scenarios_generated": 3,
+    "recommended_synthetic_per_scenario": 8
+  },
+
+  "BANK_ACCOUNT_CLOSURE": {
+    "tag": "BANK_ACCOUNT_CLOSURE",
+    "data_quality_ok": true,
+    "data_quality_issues": [],
+    "canonical_definition": "Complaints where the primary issue is closure or freezing of a checking or savings account by the bank.",
+    "include_when": [
+      "Narratives about accounts closed or frozen without clear advance notice.",
+      "Consumer is primarily concerned about access to funds and downstream consequences like returned payments."
+    ],
+    "exclude_when": [
+      "Do NOT use this tag when the main issue is a fee charged on an open account — use a fees tag instead.",
+      "Do NOT use this tag when the complaint is mainly about account opening problems, not closure."
+    ],
+    "scenarios": [
+      {
+        "name": "Account closed without prior notice",
+        "description": "Bank closes the consumer's account suddenly, often citing a risk review or policy, and the consumer learns only after direct debits or deposits fail. The complaint focuses on lack of notice and hardship caused.",
+        "case_ids_used": ["CFPB_BA_5001", "CFPB_BA_5002", "CFPB_BA_5003"],
+        "n_cases_supporting": 3,
+        "key_phrases": [
+          "found out my account was closed at the ATM",
+          "no warning before closing my checking account",
+          "paycheck was returned because the account was shut down",
+          "automatic bill payments bounced with NSF after closure"
+        ],
+        "services_represented": ["Checking or savings account"],
+        "neighbour_check_passed": true,
+        "overlap_risk": "none",
+        "overlap_note": ""
+      },
+      {
+        "name": "Funds held during fraud review",
+        "description": "Bank freezes the account due to suspected fraud and holds funds for an extended period. The consumer is unable to pay bills or withdraw money while the investigation proceeds.",
+        "case_ids_used": ["CFPB_BA_5010", "CFPB_BA_5011", "CFPB_BA_5012"],
+        "n_cases_supporting": 3,
+        "key_phrases": [
+          "account locked because of security review",
+          "bank is holding my money during investigation",
+          "unable to access funds for weeks",
+          "told to wait for compliance department decision"
+        ],
+        "services_represented": ["Checking or savings account"],
+        "neighbour_check_passed": true,
+        "overlap_risk": "none",
+        "overlap_note": ""
+      },
+      {
+        "name": "Closure after overdraft or fee dispute",
+        "description": "Bank closes the account after repeated overdrafts or a dispute over fees. The consumer feels the closure was retaliatory or not clearly disclosed as a consequence of the dispute.",
+        "case_ids_used": ["CFPB_BA_5020", "CFPB_BA_5021", "CFPB_BA_5022"],
+        "n_cases_supporting": 3,
+        "key_phrases": [
+          "bank closed my account after I challenged the fees",
+          "told I was no longer welcome as a customer",
+          "account shut down following overdraft dispute",
+          "closure letter sent after I complained"
+        ],
+        "services_represented": ["Checking or savings account"],
+        "neighbour_check_passed": true,
+        "overlap_risk": "none",
+        "overlap_note": ""
+      }
+    ],
+    "distinction_rules": {},
+    "pool_sufficient": true,
+    "pool_gaps": [],
+    "n_scenarios_generated": 3,
+    "recommended_synthetic_per_scenario": 8
+  },
+
+  "STUDENT_LOAN_SERVICING": {
+    "tag": "STUDENT_LOAN_SERVICING",
+    "data_quality_ok": true,
+    "data_quality_issues": [],
+    "canonical_definition": "Complaints where the primary issue is how a student loan is serviced, including payment processing, forbearance, and income-driven plans.",
+    "include_when": [
+      "Narratives that focus on servicer errors, misapplied payments, or confusing plan changes.",
+      "Consumer is primarily concerned about how the servicer is managing the loan, not the original loan terms."
+    ],
+    "exclude_when": [
+      "Do NOT use this tag when the main issue is a school-related dispute — use school / program tags instead."
+    ],
+    "scenarios": [
+      {
+        "name": "Income-driven repayment miscalculated",
+        "description": "Consumer applied for an income-driven plan, but the monthly payment amount appears too high given their income. The servicer's explanation is unclear or inconsistent.",
+        "case_ids_used": ["CFPB_SL_6001", "CFPB_SL_6002", "CFPB_SL_6003"],
+        "n_cases_supporting": 3,
+        "key_phrases": [
+          "payment under income-driven plan is not affordable",
+          "servicer used the wrong income information",
+          "told my paperwork was lost and had to reapply"
+        ],
+        "services_represented": ["Student loan"],
+        "neighbour_check_passed": true,
+        "overlap_risk": "none",
+        "overlap_note": ""
+      },
+      {
+        "name": "Forbearance instead of affordable plan",
+        "description": "Servicer repeatedly places the loan into short-term forbearance instead of helping the consumer enroll in a long-term affordable repayment plan. Interest continues to accrue and balance grows.",
+        "case_ids_used": ["CFPB_SL_6010", "CFPB_SL_6011", "CFPB_SL_6012"],
+        "n_cases_supporting": 3,
+        "key_phrases": [
+          "they keep putting me into forbearance",
+          "interest is piling up instead of lowering my payment",
+          "asked for a payment plan but only offered temporary pause"
+        ],
+        "services_represented": ["Student loan"],
+        "neighbour_check_passed": true,
+        "overlap_risk": "none",
+        "overlap_note": ""
+      },
+      {
+        "name": "Payment not credited to correct loan",
+        "description": "Consumer's payment is allocated incorrectly across multiple student loans, leaving some loans delinquent. The dispute focuses on how payments should have been applied.",
+        "case_ids_used": ["CFPB_SL_6020", "CFPB_SL_6021", "CFPB_SL_6022"],
+        "n_cases_supporting": 3,
+        "key_phrases": [
+          "payment applied to the wrong loan group",
+          "one loan shows late even though I paid",
+          "servicer ignored my allocation instructions"
+        ],
+        "services_represented": ["Student loan"],
+        "neighbour_check_passed": true,
+        "overlap_risk": "none",
+        "overlap_note": ""
+      }
+    ],
+    "distinction_rules": {},
+    "pool_sufficient": true,
+    "pool_gaps": [],
+    "n_scenarios_generated": 3,
+    "recommended_synthetic_per_scenario": 8
+  },
+
+  "PAYDAY_LOAN_FEES": {
+    "tag": "PAYDAY_LOAN_FEES",
+    "data_quality_ok": true,
+    "data_quality_issues": [],
+    "canonical_definition": "Complaints where the primary issue is unexpected or excessive fees on payday or small-dollar loans.",
+    "include_when": [
+      "Narratives about roll-over fees, refinancing charges, or hidden costs on payday loans."
+    ],
+    "exclude_when": [
+      "Do NOT use this tag when the main concern is collection behavior after default."
+    ],
+    "scenarios": [
+      {
+        "name": "Repeated roll-over fees",
+        "description": "Consumer rolls over a payday loan several times and is surprised by how quickly fees accumulate. They feel the lender did not clearly explain the total cost of repeated rollovers.",
+        "case_ids_used": ["CFPB_PD_7001", "CFPB_PD_7002", "CFPB_PD_7003"],
+        "n_cases_supporting": 3,
+        "key_phrases": [
+          "fees each time I rolled the loan over",
+          "paid more in fees than the original loan",
+          "was not told how expensive repeated extensions would be"
+        ],
+        "services_represented": ["Payday loan"],
+        "neighbour_check_passed": true,
+        "overlap_risk": "none",
+        "overlap_note": ""
+      },
+      {
+        "name": "Unexpected automatic debit fees",
+        "description": "Lender attempts multiple debits from the consumer’s bank account, triggering multiple NSF or return fees. The complaint centers on the number and timing of debit attempts.",
+        "case_ids_used": ["CFPB_PD_7010", "CFPB_PD_7011", "CFPB_PD_7012"],
+        "n_cases_supporting": 3,
+        "key_phrases": [
+          "multiple attempts to pull money from my account",
+          "each attempt caused a bank fee",
+          "did not authorize repeated withdrawals"
+        ],
+        "services_represented": ["Payday loan"],
+        "neighbour_check_passed": true,
+        "overlap_risk": "none",
+        "overlap_note": ""
+      },
+      {
+        "name": "Origination fee not disclosed",
+        "description": "Consumer is charged an upfront fee at origination that was not clearly disclosed in the advertised rate. They only learn about the fee when they receive the agreement or bank statement.",
+        "case_ids_used": ["CFPB_PD_7020", "CFPB_PD_7021", "CFPB_PD_7022"],
+        "n_cases_supporting": 3,
+        "key_phrases": [
+          "fee taken out of the loan amount",
+          "lump-sum fee not mentioned in the ad",
+          "net amount I received was much less than promised"
+        ],
+        "services_represented": ["Payday loan"],
+        "neighbour_check_passed": true,
+        "overlap_risk": "none",
+        "overlap_note": ""
+      }
+    ],
+    "distinction_rules": {},
+    "pool_sufficient": true,
+    "pool_gaps": [],
+    "n_scenarios_generated": 3,
+    "recommended_synthetic_per_scenario": 8
+  },
+
+  "MONEY_TRANSFER_ISSUES": {
+    "tag": "MONEY_TRANSFER_ISSUES",
+    "data_quality_ok": true,
+    "data_quality_issues": [],
+    "canonical_definition": "Complaints where the primary issue is sending, receiving, or reversing money transfers.",
+    "include_when": [
+      "Narratives about delayed, failed, or mis-routed money transfers."
+    ],
+    "exclude_when": [
+      "Do NOT use this tag when the core problem is a bank account closure that blocked the transfer."
+    ],
+    "scenarios": [
+      {
+        "name": "Transfer delayed without explanation",
+        "description": "Consumer initiates a transfer that is delayed for days without clear status updates. Support gives conflicting information about where the funds are.",
+        "case_ids_used": ["CFPB_MT_8001", "CFPB_MT_8002", "CFPB_MT_8003"],
+        "n_cases_supporting": 3,
+        "key_phrases": [
+          "funds are in limbo",
+          "app shows transfer pending for several days",
+          "support cannot tell me when money will arrive"
+        ],
+        "services_represented": ["Money transfer"],
+        "neighbour_check_passed": true,
+        "overlap_risk": "none",
+        "overlap_note": ""
+      },
+      {
+        "name": "Transfer sent to wrong recipient",
+        "description": "Consumer mistyped recipient information or selected the wrong contact and the provider refuses to reverse the transfer even though funds have not been withdrawn.",
+        "case_ids_used": ["CFPB_MT_8010", "CFPB_MT_8011", "CFPB_MT_8012"],
+        "n_cases_supporting": 3,
+        "key_phrases": [
+          "sent money to the wrong person by mistake",
+          "asked for reversal before the funds were picked up",
+          "company says it is my fault and will not help"
+        ],
+        "services_represented": ["Money transfer"],
+        "neighbour_check_passed": true,
+        "overlap_risk": "none",
+        "overlap_note": ""
+      },
+      {
+        "name": "Transfer cancelled but fees kept",
+        "description": "Consumer cancels a transfer or the transfer fails, but the provider keeps the fee or takes days to return the principal.",
+        "case_ids_used": ["CFPB_MT_8020", "CFPB_MT_8021", "CFPB_MT_8022"],
+        "n_cases_supporting": 3,
+        "key_phrases": [
+          "charged a fee even though transfer failed",
+          "refund of the money took too long",
+          "support says the fee is non-refundable"
+        ],
+        "services_represented": ["Money transfer"],
+        "neighbour_check_passed": true,
+        "overlap_risk": "none",
+        "overlap_note": ""
+      }
+    ],
+    "distinction_rules": {},
+    "pool_sufficient": true,
+    "pool_gaps": [],
+    "n_scenarios_generated": 3,
+    "recommended_synthetic_per_scenario": 8
+  },
+
+  "AUTO_LOAN_DISPUTE": {
+    "tag": "AUTO_LOAN_DISPUTE",
+    "data_quality_ok": true,
+    "data_quality_issues": [],
+    "canonical_definition": "Complaints where the primary issue is servicing or collection of an auto loan or lease.",
+    "include_when": [
+      "Narratives about payment allocation, repossession, or payoff disputes for vehicle loans."
+    ],
+    "exclude_when": [
+      "Do NOT use this tag when the main issue is dealer misrepresentation at sale."
+    ],
+    "scenarios": [
+      {
+        "name": "Repossession despite payment arrangement",
+        "description": "Consumer had a payment arrangement or extension in place but the vehicle was repossessed anyway. The complaint focuses on miscommunication and harm from losing the car.",
+        "case_ids_used": ["CFPB_AL_9001", "CFPB_AL_9002", "CFPB_AL_9003"],
+        "n_cases_supporting": 3,
+        "key_phrases": [
+          "they towed my car even after agreeing to a plan",
+          "told repossession was on hold",
+          "never called to say the arrangement fell through"
+        ],
+        "services_represented": ["Vehicle loan or lease"],
+        "neighbour_check_passed": true,
+        "overlap_risk": "none",
+        "overlap_note": ""
+      },
+      {
+        "name": "Payoff amount incorrect or unclear",
+        "description": "Consumer receives conflicting payoff quotes and is unsure if the loan is fully satisfied after payment. Additional interest or fees appear after payoff.",
+        "case_ids_used": ["CFPB_AL_9010", "CFPB_AL_9011", "CFPB_AL_9012"],
+        "n_cases_supporting": 3,
+        "key_phrases": [
+          "got different payoff amounts each time I called",
+          "loan still shows a balance after I paid off",
+          "charged extra interest beyond the payoff date"
+        ],
+        "services_represented": ["Vehicle loan or lease"],
+        "neighbour_check_passed": true,
+        "overlap_risk": "none",
+        "overlap_note": ""
+      },
+      {
+        "name": "Insurance or add-on charges in loan",
+        "description": "Consumer discovers that additional products (like add-on insurance) were financed into the loan and now affect the balance and monthly payment. The focus is on how these add-ons were disclosed and serviced.",
+        "case_ids_used": ["CFPB_AL_9020", "CFPB_AL_9021", "CFPB_AL_9022"],
+        "n_cases_supporting": 3,
+        "key_phrases": [
+          "loan includes extra insurance I did not want",
+          "payment higher because of add-on products",
+          "was not clearly told these items were financed"
+        ],
+        "services_represented": ["Vehicle loan or lease"],
+        "neighbour_check_passed": true,
+        "overlap_risk": "none",
+        "overlap_note": ""
+      }
+    ],
+    "distinction_rules": {},
+    "pool_sufficient": true,
+    "pool_gaps": [],
+    "n_scenarios_generated": 3,
+    "recommended_synthetic_per_scenario": 8
+  },
+
+  "PREPAID_CARD_ACCESS": {
+    "tag": "PREPAID_CARD_ACCESS",
+    "data_quality_ok": true,
+    "data_quality_issues": [],
+    "canonical_definition": "Complaints where the primary issue is accessing funds on a prepaid or payroll card.",
+    "include_when": [
+      "Narratives about prepaid cards not working, being locked, or having unexpected holds."
+    ],
+    "exclude_when": [
+      "Do NOT use this tag when the complaint is mainly about a specific transaction dispute."
+    ],
+    "scenarios": [
+      {
+        "name": "Card declined at point of sale",
+        "description": "Consumer attempts to use the prepaid card for purchases and the card is repeatedly declined, even though the balance shows sufficient funds.",
+        "case_ids_used": ["CFPB_PC_10001", "CFPB_PC_10002", "CFPB_PC_10003"],
+        "n_cases_supporting": 3,
+        "key_phrases": [
+          "card kept getting declined with money on it",
+          "merchant told me the card was invalid",
+          "support said there was a system issue"
+        ],
+        "services_represented": ["Prepaid card"],
+        "neighbour_check_passed": true,
+        "overlap_risk": "none",
+        "overlap_note": ""
+      },
+      {
+        "name": "Unexpected holds or freezes",
+        "description": "Prepaid card provider places a hold on funds without clear explanation, preventing the consumer from accessing money for everyday expenses.",
+        "case_ids_used": ["CFPB_PC_10010", "CFPB_PC_10011", "CFPB_PC_10012"],
+        "n_cases_supporting": 3,
+        "key_phrases": [
+          "account under review and funds unavailable",
+          "cannot withdraw cash from ATM",
+          "told to wait while they investigate"
+        ],
+        "services_represented": ["Prepaid card"],
+        "neighbour_check_passed": true,
+        "overlap_risk": "none",
+        "overlap_note": ""
+      },
+      {
+        "name": "Delayed loading of wages or benefits",
+        "description": "Consumer expects wages or benefits to be loaded to a payroll or government prepaid card on a specific date, but funds arrive late or inconsistently.",
+        "case_ids_used": ["CFPB_PC_10020", "CFPB_PC_10021", "CFPB_PC_10022"],
+        "n_cases_supporting": 3,
+        "key_phrases": [
+          "paycheck did not load on time",
+          "benefits usually available at midnight but missing",
+          "had to wait extra days for the deposit"
+        ],
+        "services_represented": ["Prepaid card"],
+        "neighbour_check_passed": true,
+        "overlap_risk": "none",
+        "overlap_note": ""
+      }
+    ],
+    "distinction_rules": {},
+    "pool_sufficient": true,
+    "pool_gaps": [],
+    "n_scenarios_generated": 3,
+    "recommended_synthetic_per_scenario": 8
+  }
+}
