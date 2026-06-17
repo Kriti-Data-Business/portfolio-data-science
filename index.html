@@ -82,7 +82,7 @@
 <body class="min-h-screen text-slate-100">
 
   <!-- HERO SECTION -->
-  <section id="home" class="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-slate-950">
+  <section id="home" class="relative min-h-[80vh] md:min-h-[85vh] flex items-center justify-center overflow-hidden bg-slate-950">
     <!-- tsParticles container -->
     <div id="tsparticles" class="absolute inset-0 -z-10"></div>
     <!-- overlays -->
@@ -100,29 +100,60 @@
             Intelligence Into Action.
           </span>
         </h1>
-        <p class="text-slate-400 text-sm md:text-base max-w-xl mb-8">
+        <p class="text-slate-400 text-sm md:text-base max-w-xl mb-3" data-profile="technical">
           Senior-leaning Data Scientist &amp; AI Engineer specialising in LLMs, GenAI, AI Agents, analytics,
           and automation — building systems that are explainable, reliable, and enterprise-ready.
+        </p>
+        <p class="hidden text-slate-400 text-sm md:text-base max-w-xl mb-3" data-profile="business">
+          Technical Business Analyst and product-minded Data Scientist translating complex ML and LLM systems into
+          clear business outcomes, stakeholder-friendly reporting, and deployable solutions across analytics and BI.
         </p>
         <div class="flex flex-wrap items-center gap-4">
           <a href="#domains" class="inline-flex items-center justify-center rounded-full bg-sky-500 px-5 py-2.5 text-sm font-medium text-slate-950 shadow-lg shadow-sky-500/30 transition hover:bg-sky-400">
             Explore My Work
           </a>
           <a href="Kriti_Yadav_CV.pdf" class="inline-flex items-center justify-center rounded-full border border-slate-700 bg-slate-900/70 px-5 py-2.5 text-sm font-medium text-slate-200 shadow-sm transition hover:border-sky-500 hover:text-sky-200">
-            Download CV
+            Download CV DA+ AI
           </a>
+          <a href="Kriti_Yadav_CV.pdf" class="inline-flex items-center justify-center rounded-full border border-slate-700 bg-slate-900/70 px-5 py-2.5 text-sm font-medium text-slate-200 shadow-sm transition hover:border-sky-500 hover:text-sky-200">
+            Download CV Technical BA
+          </a>
+        </div>
+        <div class="mt-4 inline-flex items-center gap-2 text-[11px]">
+          <span class="text-slate-500">Profile focus:</span>
+          <div class="inline-flex rounded-full border border-slate-700 bg-slate-900/80 p-1">
+            <button
+              type="button"
+              data-profile-toggle="technical"
+              class="profile-toggle active rounded-full px-3 py-1 text-[11px] text-slate-100 bg-sky-500/20"
+            >
+              Data Science &amp; AI
+            </button>
+            <button
+              type="button"
+              data-profile-toggle="business"
+              class="profile-toggle rounded-full px-3 py-1 text-[11px] text-slate-400"
+            >
+              Technical Business Analytics
+            </button>
+          </div>
         </div>
       </div>
       <div class="flex-1 max-w-md w-full">
-        <div class="relative aspect-square rounded-3xl border border-slate-800 bg-slate-900/60 shadow-[0_0_80px_rgba(56,189,248,0.25)] overflow-hidden">
-          <div class="absolute inset-0 bg-[radial-gradient(circle_at_10%_0,_rgba(56,189,248,0.18),transparent_55%),radial-gradient(circle_at_80%_100%,_rgba(45,212,191,0.2),transparent_55%)]"></div>
-          <div class="relative z-10 h-full flex flex-col items-center justify-center gap-3 px-6 text-center">
-            <p class="text-[11px] uppercase tracking-[0.18em] text-slate-400">Data Science · GenAI · Analytics</p>
-            <p class="text-lg font-semibold text-slate-100">Designed for hiring managers, CTOs, and AI leaders.</p>
-            <p class="text-[11px] text-slate-400 max-w-xs">
-              Built with modern web tech and an embedded AI concierge that actually knows my work.
-            </p>
-          </div>
+        <div class="relative aspect-video rounded-3xl border border-slate-800 bg-slate-900/60 shadow-[0_0_80px_rgba(56,189,248,0.25)] overflow-hidden">
+          <div class="absolute inset-0 bg-[radial-gradient(circle_at_10%_0,_rgba(56,189,248,0.18),transparent_55%),radial-gradient(circle_at_80%_100%,_rgba(45,212,191,0.2),transparent_55%)] pointer-events-none"></div>
+          <video
+            id="intro-video"
+            class="relative z-10 h-full w-full object-cover"
+            autoplay
+            muted
+            loop
+            playsinline
+            controls
+          >
+            <source src="assets/intro.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
         </div>
       </div>
     </div>
@@ -131,7 +162,7 @@
   <div class="section-divider"></div>
 
   <!-- DOMAIN NAVIGATION HUB -->
-  <section id="domains" class="relative py-20 bg-slate-950">
+  <section id="domains" class="relative py-14 md:py-18 bg-slate-950">
     <div class="max-w-6xl mx-auto px-6">
       <h2 class="text-3xl md:text-4xl font-semibold tracking-tight mb-3">
         Navigate My <span class="bg-gradient-to-r from-sky-400 to-cyan-300 bg-clip-text text-transparent">Domains</span>
@@ -203,9 +234,9 @@
   <div class="section-divider"></div>
 
   <!-- FEATURED PROJECTS -->
-  <section id="projects" class="relative py-20 bg-slate-950">
+  <section id="projects" class="relative py-14 md:py-18 bg-slate-950">
     <div class="max-w-6xl mx-auto px-6">
-      <div class="flex items-end justify-between gap-4 mb-10">
+      <div class="flex items-end justify-between gap-4 mb-6">
         <div>
           <h2 class="text-3xl md:text-4xl font-semibold tracking-tight mb-2">Featured Projects</h2>
           <p class="text-slate-400 text-sm md:text-base max-w-xl">
@@ -216,78 +247,184 @@
           Scroll horizontally
         </p>
       </div>
+
+      <div class="flex flex-wrap gap-2 mb-6 text-[11px]">
+        <button data-filter="all"
+          class="project-filter rounded-full border border-sky-500 bg-sky-500/10 px-3 py-1 text-sky-200">
+          All
+        </button>
+        <button data-filter="llm"
+          class="project-filter rounded-full border border-slate-700 bg-slate-900/80 px-3 py-1 text-slate-200">
+          LLMs &amp; Agentic AI
+        </button>
+        <button data-filter="deployment"
+          class="project-filter rounded-full border border-slate-700 bg-slate-900/80 px-3 py-1 text-slate-200">
+          Deployment &amp; MLOps
+        </button>
+        <button data-filter="analytics"
+          class="project-filter rounded-full border border-slate-700 bg-slate-900/80 px-3 py-1 text-slate-200">
+          Data &amp; Business Analytics
+        </button>
+        <button data-filter="dashboard"
+          class="project-filter rounded-full border border-slate-700 bg-slate-900/80 px-3 py-1 text-slate-200">
+          Dashboards &amp; Reporting
+        </button>
+      </div>
+
       <div class="flex gap-4 overflow-x-auto pb-2 snap-x snap-mandatory" id="project-strip">
-        <!-- cards filled by static HTML with data attributes for modal -->
-        <button class="project-card group relative w-80 shrink-0 snap-start rounded-2xl border border-slate-800 bg-slate-900/80 p-5 flex flex-col justify-between text-left">
+        <article
+          class="project-card group relative w-80 shrink-0 snap-start rounded-2xl border border-slate-800 bg-slate-900/80 p-5 flex flex-col justify-between text-left"
+          data-tags="llm,agents,governance,deployment"
+        >
           <div>
             <div class="inline-flex items-center gap-1 rounded-full border border-slate-700/80 bg-slate-900/80 px-2 py-1 text-[10px] font-medium text-slate-300 mb-3">
               <span class="inline-block h-1.5 w-1.5 rounded-full bg-emerald-400"></span>
-              AI Governance
+              AI Governance · Agentic AI
             </div>
-            <h3 class="text-sm font-semibold text-slate-100 mb-2">CGAI — Enterprise AI Governance Platform</h3>
-            <p class="text-[11px] text-slate-400 mb-3 line-clamp-3">
-              Unified compliance orchestration enforcing APRA, OAIC, and ACMA guardrails for AI systems.
+            <h3 class="text-sm font-semibold text-slate-100 mb-2">
+              CGAI — Enterprise AI Compliance &amp; Governance Platform
+            </h3>
+            <p class="text-[11px] text-slate-400 mb-3 line-clamp-4">
+              Designed and built a governance engine that codifies APRA, OAIC, and ACMA guidelines into
+              executable guardrails for GenAI and LLM systems, including policy checks, evidence capture,
+              and audit‑ready reporting.
             </p>
           </div>
           <div class="flex flex-wrap gap-1.5 mb-3 text-[10px]">
             <span class="rounded-full border border-slate-700 bg-slate-900/80 px-2 py-[3px] text-slate-200">Next.js</span>
             <span class="rounded-full border border-slate-700 bg-slate-900/80 px-2 py-[3px] text-slate-200">GCP</span>
-            <span class="rounded-full border border-slate-700 bg-slate-900/80 px-2 py-[3px] text-slate-200">Gemini</span>
+            <span class="rounded-full border border-slate-700 bg-slate-900/80 px-2 py-[3px] text-slate-200">Vertex AI / Gemini</span>
+            <span class="rounded-full border border-slate-700 bg-slate-900/80 px-2 py-[3px] text-slate-200">RAG</span>
           </div>
           <div class="mt-auto flex items-center justify-between text-[11px] text-sky-300">
-            <span class="inline-flex items-center gap-1">View case study<span class="transition-transform group-hover:translate-x-0.5">→</span></span>
+            <div class="flex gap-3">
+              <a href="YOUR_CGAI_CASE_STUDY_URL" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 hover:underline">
+                Case study<span class="transition-transform group-hover:translate-x-0.5">↗</span>
+              </a>
+              <a href="YOUR_CGAI_CODE_URL" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-slate-400 hover:text-sky-300 hover:underline">
+                Code<span class="transition-transform group-hover:translate-x-0.5">↗</span>
+              </a>
+            </div>
             <span class="text-slate-500">01</span>
           </div>
-        </button>
-        <button class="project-card group relative w-80 shrink-0 snap-start rounded-2xl border border-slate-800 bg-slate-900/80 p-5 flex flex-col justify-between text-left">
+        </article>
+
+        <article
+          class="project-card group relative w-80 shrink-0 snap-start rounded-2xl border border-slate-800 bg-slate-900/80 p-5 flex flex-col justify-between text-left"
+          data-tags="nlp,multilabel,llm,telecom"
+        >
           <div>
             <div class="inline-flex items-center gap-1 rounded-full border border-slate-700/80 bg-slate-900/80 px-2 py-1 text-[10px] font-medium text-slate-300 mb-3">
               <span class="inline-block h-1.5 w-1.5 rounded-full bg-emerald-400"></span>
-              NLP · Multilabel
+              NLP · Multilabel · LLM‑augmented
             </div>
-            <h3 class="text-sm font-semibold text-slate-100 mb-2">Multilabel Complaint Classification</h3>
-            <p class="text-[11px] text-slate-400 mb-3 line-clamp-3">
-              DistilBERT pipeline tagging telecom complaints into regulatory categories for TIO.
+            <h3 class="text-sm font-semibold text-slate-100 mb-2">
+              Multilabel Complaint Classification for TIO
+            </h3>
+            <p class="text-[11px] text-slate-400 mb-3 line-clamp-4">
+              Built a production‑ready pipeline using DistilBERT and one‑vs‑rest classifiers to tag 140k+ telecom
+              complaints across 90+ regulatory categories, with LLMs used for weak supervision, label validation,
+              and qualitative error analysis.
             </p>
           </div>
           <div class="flex flex-wrap gap-1.5 mb-3 text-[10px]">
             <span class="rounded-full border border-slate-700 bg-slate-900/80 px-2 py-[3px] text-slate-200">DistilBERT</span>
             <span class="rounded-full border border-slate-700 bg-slate-900/80 px-2 py-[3px] text-slate-200">Python</span>
             <span class="rounded-full border border-slate-700 bg-slate-900/80 px-2 py-[3px] text-slate-200">Hugging Face</span>
+            <span class="rounded-full border border-slate-700 bg-slate-900/80 px-2 py-[3px] text-slate-200">GPT‑4o</span>
           </div>
           <div class="mt-auto flex items-center justify-between text-[11px] text-sky-300">
-            <span class="inline-flex items-center gap-1">View case study<span class="transition-transform group-hover:translate-x-0.5">→</span></span>
+            <div class="flex gap-3">
+              <a href="YOUR_TIO_CASE_STUDY_URL" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 hover:underline">
+                Case study<span class="transition-transform group-hover:translate-x-0.5">↗</span>
+              </a>
+              <a href="YOUR_TIO_CODE_URL" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-slate-400 hover:text-sky-300 hover:underline">
+                Code<span class="transition-transform group-hover:translate-x-0.5">↗</span>
+              </a>
+            </div>
             <span class="text-slate-500">02</span>
           </div>
-        </button>
-        <button class="project-card group relative w-80 shrink-0 snap-start rounded-2xl border border-slate-800 bg-slate-900/80 p-5 flex flex-col justify-between text-left">
+        </article>
+
+        <article
+          class="project-card group relative w-80 shrink-0 snap-start rounded-2xl border border-slate-800 bg-slate-900/80 p-5 flex flex-col justify-between text-left"
+          data-tags="llm,evaluation,ir,research"
+        >
           <div>
             <div class="inline-flex items-center gap-1 rounded-full border border-slate-700/80 bg-slate-900/80 px-2 py-1 text-[10px] font-medium text-slate-300 mb-3">
               <span class="inline-block h-1.5 w-1.5 rounded-full bg-emerald-400"></span>
-              LLM Eval
+              LLM Eval · IR · Research
             </div>
-            <h3 class="text-sm font-semibold text-slate-100 mb-2">LLM Evaluation Harness</h3>
-            <p class="text-[11px] text-slate-400 mb-3 line-clamp-3">
-              450-task benchmark assessing LLM behaviour on regulatory and complaint-resolution text.
+            <h3 class="text-sm font-semibold text-slate-100 mb-2">
+              LLM Evaluation Harness for Code‑Centric IR
+            </h3>
+            <p class="text-[11px] text-slate-400 mb-3 line-clamp-4">
+              Research project at RMIT on how LLMs support software design and code retrieval, building a 450+ task
+              evaluation harness across prompt design, ranking, and hybrid retrieval. Targeted as a workshop paper
+              for an upcoming SGCI conference.
             </p>
           </div>
           <div class="flex flex-wrap gap-1.5 mb-3 text-[10px]">
-            <span class="rounded-full border border-slate-700 bg-slate-900/80 px-2 py-[3px] text-slate-200">GPT-4o</span>
-            <span class="rounded-full border border-slate-700 bg-slate-900/80 px-2 py-[3px] text-slate-200">Groq</span>
+            <span class="rounded-full border border-slate-700 bg-slate-900/80 px-2 py-[3px] text-slate-200">GPT‑4o</span>
+            <span class="rounded-full border border-slate-700 bg-slate-900/80 px-2 py-[3px] text-slate-200">IR / RAG</span>
+            <span class="rounded-full border border-slate-700 bg-slate-900/80 px-2 py-[3px] text-slate-200">Python</span>
           </div>
           <div class="mt-auto flex items-center justify-between text-[11px] text-sky-300">
-            <span class="inline-flex items-center gap-1">View case study<span class="transition-transform group-hover:translate-x-0.5">→</span></span>
+            <div class="flex gap-3">
+              <a href="YOUR_RMIT_CASE_STUDY_URL" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 hover:underline">
+                Case study<span class="transition-transform group-hover:translate-x-0.5">↗</span>
+              </a>
+              <a href="YOUR_RMIT_CODE_URL" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-slate-400 hover:text-sky-300 hover:underline">
+                Code<span class="transition-transform group-hover:translate-x-0.5">↗</span>
+              </a>
+            </div>
             <span class="text-slate-500">03</span>
           </div>
-        </button>
+        </article>
+      </div>
+
+      <div class="mt-6 text-right">
+        <a href="YOUR_GITHUB_PORTFOLIO_URL" target="_blank" rel="noopener noreferrer"
+           class="inline-flex items-center gap-1 text-[11px] text-slate-400 hover:text-sky-300 hover:underline">
+          View all projects, dashboards, and case studies ↗
+        </a>
       </div>
     </div>
   </section>
 
+  <section id="activity" class="relative py-14 md:py-18 bg-slate-950">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+        <div>
+          <h2 class="text-2xl md:text-3xl font-semibold tracking-tight mb-2">
+            GitHub Activity &amp; Learning
+          </h2>
+          <p class="text-slate-400 text-sm md:text-base max-w-xl">
+            Ongoing contributions to LLM tooling, ML pipelines, dashboards, and technical case studies across
+            data science and business analytics.
+          </p>
+        </div>
+        <p class="text-[11px] uppercase tracking-[0.18em] text-slate-500">
+          Updated from GitHub
+        </p>
+      </div>
+
+      <div class="rounded-2xl border border-slate-800 bg-slate-900/70 p-4">
+        <img
+          src="assets/github-contributions.svg"
+          alt="GitHub contribution graph for Kriti Yadav"
+          class="w-full rounded-lg border border-slate-800 bg-slate-950"
+          loading="lazy"
+        />
+      </div>
+    </div>
+  </section>
+
+
   <div class="section-divider"></div>
 
   <!-- SKILLS SECTION -->
-  <section id="skills" class="relative py-20 bg-slate-950">
+  <section id="skills" class="relative py-14 md:py-18 bg-slate-950">
     <div class="max-w-6xl mx-auto px-6">
       <div class="flex flex-col md:flex-row md:items-start gap-10 mb-10">
         <div class="flex-1">
@@ -386,7 +523,7 @@
   <div class="section-divider"></div>
 
   <!-- EXPERIENCE TIMELINE -->
-  <section id="experience" class="relative py-20 bg-slate-950">
+  <section id="experience" class="relative py-14 md:py-18 bg-slate-950">
     <div class="max-w-6xl mx-auto px-6">
       <div class="mb-10">
         <h2 class="text-3xl md:text-4xl font-semibold tracking-tight mb-2">Experience Timeline</h2>
@@ -396,7 +533,7 @@
       </div>
       <div class="relative pl-8">
         <div class="timeline-line"></div>
-        <div class="space-y-10 relative">
+        <div class="space-y-7 relative">
           <div class="fade-section">
             <span class="absolute -left-[14px] mt-1 h-3 w-3 rounded-full bg-sky-400 shadow-[0_0_18px_rgba(56,189,248,0.9)]"></span>
             <div class="flex items-center gap-2 text-[11px] text-slate-400 mb-1">
@@ -410,8 +547,8 @@
             <h3 class="text-sm font-semibold text-slate-100">Data Science Intern</h3>
             <p class="text-[12px] text-slate-400 mb-3">Telecommunications Industry Ombudsman (TIO)</p>
             <ul class="space-y-1.5 text-[12px] text-slate-300">
-              <li class="flex gap-2"><span class="mt-[5px] h-1 w-3 rounded-full bg-slate-500"></span><span>Built a multilabel complaint classification pipeline using DistilBERT and One-vs-Rest, automating triage across regulatory categories.</span></li>
-              <li class="flex gap-2"><span class="mt-[5px] h-1 w-3 rounded-full bg-slate-500"></span><span>Designed an LLM evaluation framework with 450+ benchmark tasks for regulatory and complaint text.</span></li>
+              <li class="flex gap-2"><span class="mt-[5px] h-1 w-3 rounded-full bg-slate-500"></span><span>Built a multilabel complaint classification pipeline using DistilBERT and one‑vs‑rest, automating triage across regulatory categories, with LLMs used for weak supervision, label validation, and qualitative error review.</span></li>
+              <li class="flex gap-2"><span class="mt-[5px] h-1 w-3 rounded-full bg-slate-500"></span><span>Designed an LLM evaluation framework with 450+ benchmark tasks for regulatory and complaint text, comparing model behaviour across edge cases.</span></li>
               <li class="flex gap-2"><span class="mt-[5px] h-1 w-3 rounded-full bg-slate-500"></span><span>Created Power BI dashboards to surface complaint insights to operations and leadership.</span></li>
             </ul>
           </div>
@@ -463,7 +600,7 @@
   <div class="section-divider"></div>
 
   <!-- ABOUT SECTION -->
-  <section id="about" class="relative py-20 bg-slate-950">
+  <section id="about" class="relative py-14 md:py-18 bg-slate-950">
     <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-[1.1fr_minmax(0,1.2fr)] gap-10 items-center">
       <div class="relative h-64 md:h-80 rounded-3xl border border-slate-800 bg-slate-900/70 overflow-hidden">
         <div class="absolute inset-0 bg-[radial-gradient(circle_at_20%_0,_rgba(56,189,248,0.25),transparent_55%),radial-gradient(circle_at_80%_100%,_rgba(45,212,191,0.22),transparent_55%)]"></div>
@@ -502,7 +639,7 @@
   <div class="section-divider"></div>
 
   <!-- CONTACT SECTION -->
-  <section id="contact" class="relative py-20 bg-gradient-to-b from-slate-950 to-black text-center">
+  <section id="contact" class="relative py-14 md:py-18 bg-gradient-to-b from-slate-950 to-black text-center">
     <div class="max-w-3xl mx-auto px-6">
       <h2 class="text-3xl md:text-4xl font-semibold tracking-tight mb-3">
         Let's Build Something <span class="bg-gradient-to-r from-sky-400 to-emerald-300 bg-clip-text text-transparent">Intelligent</span>.
@@ -510,6 +647,10 @@
       <p class="text-slate-400 text-sm md:text-base mb-8">
         Open to roles and consulting across Sydney, Melbourne, and remote US. If you have a problem worth
         solving with data and AI, I would love to hear from you.
+      </p>
+      <p class="text-[11px] text-slate-400 mb-6">
+        Ready for full-time roles from July on a 485 post-study visa, open to sponsorship. Given a 12-week
+        runway, I will design, build, and deploy something genuinely useful for your team.
       </p>
       <div class="flex flex-col items-center gap-4 mb-6">
         <a href="mailto:kritiyadav9993@gmail.com" class="relative inline-flex items-center justify-center rounded-full border border-sky-500/60 bg-slate-950/80 px-6 py-2.5 text-sm font-medium text-sky-100 shadow-[0_0_40px_rgba(56,189,248,0.5)] transition hover:bg-sky-500 hover:text-slate-950">
@@ -877,5 +1018,53 @@
       });
     }
   </script>
+  <script>
+    const profileButtons = document.querySelectorAll(".profile-toggle");
+    const profileBlocks = document.querySelectorAll("[data-profile]");
+
+    function setProfile(profile) {
+      profileButtons.forEach((btn) => {
+        const isActive = btn.getAttribute("data-profile-toggle") === profile;
+        btn.classList.toggle("bg-sky-500/20", isActive);
+        btn.classList.toggle("text-slate-100", isActive);
+        btn.classList.toggle("text-slate-400", !isActive);
+      });
+
+      profileBlocks.forEach((el) => {
+        const matches = el.getAttribute("data-profile") === profile;
+        el.classList.toggle("hidden", !matches);
+      });
+    }
+
+    profileButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const profile = btn.getAttribute("data-profile-toggle");
+        setProfile(profile);
+      });
+    });
+
+    setProfile("technical");
+
+    const filterButtons = document.querySelectorAll(".project-filter");
+    const projectCards = document.querySelectorAll(".project-card");
+
+    filterButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const filter = btn.getAttribute("data-filter");
+
+        filterButtons.forEach((b) =>
+          b.classList.remove("border-sky-500", "bg-sky-500/10", "text-sky-200")
+        );
+        btn.classList.add("border-sky-500", "bg-sky-500/10", "text-sky-200");
+
+        projectCards.forEach((card) => {
+          const tags = (card.getAttribute("data-tags") || "").split(",");
+          const visible = filter === "all" || tags.includes(filter);
+          card.classList.toggle("hidden", !visible);
+        });
+      });
+    });
+  </script>
+
 </body>
 </html>
