@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kriti Yadav — Data Science & AI Portfolio</title>
+  <!-- Tailwind via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- tsParticles -->
+  <script src="https://cdn.jsdelivr.net/npm/tsparticles-engine@2/tsparticles.engine.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/tsparticles@2/tsparticles.bundle.min.js"></script>
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+    body {
+      background: #020617;
+      color: #e5e7eb;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
+    }
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #1f2933; border-radius: 999px; }
+    ::-webkit-scrollbar-thumb:hover { background: #4b5563; }
+
+    /* Hero typing */
+    .typing::after {
+      content: "";
+      display: inline-block;
+      width: 1ch;
+      background: transparent;
+      border-right: 2px solid #bae6fd;
+      animation: cursorBlink 0.9s steps(1) infinite;
+      margin-left: 2px;
+    }
+    @keyframes cursorBlink {
+      0%, 50% { opacity: 1; }
+      50.01%, 100% { opacity: 0; }
+    }
+
+    /* Section divider glow */
+    .section-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #1f2937, transparent);
+    }
+
+    /* Floating chat shadow */
+    .chat-orb-glow {
+      box-shadow: 0 0 35px rgba(56, 189, 248, 0.7);
+    }
+
+    /* Simple fade-in on scroll */
+    .fade-section { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .fade-section.visible { opacity: 1; transform: translateY(0); }
+
+    /* Domain tile active state */
+    .domain-tile-active {
+      border-color: rgba(56, 189, 248, 0.6);
+      box-shadow: 0 0 35px rgba(56, 189, 248, 0.3);
+      background: rgba(15, 23, 42, 0.95);
+    }
+
+    /* Experience timeline */
+    .timeline-line {
+      position: absolute;
+      left: 0.7rem;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, rgba(56,189,248,0.7), rgba(30,64,175,0.1));
+    }
+
+    /* Chat widget */
+    .chat-scroll {
+      scrollbar-width: thin;
+    }
+  </style>
+</head>
+<body class="min-h-screen text-slate-100">
+
+  <!-- HERO SECTION -->
+  <section id="home" class="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-slate-950">
+    <!-- tsParticles container -->
+    <div id="tsparticles" class="absolute inset-0 -z-10"></div>
+    <!-- overlays -->
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,_#0b1120_0,_transparent_55%),radial-gradient(circle_at_bottom,_#020617_0,_transparent_55%)] opacity-70"></div>
+
+    <div class="relative z-10 max-w-6xl mx-auto px-6 py-24 flex flex-col md:flex-row items-center gap-14">
+      <div class="flex-1">
+        <p class="inline-flex items-center gap-2 rounded-full border border-sky-500/30 bg-sky-500/10 px-3 py-1 text-[11px] font-medium text-sky-200 mb-4">
+          <span class="inline-block h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+          Available for roles in Melbourne · Sydney · Remote US
+        </p>
+        <h1 class="text-3xl sm:text-4xl md:text-[3.1rem] leading-tight font-semibold tracking-tight mb-4">
+          <span class="block text-slate-200 mb-1">Turning Data Into Intelligence.</span>
+          <span id="hero-typed" class="block bg-gradient-to-r from-sky-400 via-cyan-300 to-emerald-200 bg-clip-text text-transparent typing">
+            Intelligence Into Action.
+          </span>
+        </h1>
+        <p class="text-slate-400 text-sm md:text-base max-w-xl mb-8">
+          Senior-leaning Data Scientist &amp; AI Engineer specialising in LLMs, GenAI, AI Agents, analytics,
+          and automation — building systems that are explainable, reliable, and enterprise-ready.
+        </p>
+        <div class="flex flex-wrap items-center gap-4">
+          <a href="#domains" class="inline-flex items-center justify-center rounded-full bg-sky-500 px-5 py-2.5 text-sm font-medium text-slate-950 shadow-lg shadow-sky-500/30 transition hover:bg-sky-400">
+            Explore My Work
+          </a>
+          <a href="Kriti_Yadav_CV.pdf" class="inline-flex items-center justify-center rounded-full border border-slate-700 bg-slate-900/70 px-5 py-2.5 text-sm font-medium text-slate-200 shadow-sm transition hover:border-sky-500 hover:text-sky-200">
+            Download CV
+          </a>
+        </div>
+      </div>
+      <div class="flex-1 max-w-md w-full">
+        <div class="relative aspect-square rounded-3xl border border-slate-800 bg-slate-900/60 shadow-[0_0_80px_rgba(56,189,248,0.25)] overflow-hidden">
+          <div class="absolute inset-0 bg-[radial-gradient(circle_at_10%_0,_rgba(56,189,248,0.18),transparent_55%),radial-gradient(circle_at_80%_100%,_rgba(45,212,191,0.2),transparent_55%)]"></div>
+          <div class="relative z-10 h-full flex flex-col items-center justify-center gap-3 px-6 text-center">
+            <p class="text-[11px] uppercase tracking-[0.18em] text-slate-400">Data Science · GenAI · Analytics</p>
+            <p class="text-lg font-semibold text-slate-100">Designed for hiring managers, CTOs, and AI leaders.</p>
+            <p class="text-[11px] text-slate-400 max-w-xs">
+              Built with modern web tech and an embedded AI concierge that actually knows my work.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- DOMAIN NAVIGATION HUB -->
+  <section id="domains" class="relative py-20 bg-slate-950">
+    <div class="max-w-6xl mx-auto px-6">
+      <h2 class="text-3xl md:text-4xl font-semibold tracking-tight mb-3">
+        Navigate My <span class="bg-gradient-to-r from-sky-400 to-cyan-300 bg-clip-text text-transparent">Domains</span>
+      </h2>
+      <p class="text-slate-400 text-sm md:text-base max-w-2xl mb-10">
+        Jump into the areas where I do my best work — from production LLM agents to SQL automation
+        and enterprise-grade reporting.
+      </p>
+      <div class="grid md:grid-cols-[1.4fr_minmax(0,1fr)] gap-8 items-start">
+        <div id="domain-tiles" class="grid sm:grid-cols-2 xl:grid-cols-3 gap-4">
+          <!-- tiles populated in HTML with data attributes -->
+          <button data-domain="ai-agents" class="domain-tile group relative overflow-hidden rounded-2xl border border-slate-800 bg-slate-900/60 px-4 py-4 text-left transition">
+            <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition bg-[radial-gradient(circle_at_top,_rgba(56,189,248,0.16),transparent_55%)]"></div>
+            <div class="relative z-10 space-y-2">
+              <p class="text-[11px] uppercase tracking-[0.18em] text-slate-500">Domain</p>
+              <p class="text-sm font-semibold text-slate-100">AI Agents &amp; GenAI</p>
+              <p class="text-[11px] text-slate-400 line-clamp-2">Built production LLM agents with LangChain, tools, and RAG pipelines.</p>
+            </div>
+          </button>
+          <button data-domain="llms" class="domain-tile group relative overflow-hidden rounded-2xl border border-slate-800 bg-slate-900/60 px-4 py-4 text-left transition">
+            <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition bg-[radial-gradient(circle_at_top,_rgba(56,189,248,0.16),transparent_55%)]"></div>
+            <div class="relative z-10 space-y-2">
+              <p class="text-[11px] uppercase tracking-[0.18em] text-slate-500">Domain</p>
+              <p class="text-sm font-semibold text-slate-100">LLMs &amp; OpenAI</p>
+              <p class="text-[11px] text-slate-400 line-clamp-2">From prompt design to retrieval and evaluation, tuned for enterprise.</p>
+            </div>
+          </button>
+          <button data-domain="analytics-sql" class="domain-tile group relative overflow-hidden rounded-2xl border border-slate-800 bg-slate-900/60 px-4 py-4 text-left transition">
+            <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition bg-[radial-gradient(circle_at_top,_rgba(56,189,248,0.16),transparent_55%)]"></div>
+            <div class="relative z-10 space-y-2">
+              <p class="text-[11px] uppercase tracking-[0.18em] text-slate-500">Domain</p>
+              <p class="text-sm font-semibold text-slate-100">Data Analytics &amp; SQL</p>
+              <p class="text-[11px] text-slate-400 line-clamp-2">End-to-end pipelines turning noisy source data into decision-ready models.</p>
+            </div>
+          </button>
+          <button data-domain="powerbi" class="domain-tile group relative overflow-hidden rounded-2xl border border-slate-800 bg-slate-900/60 px-4 py-4 text-left transition">
+            <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition bg-[radial-gradient(circle_at_top,_rgba(56,189,248,0.16),transparent_55%)]"></div>
+            <div class="relative z-10 space-y-2">
+              <p class="text-[11px] uppercase tracking-[0.18em] text-slate-500">Domain</p>
+              <p class="text-sm font-semibold text-slate-100">Power BI &amp; Reporting</p>
+              <p class="text-[11px] text-slate-400 line-clamp-2">Executive-ready dashboards wired directly to ML and operational data.</p>
+            </div>
+          </button>
+          <button data-domain="automation" class="domain-tile group relative overflow-hidden rounded-2xl border border-slate-800 bg-slate-900/60 px-4 py-4 text-left transition">
+            <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition bg-[radial-gradient(circle_at_top,_rgba(56,189,248,0.16),transparent_55%)]"></div>
+            <div class="relative z-10 space-y-2">
+              <p class="text-[11px] uppercase tracking-[0.18em] text-slate-500">Domain</p>
+              <p class="text-sm font-semibold text-slate-100">Automation &amp; MLOps</p>
+              <p class="text-[11px] text-slate-400 line-clamp-2">Self-healing, observable pipelines from notebook to production.</p>
+            </div>
+          </button>
+          <button data-domain="governance" class="domain-tile group relative overflow-hidden rounded-2xl border border-slate-800 bg-slate-900/60 px-4 py-4 text-left transition">
+            <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition bg-[radial-gradient(circle_at_top,_rgba(56,189,248,0.16),transparent_55%)]"></div>
+            <div class="relative z-10 space-y-2">
+              <p class="text-[11px] uppercase tracking-[0.18em] text-slate-500">Domain</p>
+              <p class="text-sm font-semibold text-slate-100">AI Governance &amp; Ethics</p>
+              <p class="text-[11px] text-slate-400 line-clamp-2">Guardrails, transparency, and traceability around AI decisions.</p>
+            </div>
+          </button>
+        </div>
+
+        <div id="domain-detail" class="mt-4 md:mt-0 rounded-2xl border border-dashed border-slate-800 bg-slate-900/40 p-5 text-xs text-slate-400">
+          Click a domain tile to see featured projects, tech stack, and the impact I delivered.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- FEATURED PROJECTS -->
+  <section id="projects" class="relative py-20 bg-slate-950">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="flex items-end justify-between gap-4 mb-10">
+        <div>
+          <h2 class="text-3xl md:text-4xl font-semibold tracking-tight mb-2">Featured Projects</h2>
+          <p class="text-slate-400 text-sm md:text-base max-w-xl">
+            A small sample of the systems I have designed, shipped, and iterated with real users.
+          </p>
+        </div>
+        <p class="hidden md:block text-[11px] uppercase tracking-[0.18em] text-slate-500">
+          Scroll horizontally
+        </p>
+      </div>
+      <div class="flex gap-4 overflow-x-auto pb-2 snap-x snap-mandatory" id="project-strip">
+        <!-- cards filled by static HTML with data attributes for modal -->
+        <button class="project-card group relative w-80 shrink-0 snap-start rounded-2xl border border-slate-800 bg-slate-900/80 p-5 flex flex-col justify-between text-left">
+          <div>
+            <div class="inline-flex items-center gap-1 rounded-full border border-slate-700/80 bg-slate-900/80 px-2 py-1 text-[10px] font-medium text-slate-300 mb-3">
+              <span class="inline-block h-1.5 w-1.5 rounded-full bg-emerald-400"></span>
+              AI Governance
+            </div>
+            <h3 class="text-sm font-semibold text-slate-100 mb-2">CGAI — Enterprise AI Governance Platform</h3>
+            <p class="text-[11px] text-slate-400 mb-3 line-clamp-3">
+              Unified compliance orchestration enforcing APRA, OAIC, and ACMA guardrails for AI systems.
+            </p>
+          </div>
+          <div class="flex flex-wrap gap-1.5 mb-3 text-[10px]">
+            <span class="rounded-full border border-slate-700 bg-slate-900/80 px-2 py-[3px] text-slate-200">Next.js</span>
+            <span class="rounded-full border border-slate-700 bg-slate-900/80 px-2 py-[3px] text-slate-200">GCP</span>
+            <span class="rounded-full border border-slate-700 bg-slate-900/80 px-2 py-[3px] text-slate-200">Gemini</span>
+          </div>
+          <div class="mt-auto flex items-center justify-between text-[11px] text-sky-300">
+            <span class="inline-flex items-center gap-1">View case study<span class="transition-transform group-hover:translate-x-0.5">→</span></span>
+            <span class="text-slate-500">01</span>
+          </div>
+        </button>
+        <button class="project-card group relative w-80 shrink-0 snap-start rounded-2xl border border-slate-800 bg-slate-900/80 p-5 flex flex-col justify-between text-left">
+          <div>
+            <div class="inline-flex items-center gap-1 rounded-full border border-slate-700/80 bg-slate-900/80 px-2 py-1 text-[10px] font-medium text-slate-300 mb-3">
+              <span class="inline-block h-1.5 w-1.5 rounded-full bg-emerald-400"></span>
+              NLP · Multilabel
+            </div>
+            <h3 class="text-sm font-semibold text-slate-100 mb-2">Multilabel Complaint Classification</h3>
+            <p class="text-[11px] text-slate-400 mb-3 line-clamp-3">
+              DistilBERT pipeline tagging telecom complaints into regulatory categories for TIO.
+            </p>
+          </div>
+          <div class="flex flex-wrap gap-1.5 mb-3 text-[10px]">
+            <span class="rounded-full border border-slate-700 bg-slate-900/80 px-2 py-[3px] text-slate-200">DistilBERT</span>
+            <span class="rounded-full border border-slate-700 bg-slate-900/80 px-2 py-[3px] text-slate-200">Python</span>
+            <span class="rounded-full border border-slate-700 bg-slate-900/80 px-2 py-[3px] text-slate-200">Hugging Face</span>
+          </div>
+          <div class="mt-auto flex items-center justify-between text-[11px] text-sky-300">
+            <span class="inline-flex items-center gap-1">View case study<span class="transition-transform group-hover:translate-x-0.5">→</span></span>
+            <span class="text-slate-500">02</span>
+          </div>
+        </button>
+        <button class="project-card group relative w-80 shrink-0 snap-start rounded-2xl border border-slate-800 bg-slate-900/80 p-5 flex flex-col justify-between text-left">
+          <div>
+            <div class="inline-flex items-center gap-1 rounded-full border border-slate-700/80 bg-slate-900/80 px-2 py-1 text-[10px] font-medium text-slate-300 mb-3">
+              <span class="inline-block h-1.5 w-1.5 rounded-full bg-emerald-400"></span>
+              LLM Eval
+            </div>
+            <h3 class="text-sm font-semibold text-slate-100 mb-2">LLM Evaluation Harness</h3>
+            <p class="text-[11px] text-slate-400 mb-3 line-clamp-3">
+              450-task benchmark assessing LLM behaviour on regulatory and complaint-resolution text.
+            </p>
+          </div>
+          <div class="flex flex-wrap gap-1.5 mb-3 text-[10px]">
+            <span class="rounded-full border border-slate-700 bg-slate-900/80 px-2 py-[3px] text-slate-200">GPT-4o</span>
+            <span class="rounded-full border border-slate-700 bg-slate-900/80 px-2 py-[3px] text-slate-200">Groq</span>
+          </div>
+          <div class="mt-auto flex items-center justify-between text-[11px] text-sky-300">
+            <span class="inline-flex items-center gap-1">View case study<span class="transition-transform group-hover:translate-x-0.5">→</span></span>
+            <span class="text-slate-500">03</span>
+          </div>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- SKILLS SECTION -->
+  <section id="skills" class="relative py-20 bg-slate-950">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="flex flex-col md:flex-row md:items-start gap-10 mb-10">
+        <div class="flex-1">
+          <h2 class="text-3xl md:text-4xl font-semibold tracking-tight mb-3">Skills &amp; Technology Stack</h2>
+          <p class="text-slate-400 text-sm md:text-base max-w-xl">
+            Think of this as a constellation map: clusters of skills I reach for when designing, building,
+            and shipping real systems.
+          </p>
+        </div>
+        <div class="w-full md:w-72 rounded-2xl border border-slate-800 bg-slate-900/60 p-4 text-xs text-slate-300">
+          <p class="font-semibold text-slate-100 mb-1">Where this was used</p>
+          <p id="skill-hover-text" class="text-slate-400 min-h-[3rem]">
+            Hover a skill node to see a real project where it was applied.
+          </p>
+        </div>
+      </div>
+      <div class="grid md:grid-cols-2 gap-8 text-[11px]">
+        <!-- Each block is a category -->
+        <div class="relative rounded-2xl border border-slate-800 bg-slate-900/70 p-5 overflow-hidden">
+          <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(56,189,248,0.14),transparent_60%)] opacity-30 pointer-events-none"></div>
+          <div class="relative z-10">
+            <p class="text-[11px] uppercase tracking-[0.18em] text-slate-500 mb-2">Languages</p>
+            <div class="flex flex-wrap gap-2">
+              <button class="skill-chip">Python</button>
+              <button class="skill-chip">SQL</button>
+              <button class="skill-chip">R</button>
+            </div>
+          </div>
+        </div>
+        <div class="relative rounded-2xl border border-slate-800 bg-slate-900/70 p-5 overflow-hidden">
+          <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(56,189,248,0.14),transparent_60%)] opacity-30 pointer-events-none"></div>
+          <div class="relative z-10">
+            <p class="text-[11px] uppercase tracking-[0.18em] text-slate-500 mb-2">GenAI &amp; LLMs</p>
+            <div class="flex flex-wrap gap-2">
+              <button class="skill-chip">OpenAI API</button>
+              <button class="skill-chip">LangChain</button>
+              <button class="skill-chip">Hugging Face</button>
+              <button class="skill-chip">Prompt Engineering</button>
+            </div>
+          </div>
+        </div>
+        <div class="relative rounded-2xl border border-slate-800 bg-slate-900/70 p-5 overflow-hidden">
+          <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(56,189,248,0.14),transparent_60%)] opacity-30 pointer-events-none"></div>
+          <div class="relative z-10">
+            <p class="text-[11px] uppercase tracking-[0.18em] text-slate-500 mb-2">ML &amp; AI</p>
+            <div class="flex flex-wrap gap-2">
+              <button class="skill-chip">Scikit-learn</button>
+              <button class="skill-chip">TensorFlow</button>
+              <button class="skill-chip">PyTorch</button>
+              <button class="skill-chip">XGBoost</button>
+            </div>
+          </div>
+        </div>
+        <div class="relative rounded-2xl border border-slate-800 bg-slate-900/70 p-5 overflow-hidden">
+          <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(56,189,248,0.14),transparent_60%)] opacity-30 pointer-events-none"></div>
+          <div class="relative z-10">
+            <p class="text-[11px] uppercase tracking-[0.18em] text-slate-500 mb-2">Data &amp; Analytics</p>
+            <div class="flex flex-wrap gap-2">
+              <button class="skill-chip">Snowflake</button>
+              <button class="skill-chip">BigQuery</button>
+              <button class="skill-chip">Databricks</button>
+              <button class="skill-chip">pandas</button>
+              <button class="skill-chip">Spark</button>
+            </div>
+          </div>
+        </div>
+        <div class="relative rounded-2xl border border-slate-800 bg-slate-900/70 p-5 overflow-hidden">
+          <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(56,189,248,0.14),transparent_60%)] opacity-30 pointer-events-none"></div>
+          <div class="relative z-10">
+            <p class="text-[11px] uppercase tracking-[0.18em] text-slate-500 mb-2">Visualisation</p>
+            <div class="flex flex-wrap gap-2">
+              <button class="skill-chip">Power BI</button>
+              <button class="skill-chip">Tableau</button>
+              <button class="skill-chip">Plotly</button>
+              <button class="skill-chip">Streamlit</button>
+            </div>
+          </div>
+        </div>
+        <div class="relative rounded-2xl border border-slate-800 bg-slate-900/70 p-5 overflow-hidden">
+          <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(56,189,248,0.14),transparent_60%)] opacity-30 pointer-events-none"></div>
+          <div class="relative z-10">
+            <p class="text-[11px] uppercase tracking-[0.18em] text-slate-500 mb-2">Cloud &amp; MLOps</p>
+            <div class="flex flex-wrap gap-2">
+              <button class="skill-chip">Azure</button>
+              <button class="skill-chip">AWS</button>
+              <button class="skill-chip">GCP</button>
+              <button class="skill-chip">Docker</button>
+              <button class="skill-chip">MLflow</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- EXPERIENCE TIMELINE -->
+  <section id="experience" class="relative py-20 bg-slate-950">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="mb-10">
+        <h2 class="text-3xl md:text-4xl font-semibold tracking-tight mb-2">Experience Timeline</h2>
+        <p class="text-slate-400 text-sm md:text-base max-w-2xl">
+          A scroll-driven journey through roles in Australia and global markets, with measurable outcomes.
+        </p>
+      </div>
+      <div class="relative pl-8">
+        <div class="timeline-line"></div>
+        <div class="space-y-10 relative">
+          <div class="fade-section">
+            <span class="absolute -left-[14px] mt-1 h-3 w-3 rounded-full bg-sky-400 shadow-[0_0_18px_rgba(56,189,248,0.9)]"></span>
+            <div class="flex items-center gap-2 text-[11px] text-slate-400 mb-1">
+              <span class="inline-flex items-center gap-1 rounded-full border border-slate-700 bg-slate-900/80 px-2 py-[2px]">
+                <span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span>2024 – Present
+              </span>
+              <span class="inline-flex items-center gap-1 rounded-full border border-slate-700 bg-slate-900/80 px-2 py-[2px]">
+                <span class="h-1.5 w-1.5 rounded-full bg-sky-400"></span>Australian Market
+              </span>
+            </div>
+            <h3 class="text-sm font-semibold text-slate-100">Data Science Intern</h3>
+            <p class="text-[12px] text-slate-400 mb-3">Telecommunications Industry Ombudsman (TIO)</p>
+            <ul class="space-y-1.5 text-[12px] text-slate-300">
+              <li class="flex gap-2"><span class="mt-[5px] h-1 w-3 rounded-full bg-slate-500"></span><span>Built a multilabel complaint classification pipeline using DistilBERT and One-vs-Rest, automating triage across regulatory categories.</span></li>
+              <li class="flex gap-2"><span class="mt-[5px] h-1 w-3 rounded-full bg-slate-500"></span><span>Designed an LLM evaluation framework with 450+ benchmark tasks for regulatory and complaint text.</span></li>
+              <li class="flex gap-2"><span class="mt-[5px] h-1 w-3 rounded-full bg-slate-500"></span><span>Created Power BI dashboards to surface complaint insights to operations and leadership.</span></li>
+            </ul>
+          </div>
+          <div class="fade-section">
+            <span class="absolute -left-[14px] mt-1 h-3 w-3 rounded-full bg-sky-400 shadow-[0_0_18px_rgba(56,189,248,0.9)]"></span>
+            <div class="flex items-center gap-2 text-[11px] text-slate-400 mb-1">
+              <span class="inline-flex items-center gap-1 rounded-full border border-slate-700 bg-slate-900/80 px-2 py-[2px]"><span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span>2025 – Present</span>
+              <span class="inline-flex items-center gap-1 rounded-full border border-slate-700 bg-slate-900/80 px-2 py-[2px]"><span class="h-1.5 w-1.5 rounded-full bg-sky-400"></span>Australian Market</span>
+            </div>
+            <h3 class="text-sm font-semibold text-slate-100">Research Assistant — Minor Thesis</h3>
+            <p class="text-[12px] text-slate-400 mb-3">RMIT University</p>
+            <ul class="space-y-1.5 text-[12px] text-slate-300">
+              <li class="flex gap-2"><span class="mt-[5px] h-1 w-3 rounded-full bg-slate-500"></span><span>Studying prompt design and interaction patterns for LLM-based code-generation systems.</span></li>
+              <li class="flex gap-2"><span class="mt-[5px] h-1 w-3 rounded-full bg-slate-500"></span><span>Exploring multi-agent patterns, ranking prompts, and hybrid retrieval for robust developer tooling.</span></li>
+            </ul>
+          </div>
+          <div class="fade-section">
+            <span class="absolute -left-[14px] mt-1 h-3 w-3 rounded-full bg-sky-400 shadow-[0_0_18px_rgba(56,189,248,0.9)]"></span>
+            <div class="flex items-center gap-2 text-[11px] text-slate-400 mb-1">
+              <span class="inline-flex items-center gap-1 rounded-full border border-slate-700 bg-slate-900/80 px-2 py-[2px]"><span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span>2022 – 2024</span>
+              <span class="inline-flex items-center gap-1 rounded-full border border-slate-700 bg-slate-900/80 px-2 py-[2px]"><span class="h-1.5 w-1.5 rounded-full bg-sky-400"></span>US / Global</span>
+            </div>
+            <h3 class="text-sm font-semibold text-slate-100">Data Science Associate Product Lead</h3>
+            <p class="text-[12px] text-slate-400 mb-3">Axtria Inc</p>
+            <ul class="space-y-1.5 text-[12px] text-slate-300">
+              <li class="flex gap-2"><span class="mt-[5px] h-1 w-3 rounded-full bg-slate-500"></span><span>Delivered 18.3% sales uplift via AI/ML marketing optimisation for pharma clients.</span></li>
+              <li class="flex gap-2"><span class="mt-[5px] h-1 w-3 rounded-full bg-slate-500"></span><span>Built MMM and recommendation systems with PySpark and ML models deployed to production workflows.</span></li>
+              <li class="flex gap-2"><span class="mt-[5px] h-1 w-3 rounded-full bg-slate-500"></span><span>Trained 100+ analysts on SQL and analytics best practices.</span></li>
+            </ul>
+          </div>
+          <div class="fade-section">
+            <span class="absolute -left-[14px] mt-1 h-3 w-3 rounded-full bg-sky-400 shadow-[0_0_18px_rgba(56,189,248,0.9)]"></span>
+            <div class="flex items-center gap-2 text-[11px] text-slate-400 mb-1">
+              <span class="inline-flex items-center gap-1 rounded-full border border-slate-700 bg-slate-900/80 px-2 py-[2px]"><span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span>2020 – 2022</span>
+              <span class="inline-flex items-center gap-1 rounded-full border border-slate-700 bg-slate-900/80 px-2 py-[2px]"><span class="h-1.5 w-1.5 rounded-full bg-sky-400"></span>Global</span>
+            </div>
+            <h3 class="text-sm font-semibold text-slate-100">Data &amp; AI Analyst</h3>
+            <p class="text-[12px] text-slate-400 mb-3">Wunderman Thompson (WPP)</p>
+            <ul class="space-y-1.5 text-[12px] text-slate-300">
+              <li class="flex gap-2"><span class="mt-[5px] h-1 w-3 rounded-full bg-slate-500"></span><span>Led multi-country e-commerce analytics for automotive clients, achieving 90% workflow automation.</span></li>
+              <li class="flex gap-2"><span class="mt-[5px] h-1 w-3 rounded-full bg-slate-500"></span><span>Built Python, UiPath, and BI automation to maintain &gt;99% data accuracy.</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ABOUT SECTION -->
+  <section id="about" class="relative py-20 bg-slate-950">
+    <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-[1.1fr_minmax(0,1.2fr)] gap-10 items-center">
+      <div class="relative h-64 md:h-80 rounded-3xl border border-slate-800 bg-slate-900/70 overflow-hidden">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_20%_0,_rgba(56,189,248,0.25),transparent_55%),radial-gradient(circle_at_80%_100%,_rgba(45,212,191,0.22),transparent_55%)]"></div>
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_transparent_0,_#020617_65%)] opacity-70"></div>
+        <div class="relative z-10 h-full flex flex-col items-center justify-center text-center px-6">
+          <p class="text-xs uppercase tracking-[0.2em] text-slate-300 mb-2">About</p>
+          <p class="text-sm text-slate-200 max-w-xs">
+            Data Scientist &amp; AI Engineer with 4.5+ years across healthcare, financial services, and digital
+            analytics — now focused on GenAI, LLM systems, and AI governance for enterprise.
+          </p>
+        </div>
+      </div>
+      <div>
+        <h2 class="text-3xl md:text-4xl font-semibold tracking-tight mb-3">A bit about how I work</h2>
+        <p class="text-slate-400 text-sm md:text-base mb-6">
+          I love the intersection of messy real-world data, carefully designed ML systems, and the humans who
+          rely on them. My work spans hands-on modelling, data engineering, and product thinking — always tied
+          back to measurable impact.
+        </p>
+        <div class="space-y-4">
+          <div class="relative rounded-2xl border border-slate-800 bg-slate-900/80 p-4 text-sm text-sky-100">
+            <p class="text-[11px] uppercase tracking-[0.18em] text-slate-500 mb-2">Working philosophy</p>
+            <p id="philosophy-text" class="text-sm text-slate-100 min-h-[3rem]">
+              I build AI systems that are explainable, ethical, and enterprise-ready.
+            </p>
+          </div>
+          <p class="text-[11px] text-slate-500">
+            Outside work, you will usually find me lifting at the gym, iterating on portfolio projects, or
+            reading about AI safety and human-computer interaction.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- CONTACT SECTION -->
+  <section id="contact" class="relative py-20 bg-gradient-to-b from-slate-950 to-black text-center">
+    <div class="max-w-3xl mx-auto px-6">
+      <h2 class="text-3xl md:text-4xl font-semibold tracking-tight mb-3">
+        Let's Build Something <span class="bg-gradient-to-r from-sky-400 to-emerald-300 bg-clip-text text-transparent">Intelligent</span>.
+      </h2>
+      <p class="text-slate-400 text-sm md:text-base mb-8">
+        Open to roles and consulting across Sydney, Melbourne, and remote US. If you have a problem worth
+        solving with data and AI, I would love to hear from you.
+      </p>
+      <div class="flex flex-col items-center gap-4 mb-6">
+        <a href="mailto:kritiyadav9993@gmail.com" class="relative inline-flex items-center justify-center rounded-full border border-sky-500/60 bg-slate-950/80 px-6 py-2.5 text-sm font-medium text-sky-100 shadow-[0_0_40px_rgba(56,189,248,0.5)] transition hover:bg-sky-500 hover:text-slate-950">
+          kritiyadav9993@gmail.com
+        </a>
+        <a href="https://www.linkedin.com/in/kriti-yadav-data-science/" target="_blank" class="inline-flex items-center justify-center rounded-full border border-slate-700 bg-slate-900/80 px-6 py-2.5 text-sm font-medium text-slate-100 transition hover:border-sky-500 hover:text-sky-200">
+          Connect on LinkedIn
+        </a>
+        <p class="text-[11px] text-slate-500">
+          Sydney / Melbourne / Remote US · Data Science · AI Engineering · GenAI · Analytics
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FLOATING CHAT WIDGET -->
+  <div id="chat-root" class="fixed bottom-4 right-4 z-40">
+    <!-- Rendered by JS -->
+  </div>
+
+  <script>
+    // =============== tsParticles ===============
+    document.addEventListener("DOMContentLoaded", function () {
+      if (window.tsParticles) {
+        tsParticles.load("tsparticles", {
+          fullScreen: { enable: false },
+          background: { color: "#020617" },
+          particles: {
+            number: { value: 60, density: { enable: true, area: 800 } },
+            color: { value: ["#38bdf8", "#22c55e", "#e5e7eb"] },
+            links: {
+              enable: true,
+              color: "#38bdf8",
+              distance: 130,
+              opacity: 0.25,
+              width: 1,
+            },
+            move: { enable: true, speed: 0.8, direction: "none", outModes: "out" },
+            size: { value: { min: 1, max: 3 } },
+            opacity: { value: 0.4 },
+          },
+          interactivity: {
+            events: { onHover: { enable: true, mode: "repulse" }, resize: true },
+            modes: { repulse: { distance: 100, duration: 0.4 } },
+          },
+        });
+      }
+    });
+
+    // =============== Domain detail panel ===============
+    const domainData = {
+      "ai-agents": {
+        title: "AI Agents & GenAI",
+        description:
+          "Designing agentic workflows that orchestrate tools, memory, and retrieval to solve real business tasks.",
+        projects: [
+          "CGAI compliance copilot for Australian regulations",
+          "LLM evaluation harness with 450+ benchmark tasks",
+        ],
+        stack: ["OpenAI", "LangChain", "RAG", "Azure", "GCP"],
+        impact:
+          "Cut manual compliance review and analytics effort by 50–80% in pilot teams.",
+      },
+      llms: {
+        title: "LLMs & OpenAI",
+        description:
+          "Building reliable LLM systems with careful prompt design, evaluation harnesses, and safety checks.",
+        projects: [
+          "LLM code-generation research with multi-agent patterns",
+          "Domain-specialised complaint summarisation and routing",
+        ],
+        stack: ["GPT-4o", "Claude", "Gemini", "Prompt Engineering"],
+        impact:
+          "Reduced investigation turnaround time for complex queries and routing decisions.",
+      },
+      "analytics-sql": {
+        title: "Data Analytics & SQL",
+        description:
+          "Designing dimensional models, complex SQL, and analytics workflows that stay robust at scale.",
+        projects: [
+          "50M+ record healthcare analytics platform",
+          "Inventory optimisation for quick commerce retail",
+        ],
+        stack: ["SQL", "Snowflake", "BigQuery", "Databricks"],
+        impact: "Improved reporting latency and trust in KPIs across multi-stakeholder teams.",
+      },
+      powerbi: {
+        title: "Power BI & Reporting",
+        description:
+          "Building semantic models, DAX measures, and layouts that answer real decision-making questions.",
+        projects: [
+          "Complaint triage dashboard for ombudsman reporting",
+          "Retail media campaign uplift analytics",
+        ],
+        stack: ["Power BI", "DAX", "SQL", "Python"],
+        impact: "Cut manual reporting cycles from weeks to days while improving clarity and adoption.",
+      },
+      automation: {
+        title: "Automation & MLOps",
+        description:
+          "Orchestrating ETL, model training, evaluation, and deployment with feedback loops built in.",
+        projects: [
+          "Automated retraining loop for multilabel complaint models",
+          "GenAI-powered conversational analytics platform",
+        ],
+        stack: ["Python", "Airflow", "MLflow", "Docker"],
+        impact:
+          "Brought model iteration cycles down from quarterly to weekly while keeping governance in place.",
+      },
+      governance: {
+        title: "AI Governance & Ethics",
+        description:
+          "Designing policies, controls, and monitoring around AI systems so they can be trusted in production.",
+        projects: [
+          "CGAI guardrail engine for APRA/OAIC/ACMA alignment",
+          "Bias and explainability reporting for ML models",
+        ],
+        stack: ["Model Risk", "Fairness", "Audit Trails", "RAG Policies"],
+        impact:
+          "Helped teams document, monitor, and ship AI systems that pass internal and external scrutiny.",
+      },
+    };
+
+    const tiles = document.querySelectorAll(".domain-tile");
+    const detail = document.getElementById("domain-detail");
+    let activeTile = null;
+
+    tiles.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const id = btn.getAttribute("data-domain");
+        if (!id || !domainData[id]) return;
+        if (activeTile === btn) {
+          btn.classList.remove("domain-tile-active");
+          activeTile = null;
+          detail.innerHTML =
+            "Click a domain tile to see featured projects, tech stack, and the impact I delivered.";
+          return;
+        }
+        tiles.forEach((b) => b.classList.remove("domain-tile-active"));
+        btn.classList.add("domain-tile-active");
+        activeTile = btn;
+        const data = domainData[id];
+        detail.innerHTML = `
+          <p class="text-[11px] uppercase tracking-[0.18em] text-slate-500 mb-1">Inside this domain</p>
+          <h3 class="text-sm font-semibold text-slate-100 mb-2">${data.title}</h3>
+          <p class="text-xs text-slate-400 mb-3">${data.description}</p>
+          <div class="mb-3">
+            <p class="text-[11px] font-medium text-slate-400 mb-1">Featured work</p>
+            <ul class="space-y-1.5">
+              ${data.projects
+                .map(
+                  (p) =>
+                    `<li class="text-[11px] text-slate-300 flex gap-2"><span class="mt-[3px] h-1 w-3 rounded-full bg-sky-500"></span><span>${p}</span></li>`
+                )
+                .join("")}
+            </ul>
+          </div>
+          <div class="mb-3">
+            <p class="text-[11px] font-medium text-slate-400 mb-1">Tools &amp; stack</p>
+            <div class="flex flex-wrap gap-1.5">
+              ${data.stack
+                .map(
+                  (t) =>
+                    `<span class="rounded-full border border-slate-700 bg-slate-900/80 px-2 py-[3px] text-[10px] text-slate-200">${t}</span>`
+                )
+                .join("")}
+            </div>
+          </div>
+          <p class="text-[11px] text-emerald-300/90">${data.impact}</p>
+        `;
+      });
+    });
+
+    // =============== Skill hover mapping ===============
+    const skillProjects = {
+      Python: "Used across all ML, analytics, and GenAI systems.",
+      SQL: "50M+ record analytics, Power BI semantic models, and ETL.",
+      R: "Exploratory modelling and statistical analysis in early projects.",
+      "OpenAI API": "LLM agents, conversational analytics, and evaluation harnesses.",
+      LangChain: "Agent routing, tools, and RAG pipelines for the portfolio chat concierge.",
+      "Hugging Face": "DistilBERT multilabel classification and embeddings.",
+      "Prompt Engineering": "LLM evaluation and complaint summarisation flows.",
+      "Scikit-learn": "Classical baselines and MMM models.",
+      TensorFlow: "Research experiments with deep architectures.",
+      PyTorch: "NLP experiments and custom models.",
+      XGBoost: "Inventory and demand forecasting pipelines.",
+      Snowflake: "Dimensional models and analytics views for healthcare data.",
+      BigQuery: "CGAI evidence generation and logging.",
+      Databricks: "LLM-based recommendation engines and large-scale ETL.",
+      pandas: "Day-to-day feature engineering and data prep.",
+      Spark: "Scalable transformations for analytics and ML.",
+      "Power BI": "Complaint triage dashboards and executive KPIs.",
+      Tableau: "Healthcare cost and utilisation analysis.",
+      Plotly: "Interactive ML demos and model diagnostics.",
+      Streamlit: "Rapid GenAI prototypes and internal tools.",
+      Azure: "Model deployment and experimentation.",
+      AWS: "GenAI prototypes and ETL orchestration.",
+      GCP: "CGAI stack on Cloud Run, Firestore, BigQuery, and Vertex AI.",
+      Docker: "Containerised apps and reproducible training jobs.",
+      MLflow: "Experiment tracking and model registry.",
+    };
+
+    document.querySelectorAll(".skill-chip").forEach((chip) => {
+      chip.classList.add(
+        "relative",
+        "inline-flex",
+        "items-center",
+        "justify-center",
+        "rounded-full",
+        "border",
+        "border-slate-700",
+        "bg-slate-900/80",
+        "px-3",
+        "py-1",
+        "text-[11px]",
+        "text-slate-200",
+        "shadow-sm",
+        "transition",
+        "hover:border-sky-500",
+        "hover:text-sky-200",
+        "hover:shadow-[0_0_25px_rgba(56,189,248,0.4)]"
+      );
+      const name = chip.textContent.trim();
+      chip.addEventListener("mouseenter", () => {
+        const desc = skillProjects[name] || "Used across multiple projects in this portfolio.";
+        document.getElementById("skill-hover-text").textContent = desc;
+      });
+      chip.addEventListener("mouseleave", () => {
+        document.getElementById("skill-hover-text").textContent =
+          "Hover a skill node to see a real project where it was applied.";
+      });
+    });
+
+    // =============== Scroll reveal ===============
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
+    document.querySelectorAll(".fade-section").forEach((el) => observer.observe(el));
+
+    // =============== Philosophy rotation ===============
+    const philosophies = [
+      "I build AI systems that are explainable, ethical, and enterprise-ready.",
+      "Great data science is 20% modelling and 80% understanding the business.",
+      "The best automation is one the user never notices — until it disappears.",
+    ];
+    let phiIndex = 0;
+    setInterval(() => {
+      phiIndex = (phiIndex + 1) % philosophies.length;
+      const el = document.getElementById("philosophy-text");
+      if (el) el.textContent = philosophies[phiIndex];
+    }, 6000);
+
+    // =============== Chat widget (frontend only) ===============
+    const chatRoot = document.getElementById("chat-root");
+    if (chatRoot) {
+      chatRoot.innerHTML = `
+        <button id="chat-orb" class="relative flex h-12 w-12 items-center justify-center rounded-full border border-sky-500/60 bg-slate-950 chat-orb-glow">
+          <span class="absolute -inset-px rounded-full bg-[conic-gradient(from_220deg,_rgba(56,189,248,0.4),_transparent_60%,_rgba(8,47,73,0.9))] opacity-60 blur-sm"></span>
+          <span class="relative z-10 text-sky-100 text-xl"><i class="fas fa-comments"></i></span>
+        </button>
+        <div id="chat-panel" class="hidden flex h-[520px] w-[340px] flex-col overflow-hidden rounded-3xl border border-slate-800 bg-slate-950/95 shadow-[0_20px_60px_rgba(15,23,42,0.9)] backdrop-blur mt-3">
+          <div class="flex items-center justify-between border-b border-slate-800 bg-slate-950/90 px-4 py-3">
+            <div class="flex items-center gap-2">
+              <div class="h-8 w-8 rounded-full bg-gradient-to-br from-sky-500 to-emerald-400 flex items-center justify-center text-xs font-semibold text-slate-950">KY</div>
+              <div class="flex flex-col">
+                <span class="text-xs font-medium text-slate-100">AI Portfolio Assistant</span>
+                <span class="text-[10px] text-emerald-400 flex items-center gap-1">
+                  <span class="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse"></span>Online
+                </span>
+              </div>
+            </div>
+            <button id="chat-close" class="text-slate-500 hover:text-slate-200 text-xs">✕</button>
+          </div>
+          <div id="chat-messages" class="flex-1 space-y-2 overflow-y-auto px-4 py-3 text-xs chat-scroll"></div>
+          <div id="chat-starters" class="border-t border-slate-800 px-3 py-2 flex flex-wrap gap-2 bg-slate-950/90 text-[10px]"></div>
+          <form id="chat-form" class="border-t border-slate-800 bg-slate-900/90 px-3 py-2 flex items-center gap-2">
+            <input id="chat-input" placeholder="Ask me anything about my work…" class="flex-1 bg-transparent text-[11px] text-slate-100 placeholder:text-slate-500 outline-none" />
+            <button type="submit" class="text-sky-400 text-xs font-semibold">Send</button>
+          </form>
+        </div>
+      `;
+
+      const orb = document.getElementById("chat-orb");
+      const panel = document.getElementById("chat-panel");
+      const closeBtn = document.getElementById("chat-close");
+      const msgEl = document.getElementById("chat-messages");
+      const startersEl = document.getElementById("chat-starters");
+      const form = document.getElementById("chat-form");
+      const input = document.getElementById("chat-input");
+
+      const starters = [
+        "What AI projects have you built?",
+        "Are you available for contract work in Sydney?",
+        "Tell me about your LLM and GenAI experience",
+        "What's your experience with Power BI and SQL?",
+        "Have you done any AI Governance work?",
+      ];
+
+      starters.forEach((s) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.textContent = s;
+        btn.className =
+          "rounded-full border border-slate-700 bg-slate-900/80 px-2.5 py-1 text-[10px] text-slate-200 hover:border-sky-500 hover:text-sky-200";
+        btn.addEventListener("click", () => sendMessage(s));
+        startersEl.appendChild(btn);
+      });
+
+      function addMessage(role, text) {
+        const wrap = document.createElement("div");
+        wrap.className = "flex " + (role === "user" ? "justify-end" : "justify-start");
+        const bubble = document.createElement("div");
+        bubble.className =
+          "max-w-[85%] rounded-2xl px-3 py-2 text-[11px] leading-relaxed shadow-sm " +
+          (role === "user"
+            ? "bg-sky-500 text-slate-950"
+            : "bg-slate-900/90 text-slate-100 border border-slate-700/80");
+        bubble.textContent = text;
+        wrap.appendChild(bubble);
+        msgEl.appendChild(wrap);
+        msgEl.scrollTop = msgEl.scrollHeight;
+      }
+
+      function sendMessage(text) {
+        const value = (text || input.value).trim();
+        if (!value) return;
+        addMessage("user", value);
+        input.value = "";
+        // NOTE: For GitHub Pages, you cannot safely call OpenAI directly from the browser.
+        // Instead, deploy a secure API (e.g., on Vercel) and call it here.
+        // For now, we mock a friendly response.
+        setTimeout(() => {
+          addMessage(
+            "assistant",
+            "This chat widget is wired to use a RAG-backed assistant when connected to an API. On GitHub Pages, you can point it to your own /api/chat endpoint hosted elsewhere. Would you like to see the projects I've built in this space?"
+          );
+        }, 700);
+      }
+
+      orb.addEventListener("click", () => {
+        orb.classList.add("hidden");
+        panel.classList.remove("hidden");
+        if (!msgEl.hasChildNodes()) {
+          addMessage(
+            "assistant",
+            "Hi, I'm an AI assistant representing Kriti. Ask me anything about their projects, skills, or experience."
+          );
+        }
+      });
+      closeBtn.addEventListener("click", () => {
+        panel.classList.add("hidden");
+        orb.classList.remove("hidden");
+      });
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        sendMessage();
+      });
+    }
+  </script>
+</body>
+</html>
