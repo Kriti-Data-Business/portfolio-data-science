@@ -88,13 +88,13 @@
     <!-- overlays -->
     <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,_#0b1120_0,_transparent_55%),radial-gradient(circle_at_bottom,_#020617_0,_transparent_55%)] opacity-70"></div>
 
-    <div class="relative z-10 max-w-6xl mx-auto px-6 py-24 flex flex-col md:flex-row items-center gap-14">
+    <div class="relative z-10 max-w-7xl mx-auto px-6 py-24 flex flex-col md:flex-row items-center gap-16">
       <div class="flex-1">
         <p class="inline-flex items-center gap-2 rounded-full border border-sky-500/30 bg-sky-500/10 px-3 py-1 text-[11px] font-medium text-sky-200 mb-4">
           <span class="inline-block h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
           Available for roles in Melbourne · Sydney · Remote US
         </p>
-        <h1 class="text-3xl sm:text-4xl md:text-[3.1rem] leading-tight font-semibold tracking-tight mb-4">
+        <h1 class="text-4xl sm:text-5xl md:text-[4rem] leading-tight font-semibold tracking-tight mb-4">
           <span class="block text-slate-200 mb-1">Turning Data Into Intelligence.</span>
           <span id="hero-typed" class="block bg-gradient-to-r from-sky-400 via-cyan-300 to-emerald-200 bg-clip-text text-transparent typing">
             Intelligence Into Action.
@@ -109,15 +109,23 @@
           clear business outcomes, stakeholder-friendly reporting, and deployable solutions across analytics and BI.
         </p>
         <div class="flex flex-wrap items-center gap-4">
-          <a href="#domains" class="inline-flex items-center justify-center rounded-full bg-sky-500 px-5 py-2.5 text-sm font-medium text-slate-950 shadow-lg shadow-sky-500/30 transition hover:bg-sky-400">
-            Explore My Work
+
+          <a href="#projects"
+             class="inline-flex items-center justify-center rounded-full bg-sky-500 px-5 py-2.5 text-sm font-medium text-slate-950">
+            Explore Projects
           </a>
-          <a href="Kriti_Yadav_CV.pdf" class="inline-flex items-center justify-center rounded-full border border-slate-700 bg-slate-900/70 px-5 py-2.5 text-sm font-medium text-slate-200 shadow-sm transition hover:border-sky-500 hover:text-sky-200">
-            Download CV DA+ AI
+        
+          <a href="https://medium.com/@datasciencebusiness"
+             class="inline-flex items-center justify-center rounded-full border border-slate-700 bg-slate-900/70 px-5 py-2.5 text-sm font-medium text-slate-200">
+            Medium Articles
           </a>
-          <a href="Kriti_Yadav_CV.pdf" class="inline-flex items-center justify-center rounded-full border border-slate-700 bg-slate-900/70 px-5 py-2.5 text-sm font-medium text-slate-200 shadow-sm transition hover:border-sky-500 hover:text-sky-200">
-            Download CV Technical BA
+        
+          <a href="YOUR_PROJECTS_URL"
+             target="_blank"
+             class="inline-flex items-center justify-center rounded-full border border-slate-700 bg-slate-900/70 px-5 py-2.5 text-sm font-medium text-slate-200">
+            Project Portfolio
           </a>
+        
         </div>
         <div class="mt-4 inline-flex items-center gap-2 text-[11px]">
           <span class="text-slate-500">Profile focus:</span>
@@ -334,10 +342,10 @@
           </div>
           <div class="mt-auto flex items-center justify-between text-[11px] text-sky-300">
             <div class="flex gap-3">
-              <a href="YOUR_TIO_CASE_STUDY_URL" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 hover:underline">
+              <a href="tio_multilabel.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 hover:underline">
                 Case study<span class="transition-transform group-hover:translate-x-0.5">↗</span>
               </a>
-              <a href="YOUR_TIO_CODE_URL" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-slate-400 hover:text-sky-300 hover:underline">
+              <a href="https://github.com/Kriti-Data-Business/prediction-model-multilable" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-slate-400 hover:text-sky-300 hover:underline">
                 Code<span class="transition-transform group-hover:translate-x-0.5">↗</span>
               </a>
             </div>
@@ -1018,52 +1026,95 @@
     }
   </script>
   <script>
-    const profileButtons = document.querySelectorAll(".profile-toggle");
-    const profileBlocks = document.querySelectorAll("[data-profile]");
+const profileButtons = document.querySelectorAll(".profile-toggle");
+const profileBlocks = document.querySelectorAll("[data-profile]");
 
-    function setProfile(profile) {
-      profileButtons.forEach((btn) => {
-        const isActive = btn.getAttribute("data-profile-toggle") === profile;
-        btn.classList.toggle("bg-sky-500/20", isActive);
-        btn.classList.toggle("text-slate-100", isActive);
-        btn.classList.toggle("text-slate-400", !isActive);
-      });
+function setProfile(profile) {
 
-      profileBlocks.forEach((el) => {
-        const matches = el.getAttribute("data-profile") === profile;
-        el.classList.toggle("hidden", !matches);
-      });
-    }
+  // Update active tab styling
+  profileButtons.forEach((btn) => {
+    const isActive =
+      btn.getAttribute("data-profile-toggle") === profile;
 
-    profileButtons.forEach((btn) => {
-      btn.addEventListener("click", () => {
-        const profile = btn.getAttribute("data-profile-toggle");
-        setProfile(profile);
-      });
-    });
+    btn.classList.toggle("bg-sky-500/20", isActive);
+    btn.classList.toggle("text-slate-100", isActive);
+    btn.classList.toggle("text-slate-400", !isActive);
+  });
 
-    setProfile("technical");
+  // Show/hide profile content sections
+  profileBlocks.forEach((el) => {
+    const matches =
+      el.getAttribute("data-profile") === profile;
 
-    const filterButtons = document.querySelectorAll(".project-filter");
-    const projectCards = document.querySelectorAll(".project-card");
+    el.classList.toggle("hidden", !matches);
+  });
 
-    filterButtons.forEach((btn) => {
-      btn.addEventListener("click", () => {
-        const filter = btn.getAttribute("data-filter");
+  // Update hero buttons
+  const heroButtons = document.getElementById("hero-buttons");
 
-        filterButtons.forEach((b) =>
-          b.classList.remove("border-sky-500", "bg-sky-500/10", "text-sky-200")
-        );
-        btn.classList.add("border-sky-500", "bg-sky-500/10", "text-sky-200");
+  if (!heroButtons) return;
 
-        projectCards.forEach((card) => {
-          const tags = (card.getAttribute("data-tags") || "").split(",");
-          const visible = filter === "all" || tags.includes(filter);
-          card.classList.toggle("hidden", !visible);
-        });
-      });
-    });
-  </script>
+  // DATA SCIENCE & AI TAB
+  if (profile === "technical") {
+
+    heroButtons.innerHTML = `
+      <a href="#projects"
+         class="inline-flex items-center justify-center rounded-full bg-sky-500 px-5 py-2.5 text-sm font-medium text-slate-950 shadow-lg shadow-sky-500/30 transition hover:bg-sky-400">
+        Explore Projects
+      </a>
+
+      <a href="https://medium.com/@YOUR_MEDIUM_USERNAME"
+         target="_blank"
+         class="inline-flex items-center justify-center rounded-full border border-slate-700 bg-slate-900/70 px-5 py-2.5 text-sm font-medium text-slate-200 transition hover:border-sky-500 hover:text-sky-200">
+        Medium Articles
+      </a>
+
+      <a href="Kriti_Yadav_DS_AI_CV.pdf"
+         target="_blank"
+         class="inline-flex items-center justify-center rounded-full border border-slate-700 bg-slate-900/70 px-5 py-2.5 text-sm font-medium text-slate-200 transition hover:border-sky-500 hover:text-sky-200">
+        Download DS/AI CV
+      </a>
+    `;
+
+  }
+
+  // TECHNICAL BUSINESS ANALYST TAB
+  else {
+
+    heroButtons.innerHTML = `
+      <a href="Kriti_Yadav_BA_CV.pdf"
+         target="_blank"
+         class="inline-flex items-center justify-center rounded-full bg-sky-500 px-5 py-2.5 text-sm font-medium text-slate-950 shadow-lg shadow-sky-500/30 transition hover:bg-sky-400">
+        Download BA CV
+      </a>
+
+      <a href="#case-studies"
+         class="inline-flex items-center justify-center rounded-full border border-slate-700 bg-slate-900/70 px-5 py-2.5 text-sm font-medium text-slate-200 transition hover:border-sky-500 hover:text-sky-200">
+        View Case Studies
+      </a>
+
+      <a href="https://your-business-portfolio-link.com"
+         target="_blank"
+         class="inline-flex items-center justify-center rounded-full border border-slate-700 bg-slate-900/70 px-5 py-2.5 text-sm font-medium text-slate-200 transition hover:border-sky-500 hover:text-sky-200">
+        Business Portfolio
+      </a>
+    `;
+  }
+}
+
+// Click handlers
+profileButtons.forEach((btn) => {
+  btn.addEventListener("click", () => {
+    const profile =
+      btn.getAttribute("data-profile-toggle");
+
+    setProfile(profile);
+  });
+});
+
+// Default tab on page load
+setProfile("technical");
+</script>
 
 </body>
 </html>
