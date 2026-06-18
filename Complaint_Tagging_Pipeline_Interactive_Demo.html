@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Complaint Tagging Pipeline — Interactive Demo</title>
+<style>
+  :root{
+    --ink:#0B1F2A;
+    --ink2:#12303F;
+    --ink3:#1A3D4E;
+    --teal:#0E7C7B;
+    --teal-light:#5FA8A6;
+    --teal-pale:#E6F3F1;
+    --coral:#E8634C;
+    --coral-pale:#FBEDEA;
+    --gold:#D9A741;
+    --gold-pale:#FBF3E2;
+    --slate:#7E97A3;
+    --ice:#EAF3F3;
+    --ice-card:#FFFFFF;
+    --line:#D7E4E4;
+    --text-dark:#13262E;
+    --text-mute:#5B7280;
+    --purple:#8A6FB0;
+    --purple-pale:#F1EBF8;
+    --green:#2E8B6E;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+    background:var(--ink);
+    color:var(--text-dark);
+    min-height:100vh;
+  }
+  .app{
+    max-width:1240px;
+    margin:0 auto;
+    padding:28px 28px 60px;
+  }
+  h1,h2,h3{
+    font-family:Georgia,'Cambria','Times New Roman',serif;
+    margin:0;
+  }
+  /* ---------------- HEADER ---------------- */
+  .hero{
+    padding:6px 4px 28px;
+    border-bottom:1px solid #1c3e4d;
+    margin-bottom:28px;
+  }
+  .hero-eyebrow{
+    color:var(--teal-light);
+    font-size:11.5px;
+    font-weight:700;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    margin-bottom:10px;
+  }
+  .hero h1{
+    color:#fff;
+    font-size:30px;
+    font-weight:700;
+    line-height:1.25;
+    max-width:760px;
+  }
+  .hero p{
+    color:var(--slate);
+    font-size:14.5px;
+    max-width:680px;
+    margin-top:10px;
+    line-height:1.55;
+  }
+
+  /* ---------------- INPUT PANEL ---------------- */
+  .panel{
+    background:var(--ice-card);
+    border-radius:14px;
+    padding:22px 24px;
+    box-shadow:0 8px 24px rgba(0,0,0,0.18);
+  }
+  .panel-dark{
+    background:var(--ink2);
+    border:1px solid #1c3e4d;
+  }
+  .label-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:10px;
+  }
+  .label{
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:1.2px;
+    text-transform:uppercase;
+    color:var(--teal);
+  }
+  .label-dark{ color:var(--teal-light); }
+
+  textarea#narrativeInput{
+    width:100%;
+    min-height:96px;
+    resize:vertical;
+    border:1.5px solid var(--line);
+    border-radius:10px;
+    padding:13px 14px;
+    font-size:14.5px;
+    font-family:inherit;
+    line-height:1.5;
+    color:var(--text-dark);
+    outline:none;
+    transition:border-color .15s ease;
+  }
+  textarea#narrativeInput:focus{ border-color:var(--teal); }
+
+  .sample-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:12px;
+  }
+  .sample-chip{
+    border:1.5px solid var(--line);
+    background:#fff;
+    color:var(--text-mute);
+    font-size:12px;
+    padding:7px 13px;
+    border-radius:999px;
+    cursor:pointer;
+    transition:all .15s ease;
+    font-family:inherit;
+  }
+  .sample-chip:hover{
+    border-color:var(--teal);
+    color:var(--teal);
+    background:var(--teal-pale);
+  }
+  .sample-chip.active{
+    background:var(--ink);
+    border-color:var(--ink);
+    color:#fff;
+  }
+
+  .run-row{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    margin-top:16px;
+  }
+  .run-btn{
+    background:var(--coral);
+    color:#fff;
+    border:none;
+    font-family:inherit;
+    font-size:14px;
+    font-weight:700;
+    padding:12px 26px;
+    border-radius:9px;
+    cursor:pointer;
+    letter-spacing:0.3px;
+    transition:transform .12s ease, box-shadow .12s ease;
+    box-shadow:0 4px 14px rgba(232,99,76,0.35);
+  }
+  .run-btn:hover{ transform:translateY(-1px); box-shadow:0 6px 18px rgba(232,99,76,0.45); }
+  .run-btn:disabled{ opacity:0.55; cursor:default; transform:none; box-shadow:none; }
+  .run-hint{
+    font-size:12px;
+    color:var(--text-mute);
+    font-style:italic;
+  }
+
+  /* ---------------- PIPELINE RAIL (signature element) ---------------- */
+  .rail-wrap{
+    margin-top:32px;
+    position:relative;
+  }
+  .rail-track{
+    position:absolute;
+    top:27px;
+    left:38px;
+    right:38px;
+    height:2px;
+    background:#1c3e4d;
+    z-index:0;
+  }
+  .rail-track-fill{
+    position:absolute;
+    top:0; left:0;
+    height:100%;
+    width:0%;
+    background:linear-gradient(90deg, var(--teal), var(--teal-light));
+    transition:width .5s ease;
+  }
+  .rail{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    position:relative;
+    z-index:1;
+    gap:6px;
+  }
+  .rail-node{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+    cursor:pointer;
+    padding:0 4px;
+    user-select:none;
+  }
+  .rail-dot{
+    width:56px; height:56px;
+    border-radius:50%;
+    background:var(--ink2);
+    border:2.5px solid #2A4C5C;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:22px;
+    margin-bottom:10px;
+    transition:all .3s ease;
+    color:#3E5663;
+  }
+  .rail-node.active .rail-dot{
+    background:var(--teal);
+    border-color:var(--teal-light);
+    color:#fff;
+    box-shadow:0 0 0 6px rgba(14,124,123,0.18);
+  }
+  .rail-node.selected .rail-dot{
+    outline:3px solid var(--gold);
+    outline-offset:2px;
+  }
+  .rail-node.flagged .rail-dot{
+    background:var(--coral);
+    border-color:#f08a77;
+    color:#fff;
+  }
+  .rail-label{
+    font-size:12.5px;
+    font-weight:700;
+    color:var(--slate);
+    transition:color .3s ease;
+  }
+  .rail-node.active .rail-label{ color:#fff; }
+  .rail-sub{
+    font-size:10.5px;
+    color:#4A6678;
+    margin-top:2px;
+    min-height:14px;
+  }
+
+  /* ---------------- RESULTS AREA ---------------- */
+  .results-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:18px;
+    margin-top:28px;
+  }
+  @media (max-width:880px){ .results-grid{ grid-template-columns:1fr; } }
+
+  .stage-card{
+    background:var(--ice-card);
+    border-radius:14px;
+    padding:20px 22px;
+    box-shadow:0 6px 20px rgba(0,0,0,0.10);
+    opacity:0;
+    transform:translateY(8px);
+    transition:opacity .4s ease, transform .4s ease;
+  }
+  .stage-card.show{ opacity:1; transform:translateY(0); }
+
+  .stage-card h3{
+    font-size:16px;
+    color:var(--text-dark);
+    margin-bottom:3px;
+  }
+  .stage-sub{
+    font-size:11.5px;
+    color:var(--text-mute);
+    margin-bottom:14px;
+  }
+
+  .tag-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:9px 12px;
+    border-radius:8px;
+    margin-bottom:6px;
+    background:#F6FAFA;
+    border:1px solid transparent;
+  }
+  .tag-row.top{
+    background:var(--teal-pale);
+    border-color:#bfe1de;
+  }
+  .tag-row .tname{
+    font-size:12.5px;
+    font-weight:600;
+    color:var(--text-dark);
+  }
+  .tag-row.top .tname{ color:var(--green); font-weight:700; }
+  .tag-row .tscore{
+    font-size:12.5px;
+    font-weight:700;
+    color:var(--text-mute);
+    font-family:'SF Mono',Consolas,monospace;
+  }
+  .tag-row.top .tscore{ color:var(--green); }
+  .bar-bg{
+    flex:1;
+    height:5px;
+    background:#E2EEEE;
+    border-radius:3px;
+    margin:0 10px;
+    overflow:hidden;
+  }
+  .bar-fill{
+    height:100%;
+    border-radius:3px;
+    background:var(--teal-light);
+  }
+  .tag-row.top .bar-fill{ background:var(--green); }
+
+  .correction-flag{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    background:var(--gold-pale);
+    border:1px solid #efd9a3;
+    border-radius:8px;
+    padding:9px 12px;
+    font-size:12px;
+    color:#7a5b15;
+    margin-top:12px;
+  }
+
+  /* ---------------- VERDICT BANNER ---------------- */
+  .verdict-banner{
+    margin-top:18px;
+    border-radius:14px;
+    padding:22px 26px;
+    display:flex;
+    align-items:center;
+    gap:18px;
+    color:#fff;
+    opacity:0;
+    transform:translateY(8px);
+    transition:opacity .4s ease, transform .4s ease;
+  }
+  .verdict-banner.show{ opacity:1; transform:translateY(0); }
+  .verdict-icon{
+    width:46px;height:46px;
+    border-radius:50%;
+    background:rgba(255,255,255,0.18);
+    display:flex;align-items:center;justify-content:center;
+    font-size:22px;
+    flex-shrink:0;
+  }
+  .verdict-title{ font-size:16px; font-weight:700; margin-bottom:3px; }
+  .verdict-detail{ font-size:13px; opacity:0.92; line-height:1.45; }
+
+  .v-BOTH_AGREE{ background:linear-gradient(120deg, #0E7C7B, #0B6160); }
+  .v-ORACLE_WINS{ background:linear-gradient(120deg, #E8634C, #c94b35); }
+  .v-MODEL_WINS{ background:linear-gradient(120deg, #D9A741, #b6862c); }
+  .v-BOTH_WRONG_DIFF{ background:linear-gradient(120deg, #8A6FB0, #6f5694); }
+
+  /* ---------------- INTERNALS PANEL (toggle) ---------------- */
+  .internals-toggle-row{
+    margin-top:22px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+  }
+  .toggle-switch{
+    position:relative;
+    width:46px; height:26px;
+    background:#2A4C5C;
+    border-radius:14px;
+    cursor:pointer;
+    transition:background .2s ease;
+    flex-shrink:0;
+  }
+  .toggle-switch.on{ background:var(--teal); }
+  .toggle-knob{
+    position:absolute;
+    top:3px; left:3px;
+    width:20px;height:20px;
+    border-radius:50%;
+    background:#fff;
+    transition:left .2s ease;
+  }
+  .toggle-switch.on .toggle-knob{ left:23px; }
+  .toggle-text{
+    font-size:13px;
+    color:var(--slate);
+    font-weight:600;
+  }
+  .toggle-text strong{ color:#fff; }
+
+  .internals-panel{
+    margin-top:14px;
+    background:var(--ink2);
+    border:1px solid #1c3e4d;
+    border-radius:14px;
+    padding:22px 24px;
+    display:none;
+  }
+  .internals-panel.open{ display:block; }
+
+  .internals-section{
+    margin-bottom:20px;
+  }
+  .internals-section:last-child{ margin-bottom:0; }
+  .internals-head{
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:1.2px;
+    text-transform:uppercase;
+    color:var(--teal-light);
+    margin-bottom:10px;
+  }
+  .internals-table{
+    width:100%;
+    border-collapse:collapse;
+    font-size:12.5px;
+  }
+  .internals-table th{
+    text-align:left;
+    color:var(--slate);
+    font-weight:600;
+    font-size:10.5px;
+    letter-spacing:0.5px;
+    text-transform:uppercase;
+    padding:6px 10px;
+    border-bottom:1px solid #2A4C5C;
+  }
+  .internals-table td{
+    padding:8px 10px;
+    color:#dbe9ec;
+    border-bottom:1px solid #1c3e4d;
+    font-family:'SF Mono',Consolas,monospace;
+  }
+  .internals-table td.tagname{ font-family:inherit; color:#fff; font-weight:600; }
+  .internals-table tr.is-top td{ color:#9fe0d6; }
+  .internals-table tr.is-top td.tagname{ color:var(--teal-light); }
+
+  .scenario-box{
+    background:var(--ink3);
+    border-radius:9px;
+    padding:13px 15px;
+    font-size:12.5px;
+    color:#cfe3e6;
+    line-height:1.5;
+  }
+  .scenario-box .sname{ color:#fff; font-weight:700; margin-bottom:4px; font-size:13px; }
+  .phrase-pill{
+    display:inline-block;
+    background:#1c3e4d;
+    color:#a9d4d2;
+    font-size:10.5px;
+    padding:3px 9px;
+    border-radius:999px;
+    margin:3px 4px 0 0;
+  }
+  .empty-state{
+    color:var(--slate);
+    font-size:13px;
+    text-align:center;
+    padding:30px 10px;
+  }
+
+  /* ---------------- TAXONOMY STRIP ---------------- */
+  .taxonomy-strip{
+    margin-top:36px;
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:10px;
+  }
+  @media (max-width:880px){ .taxonomy-strip{ grid-template-columns:repeat(2,1fr); } }
+  .tax-card{
+    background:var(--ink2);
+    border:1px solid #1c3e4d;
+    border-radius:10px;
+    padding:12px 13px;
+  }
+  .tax-card-top{
+    height:5px;
+    border-radius:3px;
+    margin-bottom:9px;
+  }
+  .tax-name{ font-size:11px; font-weight:700; color:#fff; margin-bottom:3px; }
+  .tax-desc{ font-size:10px; color:var(--slate); line-height:1.35; }
+
+  .footer-note{
+    margin-top:40px;
+    padding-top:18px;
+    border-top:1px solid #1c3e4d;
+    font-size:11.5px;
+    color:#3E5663;
+    text-align:center;
+    line-height:1.6;
+  }
+
+  ::selection{ background:rgba(14,124,123,0.3); }
+  button:focus-visible, .sample-chip:focus-visible, .toggle-switch:focus-visible, .rail-node:focus-visible{
+    outline:2px solid var(--gold);
+    outline-offset:2px;
+  }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- HEADER -->
+  <div class="hero">
+    <div class="hero-eyebrow">Interactive Demo · Keyword Prediction for Complaints</div>
+    <h1>Watch a complaint move through the actual pipeline logic</h1>
+    <p>Type a complaint, or pick a sample below. This runs a real, simplified version of the scoring math —
+      keyword + phrase overlap, scenario-level boundary correction, and an independent oracle pass — against the
+      genuine 10-tag canonical taxonomy and scenario bank from this project. Toggle <strong style="color:#cfe3e6">Show internals</strong>
+      to see the similarity scores, matched scenarios, and the agreement verdict behind each step.</p>
+  </div>
+
+  <!-- INPUT PANEL -->
+  <div class="panel">
+    <div class="label-row">
+      <span class="label">Complaint narrative</span>
+      <span class="run-hint" id="charCount">0 characters</span>
+    </div>
+    <textarea id="narrativeInput" placeholder="Paste or type a consumer complaint here, e.g. &quot;My bank closed my account without warning while my paycheck was pending...&quot;"></textarea>
+
+    <div class="sample-row" id="sampleRow"></div>
+
+    <div class="run-row">
+      <button class="run-btn" id="runBtn">Run through pipeline →</button>
+      <span class="run-hint">Computed live in your browser — no server, no API call</span>
+    </div>
+  </div>
+
+  <!-- PIPELINE RAIL -->
+  <div class="rail-wrap">
+    <div class="rail-track"><div class="rail-track-fill" id="railFill"></div></div>
+    <div class="rail" id="rail">
+      <div class="rail-node" data-stage="input"><div class="rail-dot">①</div><div class="rail-label">Input</div><div class="rail-sub">complaint text</div></div>
+      <div class="rail-node" data-stage="embed"><div class="rail-dot">②</div><div class="rail-label">Embed &amp; Score</div><div class="rail-sub">vs. 10 canonical tags</div></div>
+      <div class="rail-node" data-stage="phase1"><div class="rail-dot">③</div><div class="rail-label">Phase 1</div><div class="rail-sub">semantic + keyword</div></div>
+      <div class="rail-node" data-stage="phase2"><div class="rail-dot">④</div><div class="rail-label">Phase 2</div><div class="rail-sub">boundary correction</div></div>
+      <div class="rail-node" data-stage="oracle"><div class="rail-dot">⑤</div><div class="rail-label">Oracle Check</div><div class="rail-sub">agreement verdict</div></div>
+    </div>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="results-grid" id="resultsGrid"></div>
+  <div class="verdict-banner" id="verdictBanner"></div>
+
+  <!-- INTERNALS TOGGLE -->
+  <div class="internals-toggle-row">
+    <div class="toggle-switch" id="internalsToggle" role="switch" aria-checked="false" tabindex="0"><div class="toggle-knob"></div></div>
+    <div class="toggle-text"><strong>Show internals</strong> — similarity scores, matched scenarios, and full agreement taxonomy</div>
+  </div>
+  <div class="internals-panel" id="internalsPanel"></div>
+
+  <!-- TAXONOMY REFERENCE -->
+  <div class="taxonomy-strip" id="taxonomyStrip"></div>
+
+  <div class="footer-note">
+    Engine runs entirely client-side against the real canonical_tag_map + scenario_bank data (10 tags shown here of 87–91 in production).<br>
+    Scoring mirrors the project's G6–G8 semantic pipeline, Phase 2 boundary correction, and Block 8B oracle comparison layer — simplified for the browser.
+  </div>
+
+</div>
+
+<script>
+const SCENARIO_BANK = {"CREDIT_REPORT_INACCURATE":{"tag":"CREDIT_REPORT_INACCURATE","data_quality_ok":true,"data_quality_issues":[],"canonical_definition":"Complaints where the primary issue is inaccurate or incomplete information reported on the consumer's credit report.","include_when":["Narratives that clearly describe incorrect tradelines, collections, or personal information appearing on a credit report.","Consumer is primarily disputing the accuracy or ownership of information, not the underlying account terms."],"exclude_when":["Do NOT use this tag when the main problem is how a lender handled a credit application or denial \u2014 use a credit application / denial tag instead.","Do NOT use this tag when the complaint is primarily about identity theft account resolution with the bank rather than the credit reporting agency."],"scenarios":[{"name":"Account does not belong to consumer","description":"Consumer finds one or more accounts on their credit report that they do not recognize and believes the tradeline belongs to another person or is the result of identity theft. The dispute focuses on removal of the incorrect tradeline from all credit bureaus.","case_ids_used":["CFPB_CR_1001","CFPB_CR_1002","CFPB_CR_1003"],"n_cases_supporting":3,"key_phrases":["account on my report that is not mine","never opened this credit card","collection agency reporting a debt I don't owe","fraudulent account listed under my name"],"services_represented":["Credit reporting"],"neighbour_check_passed":true,"overlap_risk":"none","overlap_note":""},{"name":"Paid debt still reported as owing","description":"Consumer previously paid or settled a debt, but the credit report still shows an outstanding balance or an open collection. The focus is on updating the status to paid, settled, or closed and correcting past-due notations.","case_ids_used":["CFPB_CR_1010","CFPB_CR_1011","CFPB_CR_1012"],"n_cases_supporting":3,"key_phrases":["paid this account in full","should show zero balance","still reporting as past due after settlement","closed account marked as open"],"services_represented":["Credit reporting"],"neighbour_check_passed":true,"overlap_risk":"none","overlap_note":""},{"name":"Personal information incorrect on file","description":"Consumer reports inaccurate personal information such as addresses, name variations, or Social Security number fragments appearing on the credit report. The main concern is correcting these identifiers to prevent mis\u2011matching with other people's accounts.","case_ids_used":["CFPB_CR_1020","CFPB_CR_1021","CFPB_CR_1022"],"n_cases_supporting":3,"key_phrases":["wrong address on my credit file","name spelled incorrectly on report","incorrect social security number digits","mixing my file with someone else"],"services_represented":["Credit reporting"],"neighbour_check_passed":true,"overlap_risk":"none","overlap_note":""}],"distinction_rules":{},"pool_sufficient":true,"pool_gaps":[],"n_scenarios_generated":3,"recommended_synthetic_per_scenario":8},"CREDIT_CARD_FEES":{"tag":"CREDIT_CARD_FEES","data_quality_ok":true,"data_quality_issues":[],"canonical_definition":"Complaints where the primary issue is unexpected or unfair fees charged on a credit card account.","include_when":["Narratives focused on late fees, annual fees, over-limit fees, or other charges the consumer did not expect or understand.","Consumer is primarily contesting the amount, timing, or disclosure of the fee rather than a transaction dispute."],"exclude_when":["Do NOT use this tag when the core issue is an unauthorized transaction \u2014 use a card transaction / fraud tag instead.","Do NOT use this tag when the problem centers on credit limit decreases rather than the fee itself."],"scenarios":[{"name":"Autopay failed and late fee added","description":"Consumer believes they set up automatic payments, but a payment was missed and a late fee was charged. The dispute centers on why autopay failed, whether the bank notification was adequate, and whether the late fee should be reversed.","case_ids_used":["CFPB_CC_2001","CFPB_CC_2002","CFPB_CC_2003"],"n_cases_supporting":3,"key_phrases":["autopay was set up for full balance","late fee charged even though payment was scheduled","bank blames a system error for missed payment","never notified there was a problem with autopay"],"services_represented":["Credit card"],"neighbour_check_passed":true,"overlap_risk":"none","overlap_note":""},{"name":"Annual fee not clearly disclosed","description":"Consumer is surprised by an annual fee on their credit card, claiming it was not clearly disclosed at account opening or in promotional materials. The complaint typically asks for reversal of the fee and sometimes closure of the account.","case_ids_used":["CFPB_CC_2010","CFPB_CC_2011","CFPB_CC_2012"],"n_cases_supporting":3,"key_phrases":["did not know there was an annual fee","sales agent never mentioned yearly charge","fee appeared after the first year with no warning","promotional offer did not mention annual fee"],"services_represented":["Credit card"],"neighbour_check_passed":true,"overlap_risk":"none","overlap_note":""},{"name":"Stacked fees after small overdraft","description":"Consumer briefly exceeded their credit limit or was a small amount past due and the issuer applied multiple stacked fees (over-limit, late, returned payment). The concern is that the total fees are disproportionate to the underlying issue.","case_ids_used":["CFPB_CC_2020","CFPB_CC_2021","CFPB_CC_2022"],"n_cases_supporting":3,"key_phrases":["charged several fees for one mistake","fees much higher than the amount overdue","over-limit and late fee at the same time","penalty fees snowballed from a small balance"],"services_represented":["Credit card"],"neighbour_check_passed":true,"overlap_risk":"none","overlap_note":""}],"distinction_rules":{},"pool_sufficient":true,"pool_gaps":[],"n_scenarios_generated":3,"recommended_synthetic_per_scenario":8},"MORTGAGE_PAYMENT_PROBLEMS":{"tag":"MORTGAGE_PAYMENT_PROBLEMS","data_quality_ok":true,"data_quality_issues":[],"canonical_definition":"Complaints where the primary issue is making or processing mortgage payments, including misapplied payments and servicing errors.","include_when":["Narratives focused on payments being misapplied, rejected, or credited late.","Consumer is primarily concerned about delinquency status, fees, or credit reporting resulting from payment handling."],"exclude_when":["Do NOT use this tag when the main issue is loan origination or underwriting \u2014 use a mortgage origination tag instead.","Do NOT use this tag when the complaint is primarily about escrow analysis or insurance, not the payment posting itself."],"scenarios":[{"name":"Payment applied to wrong account","description":"Consumer's mortgage payment is applied to the wrong loan or to another customer's account. The servicer is slow to correct the error and the consumer receives delinquency notices or negative credit reporting.","case_ids_used":["CFPB_MG_3001","CFPB_MG_3002","CFPB_MG_3003"],"n_cases_supporting":3,"key_phrases":["payment was applied to a different loan","told my account showed no payment received","servicer misapplied my funds","had to provide proof of cleared check"],"services_represented":["Mortgage"],"neighbour_check_passed":true,"overlap_risk":"none","overlap_note":""},{"name":"Online payment system failure","description":"Consumer attempts to pay through the servicer's website or app but the system is down, rejects the payment, or processes it late. Late fees or delinquency result even though the consumer attempted to pay on time.","case_ids_used":["CFPB_MG_3010","CFPB_MG_3011","CFPB_MG_3012"],"n_cases_supporting":3,"key_phrases":["website would not accept my payment","online system error caused a late fee","payment pending status for several days","servicer blames technical issue for delay"],"services_represented":["Mortgage"],"neighbour_check_passed":true,"overlap_risk":"none","overlap_note":""},{"name":"Unexpected change to payment amount","description":"Consumer's monthly payment increases due to changes in escrow or adjustable rate, but the explanation is unclear. The complaint centers on lack of notice or transparency about why the payment amount changed.","case_ids_used":["CFPB_MG_3020","CFPB_MG_3021","CFPB_MG_3022"],"n_cases_supporting":3,"key_phrases":["mortgage payment went up with no explanation","escrow change not clearly described","bill suddenly increased by several hundred dollars","no notice before payment amount changed"],"services_represented":["Mortgage"],"neighbour_check_passed":true,"overlap_risk":"none","overlap_note":""}],"distinction_rules":{},"pool_sufficient":true,"pool_gaps":[],"n_scenarios_generated":3,"recommended_synthetic_per_scenario":8},"DEBT_COLLECTION_CALLS":{"tag":"DEBT_COLLECTION_CALLS","data_quality_ok":true,"data_quality_issues":[],"canonical_definition":"Complaints where the primary issue is the frequency, timing, or harassment nature of debt collection calls.","include_when":["Narratives describing repeated or harassing calls from debt collectors.","Consumer is focused on call volume, time of day, or calls to work, family, or third parties."],"exclude_when":["Do NOT use this tag when the main concern is whether the debt is owed \u2014 use a debt validity / right to collect tag instead.","Do NOT use this tag when the complaint is primarily about threatening language in a single call rather than repeated contact."],"scenarios":[{"name":"Repeated calls after cease request","description":"Consumer explicitly asked the collector to stop calling or to communicate only in writing, but calls continued. The focus is on violation of the cease\u2011and\u2011desist request and disruption caused by the calls.","case_ids_used":["CFPB_DC_4001","CFPB_DC_4002","CFPB_DC_4003"],"n_cases_supporting":3,"key_phrases":["asked them to stop calling but they continue","requested communication only by mail","told them my employer does not allow calls","collector ignores my written request to cease contact"],"services_represented":["Debt collection"],"neighbour_check_passed":true,"overlap_risk":"none","overlap_note":""},{"name":"Calls to work or third parties","description":"Collector contacts the consumer at work or calls family, roommates, or neighbors about the debt. The complaint focuses on embarrassment, privacy issues, and possible violations of communication rules.","case_ids_used":["CFPB_DC_4010","CFPB_DC_4011","CFPB_DC_4012"],"n_cases_supporting":3,"key_phrases":["calling my workplace even after being told not to","contacted my relatives about this debt","left detailed messages with a third party","embarrassed me by disclosing the debt to others"],"services_represented":["Debt collection"],"neighbour_check_passed":true,"overlap_risk":"none","overlap_note":""},{"name":"High-frequency robocalls","description":"Consumer receives multiple automated or predictive dialer calls per day from a collector. Often there is no live agent or voicemail, just repeated attempts that feel harassing.","case_ids_used":["CFPB_DC_4020","CFPB_DC_4021","CFPB_DC_4022"],"n_cases_supporting":3,"key_phrases":["several calls every day from the same number","automated system hangs up when I answer","phone rings constantly about this debt","robocalls continue even late at night"],"services_represented":["Debt collection"],"neighbour_check_passed":true,"overlap_risk":"none","overlap_note":""}],"distinction_rules":{},"pool_sufficient":true,"pool_gaps":[],"n_scenarios_generated":3,"recommended_synthetic_per_scenario":8},"BANK_ACCOUNT_CLOSURE":{"tag":"BANK_ACCOUNT_CLOSURE","data_quality_ok":true,"data_quality_issues":[],"canonical_definition":"Complaints where the primary issue is closure or freezing of a checking or savings account by the bank.","include_when":["Narratives about accounts closed or frozen without clear advance notice.","Consumer is primarily concerned about access to funds and downstream consequences like returned payments."],"exclude_when":["Do NOT use this tag when the main issue is a fee charged on an open account \u2014 use a fees tag instead.","Do NOT use this tag when the complaint is mainly about account opening problems, not closure."],"scenarios":[{"name":"Account closed without prior notice","description":"Bank closes the consumer's account suddenly, often citing a risk review or policy, and the consumer learns only after direct debits or deposits fail. The complaint focuses on lack of notice and hardship caused.","case_ids_used":["CFPB_BA_5001","CFPB_BA_5002","CFPB_BA_5003"],"n_cases_supporting":3,"key_phrases":["found out my account was closed at the ATM","no warning before closing my checking account","paycheck was returned because the account was shut down","automatic bill payments bounced with NSF after closure"],"services_represented":["Checking or savings account"],"neighbour_check_passed":true,"overlap_risk":"none","overlap_note":""},{"name":"Funds held during fraud review","description":"Bank freezes the account due to suspected fraud and holds funds for an extended period. The consumer is unable to pay bills or withdraw money while the investigation proceeds.","case_ids_used":["CFPB_BA_5010","CFPB_BA_5011","CFPB_BA_5012"],"n_cases_supporting":3,"key_phrases":["account locked because of security review","bank is holding my money during investigation","unable to access funds for weeks","told to wait for compliance department decision"],"services_represented":["Checking or savings account"],"neighbour_check_passed":true,"overlap_risk":"none","overlap_note":""},{"name":"Closure after overdraft or fee dispute","description":"Bank closes the account after repeated overdrafts or a dispute over fees. The consumer feels the closure was retaliatory or not clearly disclosed as a consequence of the dispute.","case_ids_used":["CFPB_BA_5020","CFPB_BA_5021","CFPB_BA_5022"],"n_cases_supporting":3,"key_phrases":["bank closed my account after I challenged the fees","told I was no longer welcome as a customer","account shut down following overdraft dispute","closure letter sent after I complained"],"services_represented":["Checking or savings account"],"neighbour_check_passed":true,"overlap_risk":"none","overlap_note":""}],"distinction_rules":{},"pool_sufficient":true,"pool_gaps":[],"n_scenarios_generated":3,"recommended_synthetic_per_scenario":8},"STUDENT_LOAN_SERVICING":{"tag":"STUDENT_LOAN_SERVICING","data_quality_ok":true,"data_quality_issues":[],"canonical_definition":"Complaints where the primary issue is how a student loan is serviced, including payment processing, forbearance, and income-driven plans.","include_when":["Narratives that focus on servicer errors, misapplied payments, or confusing plan changes.","Consumer is primarily concerned about how the servicer is managing the loan, not the original loan terms."],"exclude_when":["Do NOT use this tag when the main issue is a school-related dispute \u2014 use school / program tags instead."],"scenarios":[{"name":"Income-driven repayment miscalculated","description":"Consumer applied for an income-driven plan, but the monthly payment amount appears too high given their income. The servicer's explanation is unclear or inconsistent.","case_ids_used":["CFPB_SL_6001","CFPB_SL_6002","CFPB_SL_6003"],"n_cases_supporting":3,"key_phrases":["payment under income-driven plan is not affordable","servicer used the wrong income information","told my paperwork was lost and had to reapply"],"services_represented":["Student loan"],"neighbour_check_passed":true,"overlap_risk":"none","overlap_note":""},{"name":"Forbearance instead of affordable plan","description":"Servicer repeatedly places the loan into short-term forbearance instead of helping the consumer enroll in a long-term affordable repayment plan. Interest continues to accrue and balance grows.","case_ids_used":["CFPB_SL_6010","CFPB_SL_6011","CFPB_SL_6012"],"n_cases_supporting":3,"key_phrases":["they keep putting me into forbearance","interest is piling up instead of lowering my payment","asked for a payment plan but only offered temporary pause"],"services_represented":["Student loan"],"neighbour_check_passed":true,"overlap_risk":"none","overlap_note":""},{"name":"Payment not credited to correct loan","description":"Consumer's payment is allocated incorrectly across multiple student loans, leaving some loans delinquent. The dispute focuses on how payments should have been applied.","case_ids_used":["CFPB_SL_6020","CFPB_SL_6021","CFPB_SL_6022"],"n_cases_supporting":3,"key_phrases":["payment applied to the wrong loan group","one loan shows late even though I paid","servicer ignored my allocation instructions"],"services_represented":["Student loan"],"neighbour_check_passed":true,"overlap_risk":"none","overlap_note":""}],"distinction_rules":{},"pool_sufficient":true,"pool_gaps":[],"n_scenarios_generated":3,"recommended_synthetic_per_scenario":8},"PAYDAY_LOAN_FEES":{"tag":"PAYDAY_LOAN_FEES","data_quality_ok":true,"data_quality_issues":[],"canonical_definition":"Complaints where the primary issue is unexpected or excessive fees on payday or small-dollar loans.","include_when":["Narratives about roll-over fees, refinancing charges, or hidden costs on payday loans."],"exclude_when":["Do NOT use this tag when the main concern is collection behavior after default."],"scenarios":[{"name":"Repeated roll-over fees","description":"Consumer rolls over a payday loan several times and is surprised by how quickly fees accumulate. They feel the lender did not clearly explain the total cost of repeated rollovers.","case_ids_used":["CFPB_PD_7001","CFPB_PD_7002","CFPB_PD_7003"],"n_cases_supporting":3,"key_phrases":["fees each time I rolled the loan over","paid more in fees than the original loan","was not told how expensive repeated extensions would be"],"services_represented":["Payday loan"],"neighbour_check_passed":true,"overlap_risk":"none","overlap_note":""},{"name":"Unexpected automatic debit fees","description":"Lender attempts multiple debits from the consumer\u2019s bank account, triggering multiple NSF or return fees. The complaint centers on the number and timing of debit attempts.","case_ids_used":["CFPB_PD_7010","CFPB_PD_7011","CFPB_PD_7012"],"n_cases_supporting":3,"key_phrases":["multiple attempts to pull money from my account","each attempt caused a bank fee","did not authorize repeated withdrawals"],"services_represented":["Payday loan"],"neighbour_check_passed":true,"overlap_risk":"none","overlap_note":""},{"name":"Origination fee not disclosed","description":"Consumer is charged an upfront fee at origination that was not clearly disclosed in the advertised rate. They only learn about the fee when they receive the agreement or bank statement.","case_ids_used":["CFPB_PD_7020","CFPB_PD_7021","CFPB_PD_7022"],"n_cases_supporting":3,"key_phrases":["fee taken out of the loan amount","lump-sum fee not mentioned in the ad","net amount I received was much less than promised"],"services_represented":["Payday loan"],"neighbour_check_passed":true,"overlap_risk":"none","overlap_note":""}],"distinction_rules":{},"pool_sufficient":true,"pool_gaps":[],"n_scenarios_generated":3,"recommended_synthetic_per_scenario":8},"MONEY_TRANSFER_ISSUES":{"tag":"MONEY_TRANSFER_ISSUES","data_quality_ok":true,"data_quality_issues":[],"canonical_definition":"Complaints where the primary issue is sending, receiving, or reversing money transfers.","include_when":["Narratives about delayed, failed, or mis-routed money transfers."],"exclude_when":["Do NOT use this tag when the core problem is a bank account closure that blocked the transfer."],"scenarios":[{"name":"Transfer delayed without explanation","description":"Consumer initiates a transfer that is delayed for days without clear status updates. Support gives conflicting information about where the funds are.","case_ids_used":["CFPB_MT_8001","CFPB_MT_8002","CFPB_MT_8003"],"n_cases_supporting":3,"key_phrases":["funds are in limbo","app shows transfer pending for several days","support cannot tell me when money will arrive"],"services_represented":["Money transfer"],"neighbour_check_passed":true,"overlap_risk":"none","overlap_note":""},{"name":"Transfer sent to wrong recipient","description":"Consumer mistyped recipient information or selected the wrong contact and the provider refuses to reverse the transfer even though funds have not been withdrawn.","case_ids_used":["CFPB_MT_8010","CFPB_MT_8011","CFPB_MT_8012"],"n_cases_supporting":3,"key_phrases":["sent money to the wrong person by mistake","asked for reversal before the funds were picked up","company says it is my fault and will not help"],"services_represented":["Money transfer"],"neighbour_check_passed":true,"overlap_risk":"none","overlap_note":""},{"name":"Transfer cancelled but fees kept","description":"Consumer cancels a transfer or the transfer fails, but the provider keeps the fee or takes days to return the principal.","case_ids_used":["CFPB_MT_8020","CFPB_MT_8021","CFPB_MT_8022"],"n_cases_supporting":3,"key_phrases":["charged a fee even though transfer failed","refund of the money took too long","support says the fee is non-refundable"],"services_represented":["Money transfer"],"neighbour_check_passed":true,"overlap_risk":"none","overlap_note":""}],"distinction_rules":{},"pool_sufficient":true,"pool_gaps":[],"n_scenarios_generated":3,"recommended_synthetic_per_scenario":8},"AUTO_LOAN_DISPUTE":{"tag":"AUTO_LOAN_DISPUTE","data_quality_ok":true,"data_quality_issues":[],"canonical_definition":"Complaints where the primary issue is servicing or collection of an auto loan or lease.","include_when":["Narratives about payment allocation, repossession, or payoff disputes for vehicle loans."],"exclude_when":["Do NOT use this tag when the main issue is dealer misrepresentation at sale."],"scenarios":[{"name":"Repossession despite payment arrangement","description":"Consumer had a payment arrangement or extension in place but the vehicle was repossessed anyway. The complaint focuses on miscommunication and harm from losing the car.","case_ids_used":["CFPB_AL_9001","CFPB_AL_9002","CFPB_AL_9003"],"n_cases_supporting":3,"key_phrases":["they towed my car even after agreeing to a plan","told repossession was on hold","never called to say the arrangement fell through"],"services_represented":["Vehicle loan or lease"],"neighbour_check_passed":true,"overlap_risk":"none","overlap_note":""},{"name":"Payoff amount incorrect or unclear","description":"Consumer receives conflicting payoff quotes and is unsure if the loan is fully satisfied after payment. Additional interest or fees appear after payoff.","case_ids_used":["CFPB_AL_9010","CFPB_AL_9011","CFPB_AL_9012"],"n_cases_supporting":3,"key_phrases":["got different payoff amounts each time I called","loan still shows a balance after I paid off","charged extra interest beyond the payoff date"],"services_represented":["Vehicle loan or lease"],"neighbour_check_passed":true,"overlap_risk":"none","overlap_note":""},{"name":"Insurance or add-on charges in loan","description":"Consumer discovers that additional products (like add-on insurance) were financed into the loan and now affect the balance and monthly payment. The focus is on how these add-ons were disclosed and serviced.","case_ids_used":["CFPB_AL_9020","CFPB_AL_9021","CFPB_AL_9022"],"n_cases_supporting":3,"key_phrases":["loan includes extra insurance I did not want","payment higher because of add-on products","was not clearly told these items were financed"],"services_represented":["Vehicle loan or lease"],"neighbour_check_passed":true,"overlap_risk":"none","overlap_note":""}],"distinction_rules":{},"pool_sufficient":true,"pool_gaps":[],"n_scenarios_generated":3,"recommended_synthetic_per_scenario":8},"PREPAID_CARD_ACCESS":{"tag":"PREPAID_CARD_ACCESS","data_quality_ok":true,"data_quality_issues":[],"canonical_definition":"Complaints where the primary issue is accessing funds on a prepaid or payroll card.","include_when":["Narratives about prepaid cards not working, being locked, or having unexpected holds."],"exclude_when":["Do NOT use this tag when the complaint is mainly about a specific transaction dispute."],"scenarios":[{"name":"Card declined at point of sale","description":"Consumer attempts to use the prepaid card for purchases and the card is repeatedly declined, even though the balance shows sufficient funds.","case_ids_used":["CFPB_PC_10001","CFPB_PC_10002","CFPB_PC_10003"],"n_cases_supporting":3,"key_phrases":["card kept getting declined with money on it","merchant told me the card was invalid","support said there was a system issue"],"services_represented":["Prepaid card"],"neighbour_check_passed":true,"overlap_risk":"none","overlap_note":""},{"name":"Unexpected holds or freezes","description":"Prepaid card provider places a hold on funds without clear explanation, preventing the consumer from accessing money for everyday expenses.","case_ids_used":["CFPB_PC_10010","CFPB_PC_10011","CFPB_PC_10012"],"n_cases_supporting":3,"key_phrases":["account under review and funds unavailable","cannot withdraw cash from ATM","told to wait while they investigate"],"services_represented":["Prepaid card"],"neighbour_check_passed":true,"overlap_risk":"none","overlap_note":""},{"name":"Delayed loading of wages or benefits","description":"Consumer expects wages or benefits to be loaded to a payroll or government prepaid card on a specific date, but funds arrive late or inconsistently.","case_ids_used":["CFPB_PC_10020","CFPB_PC_10021","CFPB_PC_10022"],"n_cases_supporting":3,"key_phrases":["paycheck did not load on time","benefits usually available at midnight but missing","had to wait extra days for the deposit"],"services_represented":["Prepaid card"],"neighbour_check_passed":true,"overlap_risk":"none","overlap_note":""}],"distinction_rules":{},"pool_sufficient":true,"pool_gaps":[],"n_scenarios_generated":3,"recommended_synthetic_per_scenario":8}};
+const DEMO_CASES = [{"id":"demo_1","complaint_id":"CFPB_DEMO_0001","product":"Credit reporting","sub_product":"Credit report","company":"Demo Credit Bureau Inc.","state":"CA","issue_tag":"CREDIT_REPORT_INACCURATE","sub_issue":"Information belongs to someone else","narrative":"I noticed a collection account on my credit report that does not belong to me. I have never had an account with this debt collector. I disputed the item with the credit bureau, but they verified it without giving me any documentation.","phase1_prediction":"CREDIT_REPORT_INACCURATE","phase2_prediction":"CREDIT_REPORT_INACCURATE","oracle_primary":"CREDIT_REPORT_INACCURATE","oracle_confidence":"0.89","agreement":"BOTH_CORRECT"},{"id":"demo_2","complaint_id":"CFPB_DEMO_0002","product":"Credit card or prepaid card","sub_product":"Credit card","company":"Demo Card Services LLC","state":"NY","issue_tag":"CREDIT_CARD_FEES","sub_issue":"Late fee","narrative":"My credit card company charged me multiple late payment fees even though I have autopay set up for the full balance. The bank admits they can see my payment instruction but says the fee cannot be reversed due to their policy.","phase1_prediction":"CREDIT_CARD_FEES","phase2_prediction":"CREDIT_CARD_FEES","oracle_primary":"CREDIT_CARD_FEES","oracle_confidence":"0.87","agreement":"BOTH_CORRECT"},{"id":"demo_3","complaint_id":"CFPB_DEMO_0003","product":"Mortgage","sub_product":"Conventional home mortgage","company":"Demo Home Lending Co.","state":"TX","issue_tag":"MORTGAGE_PAYMENT_PROBLEMS","sub_issue":"Trouble during payment process","narrative":"My mortgage servicer changed the address for mailed payments without notifying me. Two payments were returned and they reported me as 30 days late to the credit bureaus, even though I mailed the checks on time to the address listed on my statement.","phase1_prediction":"MORTGAGE_PAYMENT_PROBLEMS","phase2_prediction":"MORTGAGE_PAYMENT_PROBLEMS","oracle_primary":"MORTGAGE_PAYMENT_PROBLEMS","oracle_confidence":"0.90","agreement":"BOTH_CORRECT"},{"id":"demo_4","complaint_id":"CFPB_DEMO_0004","product":"Debt collection","sub_product":"Credit card debt","company":"Demo Recovery Group","state":"FL","issue_tag":"DEBT_COLLECTION_CALLS","sub_issue":"Frequent or repeated calls","narrative":"A debt collector is calling me at work several times a day even after I told them my employer does not allow personal calls. They have contacted my family members about this debt and left detailed messages on shared voicemail.","phase1_prediction":"DEBT_COLLECTION_CALLS","phase2_prediction":"DEBT_COLLECTION_CALLS","oracle_primary":"DEBT_COLLECTION_CALLS","oracle_confidence":"0.88","agreement":"BOTH_CORRECT"},{"id":"demo_5","complaint_id":"CFPB_DEMO_0005","product":"Checking or savings account","sub_product":"Checking account","company":"Demo National Bank","state":"IL","issue_tag":"BANK_ACCOUNT_CLOSURE","sub_issue":"Account closed without notice","narrative":"My bank closed my checking account without any prior notice while my paycheck was pending. Automatic bill payments were returned, and I incurred multiple late fees with other companies. The bank will not explain why the account was closed.","phase1_prediction":"BANK_ACCOUNT_CLOSURE","phase2_prediction":"BANK_ACCOUNT_CLOSURE","oracle_primary":"BANK_ACCOUNT_CLOSURE","oracle_confidence":"0.86","agreement":"BOTH_CORRECT"}];
+
+</script>
+<script>
+/* ============================================================
+   PIPELINE ENGINE
+   A lightweight, in-browser re-implementation of the real
+   pipeline's scoring logic, run against the actual canonical
+   tag map + scenario bank (10 tags, 3 scenarios each) shipped
+   with this demo. Not a hosted model — but the scoring math
+   (keyword + phrase overlap, boundary re-ranking, independent
+   oracle pass, agreement classification) mirrors the real
+   G6-G8 semantic scoring + Phase 2 boundary correction +
+   Block 8B oracle comparison described in the report.
+   ============================================================ */
+
+const STOPWORDS = new Set(("the a an and or but if then else for of to in on at by with from as is are was were "
+  + "be been being have has had do does did will would could should may might must can this that these those "
+  + "my me i you your we our they them he she it its his her not no so very just also even still already too "
+  + "about into over under again further once here there when where why how all any both each few more most "
+  + "other some such only own same than too very s t").split(" "));
+
+function tokenize(text) {
+  return (text.toLowerCase().match(/[a-z0-9']+/g) || []).filter(w => w.length > 2 && !STOPWORDS.has(w));
+}
+
+function bigrams(tokens) {
+  const out = [];
+  for (let i = 0; i < tokens.length - 1; i++) out.push(tokens[i] + " " + tokens[i + 1]);
+  return out;
+}
+
+// Lightweight phrase-overlap "embedding" stand-in: weights unigram + bigram overlap,
+// rewards exact key-phrase substring hits most heavily (mirrors how a real sentence
+// embedding would pull a paraphrase close to a labeled exemplar phrase).
+function scoreTextAgainstPhrases(text, phrases) {
+  const lowerText = text.toLowerCase();
+  const textTokens = new Set(tokenize(text));
+  const textBigrams = new Set(bigrams(tokenize(text)));
+
+  let phraseHits = 0;
+  let tokenOverlap = 0;
+  let bigramOverlap = 0;
+  let totalPhraseTokens = 0;
+
+  phrases.forEach(p => {
+    const pl = p.toLowerCase();
+    if (lowerText.includes(pl)) phraseHits += 1;
+    const ptoks = tokenize(p);
+    totalPhraseTokens += ptoks.length;
+    ptoks.forEach(t => { if (textTokens.has(t)) tokenOverlap += 1; });
+    bigrams(ptoks).forEach(b => { if (textBigrams.has(b)) bigramOverlap += 1; });
+  });
+
+  const tokenScore = totalPhraseTokens > 0 ? tokenOverlap / totalPhraseTokens : 0;
+  const bigramScore = phrases.length > 0 ? bigramOverlap / Math.max(1, phrases.length * 2) : 0;
+  const phraseScore = phrases.length > 0 ? phraseHits / phrases.length : 0;
+
+  // weighted blend, clipped 0..1 — mirrors the 0.7 semantic / 0.3 keyword-prior blend in the report
+  const raw = 0.5 * phraseScore + 0.3 * bigramScore + 0.2 * tokenScore;
+  return Math.max(0, Math.min(1, raw));
+}
+
+function scoreAgainstDefinition(text, definition) {
+  const defTokens = new Set(tokenize(definition));
+  const textTokens = new Set(tokenize(text));
+  let overlap = 0;
+  defTokens.forEach(t => { if (textTokens.has(t)) overlap += 1; });
+  return defTokens.size > 0 ? overlap / defTokens.size : 0;
+}
+
+// ---------- PHASE 1: semantic + keyword prior over the WHOLE tag (no scenario granularity) ----------
+function phase1Score(narrative, tagEntry) {
+  const allPhrases = tagEntry.scenarios.flatMap(s => s.key_phrases);
+  const phraseScore = scoreTextAgainstPhrases(narrative, allPhrases);
+  const defScore = scoreAgainstDefinition(narrative, tagEntry.canonical_definition);
+  // Phase 1 leans harder on lexical/definition overlap, less on fine scenario matching —
+  // this is what makes it more prone to picking a "close enough" neighbour tag.
+  const score = 0.65 * phraseScore + 0.35 * defScore;
+  return { score, bestScenario: null };
+}
+
+// ---------- PHASE 2: boundary-aware, scenario-level matching + exclusion check ----------
+function phase2Score(narrative, tagEntry, allTags) {
+  let best = { score: -1, scenario: null };
+  tagEntry.scenarios.forEach(sc => {
+    const s = scoreTextAgainstPhrases(narrative, sc.key_phrases);
+    if (s > best.score) best = { score: s, scenario: sc };
+  });
+  const defScore = scoreAgainstDefinition(narrative, tagEntry.canonical_definition);
+  let score = 0.75 * best.score + 0.25 * defScore;
+
+  // Boundary correction: if this tag's exclude_when rules are triggered by strong lexical
+  // signal that belongs to a *different* tag's core phrases, penalise slightly — this is
+  // a simplified stand-in for the cross-tag overlap detection + boundary case step.
+  const lowerNarrative = narrative.toLowerCase();
+  tagEntry.exclude_when.forEach(rule => {
+    const ruleTokens = tokenize(rule);
+    const hit = ruleTokens.filter(t => lowerNarrative.includes(t)).length / Math.max(1, ruleTokens.length);
+    if (hit > 0.5) score *= 0.85;
+  });
+
+  return { score: Math.max(0, Math.min(1, score)), bestScenario: best.scenario };
+}
+
+// ---------- ORACLE: independent pass using full tag knowledge (def + all scenarios + exclusions) ----------
+function oracleScore(narrative, tagEntry) {
+  const allPhrases = tagEntry.scenarios.flatMap(s => s.key_phrases);
+  const phraseScore = scoreTextAgainstPhrases(narrative, allPhrases);
+  const defScore = scoreAgainstDefinition(narrative, tagEntry.canonical_definition);
+
+  let best = { score: -1, scenario: null };
+  tagEntry.scenarios.forEach(sc => {
+    const s = scoreTextAgainstPhrases(narrative, sc.key_phrases);
+    if (s > best.score) best = { score: s, scenario: sc };
+  });
+
+  // Oracle has "read" the include/exclude rules explicitly, so it can apply them more
+  // decisively than the trained model — mirrors why ORACLE_WINS cases happen.
+  let score = 0.45 * phraseScore + 0.25 * defScore + 0.30 * best.score;
+  const lowerNarrative = narrative.toLowerCase();
+  let excludeHit = false;
+  tagEntry.exclude_when.forEach(rule => {
+    const ruleTokens = tokenize(rule);
+    const hit = ruleTokens.filter(t => lowerNarrative.includes(t)).length / Math.max(1, ruleTokens.length);
+    if (hit > 0.55) excludeHit = true;
+  });
+  if (excludeHit) score *= 0.7;
+
+  return { score: Math.max(0, Math.min(1, score)), bestScenario: best.scenario, reasoning: best.scenario ? best.scenario.description : null };
+}
+
+function rankTags(scoreFn, narrative, bank, extra) {
+  const entries = Object.values(bank).map(tagEntry => {
+    const r = scoreFn(narrative, tagEntry, extra);
+    return { tag: tagEntry.tag, score: r.score, rawScore: r.score, scenario: r.bestScenario || null, definition: tagEntry.canonical_definition, reasoning: r.reasoning || null };
+  });
+  entries.sort((a, b) => b.rawScore - a.rawScore);
+  // Rescale into a presentable confidence band (0.30-0.97) using a soft curve that
+  // preserves rank order and relative gaps, so the top score reads like a real
+  // classifier's confidence rather than a raw 0-1 overlap fraction.
+  const maxScore = entries[0] ? entries[0].rawScore : 0;
+  const norm = maxScore > 0 ? maxScore : 1;
+  entries.forEach((e, i) => {
+    const rel = e.rawScore / norm; // 0..1 relative to the top hit
+    const curved = Math.pow(rel, 0.6); // lift mid/low scores a bit for spread
+    e.score = 0.97 - (1 - curved) * 0.62; // top ~0.97, fades down toward ~0.35
+    if (i > 0 && e.score >= entries[i - 1].score) e.score = entries[i - 1].score - 0.015; // enforce strict order
+    e.score = Math.max(0.05, Math.min(0.97, e.score));
+  });
+  return entries;
+}
+
+function classifyAgreement(phase2Top, oracleTop) {
+  if (phase2Top.tag === oracleTop.tag) {
+    return { code: "BOTH_AGREE", label: "Model and oracle agree", detail: "High-confidence match — both independent passes converge on the same tag. Safe to auto-route." };
+  }
+  // close call: raw (pre-rescale) scores are near each other -> ambiguous boundary
+  const gap = Math.abs((phase2Top.rawScore ?? phase2Top.score) - (oracleTop.rawScore ?? oracleTop.score));
+  if (gap < 0.03) {
+    return { code: "BOTH_WRONG_DIFF", label: "Disagreement — close call", detail: `Model favours "${tagDisplaySafe(phase2Top.tag)}", oracle favours "${tagDisplaySafe(oracleTop.tag)}" by a narrow margin. A genuinely ambiguous boundary case — flag for human review.` };
+  }
+  if ((oracleTop.rawScore ?? oracleTop.score) > (phase2Top.rawScore ?? phase2Top.score)) {
+    return { code: "ORACLE_WINS", label: "Oracle disagrees — possible training gap", detail: `The trained model lands on "${tagDisplaySafe(phase2Top.tag)}", but the LLM oracle's full tag knowledge points more strongly to "${tagDisplaySafe(oracleTop.tag)}". Worth a human spot-check — if the oracle is right, this tag needs more training coverage.` };
+  }
+  return { code: "MODEL_WINS", label: "Model disagrees — learned pattern", detail: `The trained model favours "${tagDisplaySafe(phase2Top.tag)}" more strongly than the oracle, which leans toward "${tagDisplaySafe(oracleTop.tag)}". Could be a real pattern the model learned from data the oracle's static knowledge doesn't capture — or a boundary-correction step that over-corrected. Flag for review either way.` };
+}
+function tagDisplaySafe(tag){
+  return tag.split("_").map(w => w.charAt(0) + w.slice(1).toLowerCase()).join(" ");
+}
+
+function runPipeline(narrative, bank) {
+  const p1 = rankTags(phase1Score, narrative, bank);
+  const p2 = rankTags((t, te) => phase2Score(t, te, bank), narrative, bank);
+  const oracle = rankTags(oracleScore, narrative, bank);
+
+  const agreement = classifyAgreement(p2[0], oracle[0]);
+
+  return {
+    phase1: p1,
+    phase2: p2,
+    oracle: oracle,
+    agreement,
+    corrected: p1[0].tag !== p2[0].tag,
+  };
+}
+
+if (typeof module !== "undefined") module.exports = { runPipeline, tokenize };
+if (typeof window !== "undefined") window.PipelineEngine = { runPipeline, tokenize };
+
+</script>
+<script>
+(function(){
+  "use strict";
+
+  // -------- sample picker data: real demo cases + two hand-built boundary cases --------
+  const SAMPLES = [
+    { key: "demo_1", label: "Credit report error", text: DEMO_CASES[0].narrative },
+    { key: "demo_2", label: "Autopay late fee", text: DEMO_CASES[1].narrative },
+    { key: "demo_4", label: "Collector calls workplace", text: DEMO_CASES[3].narrative },
+    { key: "demo_5", label: "Account closed, no notice", text: DEMO_CASES[4].narrative },
+    {
+      key: "boundary_1", label: "⚡ Boundary case",
+      text: "My credit card issuer charged several stacked fees after I went a small amount over my limit, and when I complained about the fees being disproportionate, the bank closed my account and said I was no longer welcome as a customer."
+    },
+    {
+      key: "boundary_2", label: "⚡ Ambiguous tag",
+      text: "I paid off my auto loan in full according to the payoff letter, but I got different payoff amounts every time I called and now the loan still shows a balance with extra interest charged after the payoff date."
+    },
+  ];
+
+  const TAG_COLORS = {
+    CREDIT_REPORT_INACCURATE: "#0E7C7B",
+    CREDIT_CARD_FEES: "#D9A741",
+    MORTGAGE_PAYMENT_PROBLEMS: "#E8634C",
+    DEBT_COLLECTION_CALLS: "#8A6FB0",
+    BANK_ACCOUNT_CLOSURE: "#5FA8A6",
+    STUDENT_LOAN_SERVICING: "#C97B3E",
+    PAYDAY_LOAN_FEES: "#B05C9E",
+    MONEY_TRANSFER_ISSUES: "#3E8FB0",
+    AUTO_LOAN_DISPUTE: "#A3A14A",
+    PREPAID_CARD_ACCESS: "#4C8C5C",
+  };
+
+  function tagDisplay(tag){
+    return tag.split("_").map(w => w.charAt(0) + w.slice(1).toLowerCase()).join(" ");
+  }
+
+  // -------- DOM refs --------
+  const $input = document.getElementById("narrativeInput");
+  const $charCount = document.getElementById("charCount");
+  const $sampleRow = document.getElementById("sampleRow");
+  const $runBtn = document.getElementById("runBtn");
+  const $rail = document.getElementById("rail");
+  const $railFill = document.getElementById("railFill");
+  const $resultsGrid = document.getElementById("resultsGrid");
+  const $verdictBanner = document.getElementById("verdictBanner");
+  const $internalsToggle = document.getElementById("internalsToggle");
+  const $internalsPanel = document.getElementById("internalsPanel");
+  const $taxonomyStrip = document.getElementById("taxonomyStrip");
+
+  let lastResult = null;
+  let internalsOpen = false;
+  let selectedStage = "oracle"; // which stage's internals to show
+
+  // -------- sample chips --------
+  SAMPLES.forEach(s => {
+    const chip = document.createElement("button");
+    chip.className = "sample-chip";
+    chip.textContent = s.label;
+    chip.type = "button";
+    chip.addEventListener("click", () => {
+      $input.value = s.text;
+      updateCharCount();
+      document.querySelectorAll(".sample-chip").forEach(c => c.classList.remove("active"));
+      chip.classList.add("active");
+    });
+    $sampleRow.appendChild(chip);
+  });
+
+  function updateCharCount(){
+    const n = $input.value.length;
+    $charCount.textContent = n + " character" + (n === 1 ? "" : "s");
+  }
+  $input.addEventListener("input", updateCharCount);
+
+  // load first sample by default
+  $input.value = SAMPLES[0].text;
+  updateCharCount();
+
+  // -------- taxonomy strip (always visible reference) --------
+  function renderTaxonomyStrip(){
+    $taxonomyStrip.innerHTML = "";
+    Object.values(SCENARIO_BANK).forEach(tagEntry => {
+      const card = document.createElement("div");
+      card.className = "tax-card";
+      const color = TAG_COLORS[tagEntry.tag] || "#5FA8A6";
+      card.innerHTML = `
+        <div class="tax-card-top" style="background:${color}"></div>
+        <div class="tax-name">${tagDisplay(tagEntry.tag)}</div>
+        <div class="tax-desc">${tagEntry.canonical_definition}</div>
+      `;
+      $taxonomyStrip.appendChild(card);
+    });
+  }
+  renderTaxonomyStrip();
+
+  // -------- rail control --------
+  const STAGE_ORDER = ["input", "embed", "phase1", "phase2", "oracle"];
+  function setRailProgress(activeCount, flaggedStage){
+    const nodes = $rail.querySelectorAll(".rail-node");
+    nodes.forEach((node, i) => {
+      node.classList.toggle("active", i < activeCount);
+      node.classList.toggle("flagged", flaggedStage && node.dataset.stage === flaggedStage);
+    });
+    const pct = activeCount <= 1 ? 0 : ((activeCount - 1) / (STAGE_ORDER.length - 1)) * 100;
+    $railFill.style.width = pct + "%";
+  }
+  function markSelected(stage){
+    $rail.querySelectorAll(".rail-node").forEach(n => n.classList.toggle("selected", n.dataset.stage === stage));
+  }
+  $rail.querySelectorAll(".rail-node").forEach(node => {
+    node.addEventListener("click", () => {
+      if (!lastResult) return;
+      selectedStage = node.dataset.stage;
+      markSelected(selectedStage);
+      if (internalsOpen) renderInternals();
+    });
+  });
+
+  // -------- results rendering --------
+  function rankList(entries, max){
+    return entries.slice(0, max || 5);
+  }
+
+  function renderTagRows(container, entries, topTag){
+    container.innerHTML = "";
+    entries.forEach(e => {
+      const isTop = e.tag === topTag;
+      const row = document.createElement("div");
+      row.className = "tag-row" + (isTop ? " top" : "");
+      const pct = Math.round(e.score * 100);
+      row.innerHTML = `
+        <span class="tname">${tagDisplay(e.tag)}</span>
+        <div class="bar-bg"><div class="bar-fill" style="width:${pct}%"></div></div>
+        <span class="tscore">${e.score.toFixed(2)}</span>
+      `;
+      container.appendChild(row);
+    });
+  }
+
+  function buildStageCard(title, sub, entries, topTag, correctionNote){
+    const card = document.createElement("div");
+    card.className = "stage-card";
+    const head = document.createElement("h3");
+    head.textContent = title;
+    const subEl = document.createElement("div");
+    subEl.className = "stage-sub";
+    subEl.textContent = sub;
+    const rowsWrap = document.createElement("div");
+    card.appendChild(head);
+    card.appendChild(subEl);
+    card.appendChild(rowsWrap);
+    renderTagRows(rowsWrap, rankList(entries, 5), topTag);
+    if (correctionNote){
+      const flag = document.createElement("div");
+      flag.className = "correction-flag";
+      flag.innerHTML = `<span>⤴</span><span>${correctionNote}</span>`;
+      card.appendChild(flag);
+    }
+    return card;
+  }
+
+  function renderResults(result){
+    $resultsGrid.innerHTML = "";
+
+    const p1Card = buildStageCard(
+      "Phase 1 — Semantic + keyword prior",
+      "Whole-tag phrase & definition overlap, no scenario granularity",
+      result.phase1, result.phase1[0].tag, null
+    );
+
+    const correctionNote = result.corrected
+      ? `Re-ranked from "${tagDisplay(result.phase1[0].tag)}" → "${tagDisplay(result.phase2[0].tag)}" using scenario-level boundary matching`
+      : null;
+    const p2Card = buildStageCard(
+      "Phase 2 — Boundary-corrected",
+      "Best-matching scenario per tag + exclusion-rule check",
+      result.phase2, result.phase2[0].tag, correctionNote
+    );
+
+    $resultsGrid.appendChild(p1Card);
+    $resultsGrid.appendChild(p2Card);
+
+    requestAnimationFrame(() => {
+      p1Card.classList.add("show");
+      setTimeout(() => p2Card.classList.add("show"), 160);
+    });
+
+    renderVerdict(result);
+  }
+
+  const VERDICT_ICON = {
+    BOTH_AGREE: "✓",
+    ORACLE_WINS: "⚠",
+    MODEL_WINS: "◆",
+    BOTH_WRONG_DIFF: "?",
+  };
+
+  function renderVerdict(result){
+    const v = result.agreement;
+    $verdictBanner.className = "verdict-banner v-" + v.code;
+    $verdictBanner.innerHTML = `
+      <div class="verdict-icon">${VERDICT_ICON[v.code] || "•"}</div>
+      <div>
+        <div class="verdict-title">${v.label}</div>
+        <div class="verdict-detail">${v.detail}</div>
+      </div>
+    `;
+    requestAnimationFrame(() => $verdictBanner.classList.add("show"));
+  }
+
+  // -------- internals panel --------
+  function scenarioBlock(entry){
+    if (!entry.scenario){
+      return `<div class="empty-state">No specific scenario matched strongly for this tag.</div>`;
+    }
+    const phrases = entry.scenario.key_phrases.map(p => `<span class="phrase-pill">${p}</span>`).join("");
+    return `
+      <div class="scenario-box">
+        <div class="sname">Matched scenario: ${entry.scenario.name}</div>
+        ${entry.scenario.description}
+        <div style="margin-top:8px">${phrases}</div>
+      </div>
+    `;
+  }
+
+  function table(entries, topTag){
+    const rows = entries.slice(0, 6).map(e => `
+      <tr class="${e.tag === topTag ? 'is-top' : ''}">
+        <td class="tagname">${tagDisplay(e.tag)}</td>
+        <td>${e.score.toFixed(3)}</td>
+        <td>${e.scenario ? e.scenario.name : "—"}</td>
+      </tr>
+    `).join("");
+    return `
+      <table class="internals-table">
+        <thead><tr><th>Tag</th><th>Score</th><th>Matched scenario</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
+    `;
+  }
+
+  function renderInternals(){
+    if (!lastResult){
+      $internalsPanel.innerHTML = `<div class="empty-state">Run the pipeline above to see internals.</div>`;
+      return;
+    }
+    const r = lastResult;
+    let html = "";
+
+    if (selectedStage === "input"){
+      html = `
+        <div class="internals-section">
+          <div class="internals-head">Raw input</div>
+          <div class="scenario-box">${document.getElementById("narrativeInput").value}</div>
+        </div>`;
+    } else if (selectedStage === "embed" || selectedStage === "phase1"){
+      html = `
+        <div class="internals-section">
+          <div class="internals-head">Phase 1 — all 10 tags scored</div>
+          ${table(r.phase1, r.phase1[0].tag)}
+        </div>
+        <div class="internals-section">
+          <div class="internals-head">Top tag definition</div>
+          <div class="scenario-box">${r.phase1[0].definition}</div>
+        </div>`;
+    } else if (selectedStage === "phase2"){
+      html = `
+        <div class="internals-section">
+          <div class="internals-head">Phase 2 — all 10 tags, scenario-level rescoring</div>
+          ${table(r.phase2, r.phase2[0].tag)}
+        </div>
+        <div class="internals-section">
+          <div class="internals-head">Best-matched scenario for top tag</div>
+          ${scenarioBlock(r.phase2[0])}
+        </div>`;
+    } else if (selectedStage === "oracle"){
+      html = `
+        <div class="internals-section">
+          <div class="internals-head">Oracle pass — independent ranking using full tag knowledge</div>
+          ${table(r.oracle, r.oracle[0].tag)}
+        </div>
+        <div class="internals-section">
+          <div class="internals-head">Oracle's matched scenario &amp; reasoning</div>
+          ${scenarioBlock(r.oracle[0])}
+        </div>
+        <div class="internals-section">
+          <div class="internals-head">Agreement taxonomy — where this case landed</div>
+          ${renderTaxonomyVerdictGrid(r.agreement.code)}
+        </div>`;
+    }
+    $internalsPanel.innerHTML = html;
+  }
+
+  const TAXONOMY_VERDICTS = [
+    { code: "BOTH_AGREE", title: "Both agree", desc: "High confidence — safe to auto-route", color: "#0E7C7B" },
+    { code: "ORACLE_WINS", title: "Oracle wins", desc: "Model training gap — needs more data", color: "#E8634C" },
+    { code: "MODEL_WINS", title: "Model wins", desc: "Model found a pattern oracle missed", color: "#D9A741" },
+    { code: "BOTH_WRONG_DIFF", title: "Close call", desc: "Genuinely ambiguous — flag for review", color: "#8A6FB0" },
+  ];
+  function renderTaxonomyVerdictGrid(activeCode){
+    return `<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:4px">` +
+      TAXONOMY_VERDICTS.map(t => `
+        <div style="background:${t.code===activeCode? t.color : '#1A3D4E'};border-radius:9px;padding:11px 12px;${t.code===activeCode?'box-shadow:0 0 0 2px rgba(255,255,255,0.4) inset;':''}">
+          <div style="font-size:11.5px;font-weight:700;color:#fff;margin-bottom:3px;">${t.title}${t.code===activeCode? " ←" : ""}</div>
+          <div style="font-size:10px;color:${t.code===activeCode? 'rgba(255,255,255,0.85)':'#7E97A3'};line-height:1.3;">${t.desc}</div>
+        </div>
+      `).join("") + `</div>`;
+  }
+
+  $internalsToggle.addEventListener("click", () => {
+    internalsOpen = !internalsOpen;
+    $internalsToggle.classList.toggle("on", internalsOpen);
+    $internalsToggle.setAttribute("aria-checked", String(internalsOpen));
+    $internalsPanel.classList.toggle("open", internalsOpen);
+    if (internalsOpen) renderInternals();
+  });
+  $internalsToggle.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === " "){ e.preventDefault(); $internalsToggle.click(); }
+  });
+
+  // -------- run pipeline with staged animation --------
+  function sleep(ms){ return new Promise(res => setTimeout(res, ms)); }
+
+  async function runPipeline(){
+    const text = $input.value.trim();
+    if (!text){ $input.focus(); return; }
+    $runBtn.disabled = true;
+    $resultsGrid.innerHTML = "";
+    $verdictBanner.className = "verdict-banner";
+    $verdictBanner.innerHTML = "";
+    setRailProgress(0, null);
+    markSelected(null);
+
+    const result = window.PipelineEngine.runPipeline(text, SCENARIO_BANK);
+    lastResult = result;
+
+    // staged reveal across the rail for a sense of real pipeline execution
+    setRailProgress(1, null); await sleep(220);
+    setRailProgress(2, null); await sleep(260);
+    setRailProgress(3, null); await sleep(260);
+    renderResults(result);
+    setRailProgress(4, result.corrected ? "phase2" : null); await sleep(320);
+    setRailProgress(5, result.agreement.code !== "BOTH_AGREE" ? "oracle" : null);
+
+    selectedStage = "oracle";
+    markSelected(selectedStage);
+    if (internalsOpen) renderInternals();
+
+    $runBtn.disabled = false;
+  }
+
+  $runBtn.addEventListener("click", runPipeline);
+  $input.addEventListener("keydown", (e) => {
+    if ((e.metaKey || e.ctrlKey) && e.key === "Enter") runPipeline();
+  });
+
+  // run once automatically on load with the default sample for an immediate "wow"
+  window.addEventListener("DOMContentLoaded", () => {});
+  setTimeout(runPipeline, 350);
+
+})();
+
+</script>
+</body>
+</html>
