@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TIO Multi-Label Complaint Tagging · Project Case Study</title>
+  <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            slate: tailwind.colors.slate,
+            sky: tailwind.colors.sky,
+            emerald: tailwind.colors.emerald,
+          },
+        },
+      },
+    };
+  </script>
+</head>
+<body class="min-h-screen bg-slate-950 text-slate-100">
+  <main class="relative">
+    <!-- Hero -->
+    <section class="relative border-b border-slate-800 bg-gradient-to-b from-slate-950 to-slate-900">
+      <div class="max-w-6xl mx-auto px-6 py-14 md:py-18 flex flex-col md:flex-row gap-10 md:gap-16 items-center">
+        <div class="flex-1 space-y-5">
+          <p class="inline-flex items-center gap-2 rounded-full border border-emerald-500/40 bg-emerald-500/10 px-3 py-1 text-[11px] font-medium text-emerald-200">
+            <span class="inline-block h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+            Industry project with the Telecommunications Industry Ombudsman (TIO)
+          </p>
+          <h1 class="text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight leading-tight">
+            <span class="block mb-1">Keyword Prediction for Complaints</span>
+            <span class="block bg-gradient-to-r from-sky-400 via-cyan-300 to-emerald-200 bg-clip-text text-transparent">
+              End-to-End Multi-Label Classification at TIO
+            </span>
+          </h1>
+          <p class="text-sm md:text-base text-slate-300 max-w-xl">
+            Designed and delivered with TIO&apos;s highly technical complaints, data and policy team, this
+            project builds a production-ready pipeline for Tier-2 tag prediction on 140k+ complaints while
+            proving that in extreme multi-label settings, <span class="font-semibold text-sky-300">data quality
+            and label governance, not model complexity, are the dominant levers</span>.
+          </p>
+          <div class="grid grid-cols-2 sm:flex sm:flex-wrap gap-4 text-xs md:text-[13px]">
+            <div class="rounded-2xl border border-slate-800 bg-slate-900/70 px-3 py-2">
+              <p class="text-slate-400">Phase 1 production</p>
+              <p class="font-semibold text-sky-300">Macro F1 0.4279 · 29 tags ≥ 0.60</p>
+            </div>
+            <div class="rounded-2xl border border-slate-800 bg-slate-900/70 px-3 py-2">
+              <p class="text-slate-400">Phase 2 LLM-enriched (testing)</p>
+              <p class="font-semibold text-emerald-300">Macro F1 ≈ 0.60 · 32 tags</p>
+            </div>
+            <div class="rounded-2xl border border-slate-800 bg-slate-900/70 px-3 py-2 col-span-2 sm:col-span-1">
+              <p class="text-slate-400">Impact</p>
+              <p class="font-semibold text-slate-100">Cuts manual search from 87–91 tags to 5 verified options per case</p>
+            </div>
+          </div>
+          <div class="flex flex-wrap items-center gap-4 pt-2">
+            <a href="#demo" class="inline-flex items-center justify-center rounded-full bg-sky-500 px-5 py-2.5 text-sm font-medium text-slate-950 shadow-lg shadow-sky-500/30 transition hover:bg-sky-400">
+              Try the oracle vs model demo
+            </a>
+            <a href="#architecture" class="inline-flex items-center justify-center rounded-full border border-slate-700 bg-slate-900/70 px-5 py-2.5 text-sm font-medium text-slate-200 shadow-sm transition hover:border-sky-500 hover:text-sky-200">
+              See the technical architecture
+            </a>
+          </div>
+        </div>
+        <div class="flex-1 max-w-md w-full">
+          <div class="relative aspect-[4/3] rounded-3xl border border-slate-800 bg-slate-900/70 shadow-[0_0_80px_rgba(56,189,248,0.25)] overflow-hidden">
+            <div class="absolute inset-0 bg-[radial-gradient(circle_at_10%_0,_rgba(56,189,248,0.18),transparent_55%),radial-gradient(circle_at_80%_100%,_rgba(45,212,191,0.2),transparent_55%)] pointer-events-none"></div>
+            <div class="relative z-10 h-full px-6 py-5 flex flex-col justify-between text-xs">
+              <div class="space-y-1">
+                <p class="text-[11px] uppercase tracking-[0.18em] text-slate-400">Why this problem matters for TIO</p>
+                <p class="text-slate-100 font-medium">
+                  Each complaint carries 1–12 issue tags from a 87–91 tag taxonomy and drives regulatory
+                  reporting, trend analysis and policy decisions. Getting tags right at scale is core to
+                  TIO&apos;s mission and governance obligations.
+                </p>
+              </div>
+              <div class="space-y-2 text-slate-300">
+                <p class="flex items-center gap-2">
+                  <span class="inline-flex h-5 w-5 items-center justify-center rounded-full bg-emerald-500/20 text-[10px] text-emerald-300">1</span>
+                  <span>Respect: TIO officers remain the decision-makers. The model produces a ranked shortlist
+                  to confirm, not an auto-decision.</span>
+                </p>
+                <p class="flex items-center gap-2">
+                  <span class="inline-flex h-5 w-5 items-center justify-center rounded-full bg-sky-500/20 text-[10px] text-sky-300">2</span>
+                  <span>Reliability: Scenario-based LLM enrichment focuses specifically on known boundary tags,
+                  not generic augmentation.</span>
+                </p>
+                <p class="flex items-center gap-2">
+                  <span class="inline-flex h-5 w-5 items-center justify-center rounded-full bg-fuchsia-500/20 text-[10px] text-fuchsia-300">3</span>
+                  <span>Scalability: The same machinery can underpin routing, operations planning and policy
+                  analytics beyond tagging.</span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Problem & context -->
+    <section id="problem" class="relative border-b border-slate-800 bg-slate-950 py-12 md:py-16">
+      <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-[1.3fr_minmax(0,1fr)] gap-10 items-start">
+        <div class="space-y-4">
+          <h2 class="text-2xl md:text-3xl font-semibold tracking-tight">The TIO context &amp; why this problem is special</h2>
+          <p class="text-sm md:text-[15px] text-slate-300">
+            The <span class="font-semibold">Telecommunications Industry Ombudsman (TIO)</span> is an independent
+            dispute resolution body for Australian consumers. Its team handles tens of thousands of complex,
+            multi-issue complaints each year and is accountable for transparent, accurate reporting to
+            regulators and providers.
+          </p>
+          <p class="text-sm md:text-[15px] text-slate-300">
+            Each complaint must be annotated with one or more Tier-2 tags from a carefully designed taxonomy.
+            These tags are not just metadata – they underpin regulatory dashboards, trend analysis, root cause
+            reviews, and decisions about where industry and TIO should invest effort next.
+          </p>
+          <ul class="text-sm text-slate-300 space-y-2">
+            <li class="flex gap-2"><span class="mt-1 h-1 w-3 rounded-full bg-sky-400"></span><span>Complaints are
+              long, multi-issue and imbalanced: some tags appear thousands of times per year, others only a
+              handful. This makes naive machine learning brittle and evaluation tricky.</span></li>
+            <li class="flex gap-2"><span class="mt-1 h-1 w-3 rounded-full bg-sky-400"></span><span>Historical analysis
+              revealed <span class="font-semibold">188 raw tag variants for 87 canonical concepts</span>, showing how
+              hard the tagging job is and how seriously TIO engages with improving its own data quality.</span></li>
+            <li class="flex gap-2"><span class="mt-1 h-1 w-3 rounded-full bg-sky-400"></span><span>TIO partnered on this
+              project with a genuinely hands-on, technically sophisticated team – supervisors were comfortable
+              reviewing data pipelines, evaluation protocols and LLM prompts, not just final dashboards.</span></li>
+          </ul>
+        </div>
+        <div class="space-y-4 text-xs md:text-[13px]">
+          <div class="rounded-2xl border border-slate-800 bg-slate-900/70 p-4">
+            <h3 class="text-sm font-semibold mb-1">High-level constraints</h3>
+            <ul class="space-y-1 text-slate-300">
+              <li>&bull; Extreme class imbalance (up to 1,895:1) and 1–12 tags per complaint.</li>
+              <li>&bull; CPU-constrained production hardware; GPU access only for controlled experiments.</li>
+              <li>&bull; Ground truth is noisy: officer-assigned tags are very good, but not perfect.</li>
+            </ul>
+          </div>
+          <div class="rounded-2xl border border-slate-800 bg-slate-900/70 p-4">
+            <h3 class="text-sm font-semibold mb-1">Operational goals</h3>
+            <ul class="space-y-1 text-slate-300">
+              <li>&bull; Provide officers with a trustworthy ranked shortlist, not an opaque auto-decision.</li>
+              <li>&bull; Make tag boundaries and scenario definitions explicit and auditable.</li>
+              <li>&bull; Build something TIO can iterate and scale independently, not a one-off prototype.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Architecture & story -->
+    <section id="architecture" class="relative border-b border-slate-800 bg-slate-950 py-12 md:py-16">
+      <div class="max-w-6xl mx-auto px-6 space-y-10">
+        <div class="max-w-3xl space-y-4">
+          <h2 class="text-2xl md:text-3xl font-semibold tracking-tight">What I actually built with TIO</h2>
+          <p class="text-sm md:text-[15px] text-slate-300">
+            Over nine experiments we discovered that almost every meaningful performance gain came from
+            <span class="font-semibold text-sky-300">data strategy, canonicalisation and label governance</span>, not
+            increasingly complex models. The final system is a two-phase pipeline:
+          </p>
+          <ol class="list-decimal list-inside space-y-2 text-sm text-slate-300">
+            <li><span class="font-semibold">Phase 1 – G0–G13 Gold Dataset Pipeline:</span> builds a 2,500-case,
+              quality-verified, stratified training set from 140k complaints with leakage guards, canonical tag
+              mapping and greedy max-coverage selection.</li>
+            <li><span class="font-semibold">Phase 2 – LLM Scenario Bank &amp; Oracle Layer:</span> uses LLMs to learn
+              boundary-conditioned scenarios for each tag, generate synthetic training cases where they matter
+              most, and compare model predictions to an LLM &ldquo;oracle&rdquo; for live diagnostics.</li>
+          </ol>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-6 text-xs md:text-[13px]">
+          <div class="rounded-2xl border border-slate-800 bg-slate-900/70 p-4 space-y-2">
+            <h3 class="text-sm font-semibold mb-1">Phase 1 – G0–G13 Gold Dataset Construction</h3>
+            <ul class="space-y-1 text-slate-300">
+              <li>&bull; G1–G4: ingest 140k complaints, canonicalise 188 raw tags to 87–91 canonical forms,
+                  remove leakage and duplicates.</li>
+              <li>&bull; G5–G7: compute semantic similarity scores and adaptive thresholds per tag to keep only
+                  cases that strongly support their assigned tags.</li>
+              <li>&bull; G8–G10: greedy max-coverage selection to preserve rare tags while maintaining coverage
+                  across multi-label combinations.</li>
+              <li>&bull; G11–G13: assemble 2,500 quality-verified training cases and train an OvR LightGBM model
+                  on sentence-transformer embeddings only.</li>
+            </ul>
+          </div>
+          <div class="rounded-2xl border border-slate-800 bg-slate-900/70 p-4 space-y-2">
+            <h3 class="text-sm font-semibold mb-1">Phase 2 – Scenario Bank &amp; LLM Oracle</h3>
+            <ul class="space-y-1 text-slate-300">
+              <li>&bull; Per-tag scenario bank: for each canonical tag, an LLM reads its best examples and
+                  neighbouring tags, then writes 3–6 clearly distinguishable scenarios with include/exclude
+                  rules.</li>
+              <li>&bull; Geometric QC (Block 6): scenario embeddings are compared across tags to flag any
+                  overlapping definitions and auto-suggest sharper boundaries.</li>
+              <li>&bull; Training weights (Block 7): real and synthetic cases are re-scored, giving more weight to
+                  boundary cases where the scenario bank says ambiguity is highest.</li>
+              <li>&bull; Oracle comparison (Block 8B): an LLM predicts tags for a blind test set so we can compare
+                  model vs oracle vs ground labels and understand <em>why</em> a prediction failed, not just
+                  whether it failed.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Oracle vs model demo -->
+    <section id="demo" class="relative border-b border-slate-800 bg-slate-950 py-12 md:py-16">
+      <div class="max-w-6xl mx-auto px-6 space-y-6">
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+          <div class="space-y-2 max-w-3xl">
+            <h2 class="text-2xl md:text-3xl font-semibold tracking-tight">Interactive demo – where Phase 2 really helps</h2>
+            <p class="text-sm md:text-[15px] text-slate-300">
+              This sandbox uses complaint-like examples (based on the CFPB public dataset) to show how the
+              <span class="font-semibold">Phase 1 production model</span>, the <span class="font-semibold">Phase 2
+              LLM-enriched model</span>, and an <span class="font-semibold">LLM oracle</span> disagree. The goal is not
+              to replace officers, but to surface cases where extra training or sharper boundaries would add the
+              most value.</p>
+          </div>
+          <div class="text-[11px] text-slate-500 max-w-sm">
+            <p class="mb-1 font-semibold text-slate-300">How to read it</p>
+            <p>Choose a case, then compare how Phase 1, Phase 2 and the oracle behave. The agreement label
+            tells you whether we have a data gap, a boundary issue, or a truly hard case needing human review.</p>
+          </div>
+        </div>
+
+        <div class="grid lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1.2fr)] gap-6 items-start">
+          <!-- Left: complaint selection -->
+          <div class="space-y-4 text-sm">
+            <div class="rounded-2xl border border-slate-800 bg-slate-900/70 p-4 space-y-3">
+              <div class="flex items-center justify-between gap-2">
+                <div>
+                  <p class="text-[11px] uppercase tracking-[0.18em] text-slate-500">1. Choose a complaint</p>
+                  <p class="text-sm font-semibold text-slate-100">Sample complaints (CFPB-style)</p>
+                </div>
+                <span id="agreement-badge" class="inline-flex items-center rounded-full border border-slate-700 bg-slate-900/80 px-3 py-1 text-[11px] text-slate-300">
+                  &nbsp;
+                </span>
+              </div>
+              <select id="case-select" class="mt-2 w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-slate-100 focus:outline-none focus:ring-1 focus:ring-sky-500">
+                <option>Loading cases…</option>
+              </select>
+              <div class="pt-3 border-t border-slate-800">
+                <p class="text-[11px] uppercase tracking-[0.18em] text-slate-500 mb-1">Complaint summary</p>
+                <p id="complaint-text" class="text-sm text-slate-200 min-h-[5rem]"></p>
+              </div>
+              <div class="grid grid-cols-2 gap-3 pt-3 text-[11px] text-slate-400">
+                <div>
+                  <p class="text-slate-500">True tag(s)</p>
+                  <p id="true-tags" class="text-slate-200"></p>
+                </div>
+                <div>
+                  <p class="text-slate-500">Service / channel</p>
+                  <p id="service" class="text-slate-200"></p>
+                </div>
+              </div>
+            </div>
+
+            <div class="rounded-2xl border border-slate-800 bg-slate-900/70 p-4 text-xs text-slate-300 space-y-2">
+              <p class="font-semibold">Why this demo matters for TIO operations</p>
+              <p>In production, this pattern lets TIO:</p>
+              <ul class="list-disc list-inside space-y-1">
+                <li>Route boundary-ambiguous complaints to more experienced officers or specialist queues.</li>
+                <li>Identify tags whose definitions or training data need refinement (clusters of ORACLE_WINS or
+                    BOTH_WRONG_SAME cases).</li>
+                <li>Quantify where LLM knowledge adds value vs where historical data is already strong.</li>
+                <li>Feed insights back into policy, reporting and workforce planning – not just the model.</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Right: predictions -->
+          <div class="space-y-4 text-xs md:text-[13px]">
+            <div class="grid md:grid-cols-2 gap-4">
+              <div class="rounded-2xl border border-slate-800 bg-slate-900/80 p-4 space-y-2">
+                <p class="text-[11px] uppercase tracking-[0.18em] text-slate-500">2. Phase 1 – Production model</p>
+                <p class="font-semibold text-slate-100 mb-1">Ranked tag shortlist (LightGBM on gold data)</p>
+                <ul id="phase1-list" class="space-y-1.5"></ul>
+              </div>
+              <div class="rounded-2xl border border-slate-800 bg-slate-900/80 p-4 space-y-2">
+                <p class="text-[11px] uppercase tracking-[0.18em] text-slate-500">3. Phase 2 – LLM-enriched model</p>
+                <p class="font-semibold text-slate-100 mb-1">Boundary-conditioned training + weights</p>
+                <ul id="phase2-list" class="space-y-1.5"></ul>
+              </div>
+            </div>
+            <div class="rounded-2xl border border-fuchsia-500/40 bg-slate-900/80 p-4 space-y-2">
+              <div class="flex items-center justify-between">
+                <p class="text-[11px] uppercase tracking-[0.18em] text-fuchsia-300">4. LLM Oracle &amp; Scenario Match</p>
+                <p id="oracle-conf" class="text-[11px] text-slate-400"></p>
+              </div>
+              <p class="font-semibold text-slate-100" id="oracle-tag"></p>
+              <p class="text-slate-300" id="oracle-reasoning"></p>
+              <p class="text-[11px] text-slate-400 pt-2" id="oracle-boundary"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Future use & scaling -->
+    <section id="future" class="relative border-b border-slate-800 bg-slate-950 py-12 md:py-16">
+      <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-8 items-start">
+        <div class="space-y-3">
+          <h2 class="text-2xl md:text-3xl font-semibold tracking-tight">Why this is more than &ldquo;just tagging&rdquo;</h2>
+          <p class="text-sm md:text-[15px] text-slate-300">
+            The most exciting part of this work for me – and for the TIO team – is that once you have
+            canonical tags, explicit scenarios and a comparison layer, the same machinery becomes a platform
+            for other decisions, not only complaint tagging.
+          </p>
+          <ul class="space-y-2 text-sm text-slate-300">
+            <li class="flex gap-2"><span class="mt-1 h-1 w-3 rounded-full bg-emerald-400"></span><span><span class="font-semibold">Operational routing:</span> prioritise and route high-risk scenarios (e.g. fraud,
+                safety, systemic billing issues) to specialist queues as soon as the complaint lands.</span></li>
+            <li class="flex gap-2"><span class="mt-1 h-1 w-3 rounded-full bg-emerald-400"></span><span><span class="font-semibold">Workforce planning:</span> scenario frequencies tell TIO which skills are most in
+                demand, informing training plans and headcount in specific dispute types.</span></li>
+            <li class="flex gap-2"><span class="mt-1 h-1 w-3 rounded-full bg-emerald-400"></span><span><span class="font-semibold">Policy and industry analytics:</span> shifts in scenario mix over time highlight
+                new product risks or emerging harms much earlier than aggregate counts alone.</span></li>
+            <li class="flex gap-2"><span class="mt-1 h-1 w-3 rounded-full bg-emerald-400"></span><span><span class="font-semibold">Explainability &amp; governance:</span> every model decision can be traced back to a
+                scenario definition and boundary rule that a human expert can read and critique.</span></li>
+          </ul>
+        </div>
+        <div class="space-y-3 text-xs md:text-[13px]">
+          <div class="rounded-2xl border border-slate-800 bg-slate-900/70 p-4 space-y-2">
+            <h3 class="text-sm font-semibold">Scalability in practice</h3>
+            <ul class="space-y-1 text-slate-300">
+              <li>&bull; New tags or services can be onboarded by adding scenarios and examples, without
+                  redesigning the whole model.</li>
+              <li>&bull; The same approach generalises to other ombudsman schemes and regulated domains where
+                  complaints, reasons and obligations are expressed in free text.</li>
+              <li>&bull; Because the heaviest lift is the data and scenario work, TIO retains control: the
+                  organisation can keep enriching the scenario bank as policies and products evolve.</li>
+            </ul>
+          </div>
+          <div class="rounded-2xl border border-slate-800 bg-slate-900/70 p-4 space-y-2">
+            <h3 class="text-sm font-semibold">My contribution</h3>
+            <p class="text-slate-300">
+              I designed and implemented the full experimental roadmap, data pipeline, evaluation framework
+              and LLM blocks, working closely with TIO&apos;s supervisors and academic partners. The aim was
+              always twofold: deliver immediate value to TIO, and leave behind a platform they can scale.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Links -->
+    <section id="links" class="relative bg-slate-950 py-10">
+      <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <h2 class="text-lg md:text-xl font-semibold mb-1">Explore this project further</h2>
+          <p class="text-sm text-slate-300 max-w-xl">
+            Once you connect this page to your GitHub repos, link them here – full report, notebooks and
+            code for the data pipeline, LLM scenario bank and oracle comparison.
+          </p>
+        </div>
+        <div class="flex flex-wrap gap-3 text-sm">
+          <a href="#" class="inline-flex items-center justify-center rounded-full border border-slate-700 bg-slate-900/80 px-4 py-2 text-slate-200 hover:border-sky-500 hover:text-sky-200">
+            GitHub &middot; Data &amp; pipeline (add link)
+          </a>
+          <a href="#" class="inline-flex items-center justify-center rounded-full border border-slate-700 bg-slate-900/80 px-4 py-2 text-slate-200 hover:border-sky-500 hover:text-sky-200">
+            PDF &middot; Industry report (add link)
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    async function loadDemoCases() {
+      try {
+        const res = await fetch('tio_demo_cases.json');
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const cases = await res.json();
+        initialiseDemo(cases);
+      } catch (err) {
+        console.error('Failed to load demo cases', err);
+        const fallback = [
+          {
+            id: 'case_1',
+            label: 'Callback failure on disputed charge',
+            service: 'Mobile',
+            complaint: 'Customer contacted provider three times about an incorrect late payment fee. Each time they were promised a callback within 48 hours, but no one called back and the charge remained on the account.',
+            true_tags: ['No or delayed action', 'Complaint handling'],
+            phase1: [
+              { tag: 'Incorrect information', score: 0.71 },
+              { tag: 'No or delayed action', score: 0.68 },
+              { tag: 'Complaint handling', score: 0.62 },
+            ],
+            phase2: [
+              { tag: 'No or delayed action', score: 0.89 },
+              { tag: 'Complaint handling', score: 0.72 },
+              { tag: 'Billing dispute', score: 0.31 },
+            ],
+            oracle_tag: 'No or delayed action',
+            oracle_confidence: '0.90',
+            oracle_reasoning:
+              'The core issue is repeated promises to act with no follow-through. The fee dispute is secondary; the pattern matches escalation promises not being honoured.',
+            oracle_boundary:
+              'Distinguish from Billing dispute: if the main harm is lack of action after multiple contacts, use No or delayed action; if the harm is a single incorrect bill that is promptly corrected, use Billing dispute.',
+            agreement: 'ORACLE_WINS',
+          },
+          {
+            id: 'case_2',
+            label: 'Cancellation not processed, ongoing direct debit',
+            service: 'Internet',
+            complaint: 'Customer cancelled their internet service and returned the modem, but direct debits continued for three months despite multiple calls where staff agreed the service should have been cancelled.',
+            true_tags: ['Failure to cancel', 'Billing dispute'],
+            phase1: [
+              { tag: 'No or delayed action', score: 0.82 },
+              { tag: 'Failure to cancel', score: 0.63 },
+              { tag: 'Billing dispute', score: 0.54 },
+            ],
+            phase2: [
+              { tag: 'Failure to cancel', score: 0.91 },
+              { tag: 'Billing dispute', score: 0.70 },
+              { tag: 'No or delayed action', score: 0.38 },
+            ],
+            oracle_tag: 'Failure to cancel',
+            oracle_confidence: '0.91',
+            oracle_reasoning:
+              'Multiple references to cancellation being requested and agreed, but service and charges continuing, align with Failure to cancel rather than generic delay.',
+            oracle_boundary:
+              'Distinguish from No or delayed action: where the customer explicitly asks to cancel and billing continues, treat it as Failure to cancel even if there are also delays in communication.',
+            agreement: 'BOTH_CORRECT',
+          },
+          {
+            id: 'case_3',
+            label: 'Social engineering vishing call',
+            service: 'Mobile',
+            complaint: 'Customer received a call from someone impersonating the provider\'s fraud department, was pressured to disclose one-time passcodes, and later discovered unauthorised charges on their account.',
+            true_tags: ['Bank impersonation social engineering / vishing'],
+            phase1: [
+              { tag: 'Suspicious caller financial', score: 0.76 },
+              { tag: 'Complaint handling', score: 0.29 },
+              { tag: 'Service quality', score: 0.22 },
+            ],
+            phase2: [
+              { tag: 'Bank impersonation social engineering / vishing', score: 0.93 },
+              { tag: 'Suspicious caller financial', score: 0.64 },
+              { tag: 'Unauthorised payment', score: 0.41 },
+            ],
+            oracle_tag: 'Bank impersonation social engineering / vishing',
+            oracle_confidence: '0.93',
+            oracle_reasoning:
+              'The pattern is a caller pretending to be a financial institution or its fraud team, seeking codes and enabling unauthorised transactions. This aligns most closely with the vishing tag.',
+            oracle_boundary:
+              'Distinguish from Suspicious caller financial: use the vishing tag when the impersonation is convincing enough to lead to account compromise, not just a suspicious but unsuccessful attempt.',
+            agreement: 'ORACLE_WINS',
+          },
+        ];
+        initialiseDemo(fallback);
+      }
+    }
+
+    function initialiseDemo(cases) {
+      const selectEl = document.getElementById('case-select');
+      const complaintEl = document.getElementById('complaint-text');
+      const trueTagsEl = document.getElementById('true-tags');
+      const serviceEl = document.getElementById('service');
+      const phase1El = document.getElementById('phase1-list');
+      const phase2El = document.getElementById('phase2-list');
+      const agreementBadge = document.getElementById('agreement-badge');
+      const oracleTagEl = document.getElementById('oracle-tag');
+      const oracleReasoningEl = document.getElementById('oracle-reasoning');
+      const oracleBoundaryEl = document.getElementById('oracle-boundary');
+      const oracleConfEl = document.getElementById('oracle-conf');
+
+      selectEl.innerHTML = '';
+      cases.forEach((c, idx) => {
+        const opt = document.createElement('option');
+        opt.value = c.id;
+        opt.textContent = `${idx + 1}. ${c.label}`;
+        selectEl.appendChild(opt);
+      });
+
+      function renderCase(id) {
+        const c = cases.find((x) => x.id === id) || cases[0];
+        if (!c) return;
+        complaintEl.textContent = c.complaint;
+        trueTagsEl.textContent = Array.isArray(c.true_tags) ? c.true_tags.join(', ') : c.true_tags;
+        serviceEl.textContent = c.service || '—';
+
+        phase1El.innerHTML = '';
+        (c.phase1 || []).forEach((p, i) => {
+          const li = document.createElement('li');
+          li.className = 'flex items-center justify-between gap-2';
+          li.innerHTML = `<span class="truncate">${i + 1}. ${p.tag}</span><span class="text-slate-400">${(p.score * 100).toFixed(0)}% </span>`;
+          phase1El.appendChild(li);
+        });
+
+        phase2El.innerHTML = '';
+        (c.phase2 || []).forEach((p, i) => {
+          const li = document.createElement('li');
+          li.className = 'flex items-center justify-between gap-2';
+          li.innerHTML = `<span class="truncate">${i + 1}. ${p.tag}</span><span class="text-slate-400">${(p.score * 100).toFixed(0)}% </span>`;
+          phase2El.appendChild(li);
+        });
+
+        oracleTagEl.textContent = c.oracle_tag || '—';
+        oracleReasoningEl.textContent = c.oracle_reasoning || '';
+        oracleBoundaryEl.textContent = c.oracle_boundary || '';
+        oracleConfEl.textContent = c.oracle_confidence ? `Oracle confidence: ${c.oracle_confidence}` : '';
+
+        const a = (c.agreement || '').toUpperCase();
+        let label = a || 'AGREEMENT';
+        let colour = 'border-slate-700 bg-slate-900/80 text-slate-300';
+        if (a === 'BOTH_CORRECT') {
+          label = 'BOTH_CORRECT · safe to auto-shortlist';
+          colour = 'border-emerald-500/60 bg-emerald-500/10 text-emerald-200';
+        } else if (a === 'ORACLE_WINS') {
+          label = 'ORACLE_WINS · training gap';
+          colour = 'border-sky-500/60 bg-sky-500/10 text-sky-200';
+        } else if (a === 'MODEL_WINS') {
+          label = 'MODEL_WINS · model saw pattern LLM missed';
+          colour = 'border-indigo-500/60 bg-indigo-500/10 text-indigo-200';
+        } else if (a === 'BOTH_WRONG_SAME') {
+          label = 'BOTH_WRONG_SAME · tag boundary issue';
+          colour = 'border-amber-500/60 bg-amber-500/10 text-amber-200';
+        } else if (a === 'BOTH_WRONG_DIFF') {
+          label = 'BOTH_WRONG_DIFF · escalate to officer';
+          colour = 'border-rose-500/60 bg-rose-500/10 text-rose-200';
+        }
+        agreementBadge.className = `inline-flex items-center rounded-full px-3 py-1 text-[11px] ${colour}`;
+        agreementBadge.textContent = label;
+      }
+
+      selectEl.addEventListener('change', (e) => renderCase(e.target.value));
+      if (cases.length) renderCase(cases[0].id);
+    }
+
+    document.addEventListener('DOMContentLoaded', loadDemoCases);
+  </script>
+</body>
+</html>
