@@ -130,7 +130,51 @@
       font-size:.7rem; cursor:pointer; transition:all .2s;
     }
     .tour-btn:hover { border-color:#38bdf8; color:#e0f2fe; background:rgba(56,189,248,.08); }
+  <style>
+  /* your existing CSS */
 
+  .some-class {
+    ...
+  }
+
+  /* Certifications */
+  .cert-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+
+    padding: 8px 14px;
+    border-radius: 999px;
+
+    background: rgba(15,23,42,.7);
+    border: 1px solid rgba(56,189,248,.2);
+
+    color: #cbd5e1;
+    font-size: .8rem;
+    text-decoration: none;
+
+    transition: all .2s ease;
+  }
+
+  .cert-pill:hover {
+    transform: translateY(-2px);
+    border-color: rgba(56,189,248,.5);
+    color: #fff;
+  }
+
+  .cert-pill i {
+    color: #38bdf8;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  .scrollbar-hide {
+    scrollbar-width: none;
+  }
+  </style>
   </style>
 </head>
 <body class="bg-slate-950 antialiased">
@@ -217,20 +261,23 @@
 
       <!-- quick action circles -->
       <div class="quick-actions">
+        <a href="https://kriti-data-business.github.io/portfolio-data-science/tio_multilabel%20(1).html" target="_blank" rel="noopener noreferrer" class="action-circle" title="RAG Financial Demo">
+          <i class="fas fa-brain"></i><span>Internship</span>
+        </a>
         <a href="https://kriti-data-business.github.io/Portfolio/australian-financial-rag-rfp.html" target="_blank" rel="noopener noreferrer" class="action-circle" title="RAG Financial Demo">
           <i class="fas fa-robot"></i><span>RAG Demo</span>
         </a>
         <a href="https://kriti-data-business.github.io/Portfolio/Portfolio-Case-Study-for-Construction-Property-Operations.html" target="_blank" rel="noopener noreferrer" class="action-circle" title="Data Quality &amp; Workflow">
-          <i class="fas fa-database"></i><span>Data Analytics</span>
+          <i class="fas fa-database"></i><span>Case Study</span>
         </a>
         <a href="https://kriti-data-business.github.io/Portfolio/Mining-Analytics-Dashboard.html" target="_blank" rel="noopener noreferrer" class="action-circle" title="Dashboard Analytics">
           <i class="fas fa-chart-line"></i><span>Dashboard</span>
         </a>
         <a href="https://github.com/Kriti-Data-Business" target="_blank" rel="noopener noreferrer" class="action-circle" title="GitHub">
-          <i class="fab fa-github"></i><span>Projects</span>
+          <i class="fab fa-github"></i><span>Github</span>
         </a>
         <a href="https://medium.com/@datasciencebusiness" target="_blank" rel="noopener noreferrer" class="action-circle" title="Medium">
-          <i class="fab fa-medium"></i><span>Articles</span>
+          <i class="fab fa-medium"></i><span>Technical Articles</span>
         </a>
         <a href="https://au.linkedin.com/in/kriti-yadav-data-science" target="_blank" rel="noopener noreferrer" class="action-circle" title="LinkedIn">
           <i class="fab fa-linkedin"></i><span>LinkedIn</span>
@@ -241,7 +288,7 @@
 
     </div>
     <!-- RIGHT: video -->
-    <div class="flex-shrink-0 w-full max-w-sm lg:max-w-md">
+   <div class="flex-shrink-0 w-full max-w-sm lg:max-w-md space-y-4">
       <div class="relative aspect-video rounded-2xl border border-slate-800 bg-slate-900/60 overflow-hidden shadow-[0_0_60px_rgba(56,189,248,.15)]">
         <video id="intro-video" class="relative z-10 h-full w-full object-cover" autoplay muted loop playsinline controls>
           <source src="Untitled - 18 June 2026 at 00.05.15.mp4" type="video/mp4" />
@@ -254,6 +301,68 @@
         </div>
       </div>
     </div>
+    <!-- Certifications -->
+<div class="rounded-2xl border border-slate-800 bg-slate-900/40 p-4">
+  <div class="flex items-center justify-between mb-3">
+    <h3 class="text-sm font-semibold text-white tracking-wide">
+      Certifications
+    </h3>
+    <span class="text-xs text-slate-500">Click to verify</span>
+  </div>
+
+  <div class="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
+
+    <a href="https://www.linkedin.com/learning/certificates/60aeb6510278f2815ae9ccb5ab8b70b70d80bf2c33c544a51c889d8aaecd283a?trk=share_certificate"
+       target="_blank"
+       class="cert-pill">
+      <i class="fas fa-brain"></i>
+      <span>Azure AI</span>
+    </a>
+
+    <a href="https://www.aws.training/Transcript/CompletionCertificateHtml?transcriptid=JNjzuj_r4UqDbFoet2YraA2"
+       target="_blank"
+       class="cert-pill">
+      <i class="fab fa-aws"></i>
+      <span>AWS ML</span>
+    </a>
+
+    <a href="https://www.linkedin.com/learning/certificates/1c77fc05f18459c7e28b7d7b65f2518fc138f53f95c548d8de56f40c1e304602"
+       target="_blank"
+       class="cert-pill">
+      <i class="fab fa-python"></i>
+      <span>Python</span>
+    </a>
+
+    <a href="https://www.udemy.com/certificate/UC-dcd1efcc-4de8-414f-95f3-24b8e2d6e57a/"
+       target="_blank"
+       class="cert-pill">
+      <i class="fas fa-chart-line"></i>
+      <span>Power BI</span>
+    </a>
+
+    <a href="https://certificates.mavenanalytics.io/706b2d85-35aa-46ab-801f-0a071ca4754c"
+       target="_blank"
+       class="cert-pill">
+      <i class="fas fa-database"></i>
+      <span>MySQL</span>
+    </a>
+
+    <a href="https://www.udemy.com/share/101xga3@uI2IlE-_-5vxT2WxJZuRXIDiVPz3k0hCsEuZpTdZMZZqFmgVLUSe2kOlAO79OseW/"
+       target="_blank"
+       class="cert-pill">
+      <i class="fas fa-diagram-project"></i>
+      <span>PM</span>
+    </a>
+
+    <a href="https://coursera.org/share/618d72689edb4b53415a369fd3a221db"
+       target="_blank"
+       class="cert-pill">
+      <i class="fas fa-code"></i>
+      <span>Algorithms</span>
+    </a>
+
+  </div>
+</div>
   </div>
 </section>
 
