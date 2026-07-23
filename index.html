@@ -249,6 +249,23 @@
           Explore portfolio ↓
         </a>
       </div>
+      <!-- latest project highlight -->
+      <a href="https://github.com/Kriti-Data-Business/fraud-deployment-validation-project" target="_blank" rel="noopener noreferrer"
+         class="group block rounded-2xl border border-sky-500/30 bg-gradient-to-r from-sky-500/10 to-teal-500/10 px-5 py-4 mb-5 hover:border-sky-400/60 hover:from-sky-500/15 hover:to-teal-500/15 transition-all">
+        <div class="flex items-center gap-2 mb-1.5">
+          <span class="flex-shrink-0 rounded-full bg-sky-500/20 border border-sky-400/40 px-2 py-0.5 text-[10px] font-semibold text-sky-300 uppercase tracking-wide">Latest project</span>
+          <span class="text-[10px] text-slate-500">Model Risk · Fraud Detection</span>
+        </div>
+        <p class="text-[13.5px] font-semibold text-slate-100 mb-1">A trained model isn't a finished model — it's a hypothesis. I built a fraud model, then independently validated it the way a bank's Model Risk team would.</p>
+        <div class="flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-slate-400 mb-2">
+          <span><span class="text-sky-300 font-semibold">0.873</span> PR-AUC</span>
+          <span><span class="text-sky-300 font-semibold">8</span> risk-rated findings</span>
+          <span><span class="text-sky-300 font-semibold">Fit for purpose</span> — with conditions</span>
+        </div>
+        <span class="inline-flex items-center gap-1.5 text-[11.5px] font-semibold text-sky-300 group-hover:gap-2.5 transition-all">
+          Read the validation report <i class="fas fa-arrow-right text-[10px]"></i>
+        </span>
+      </a>
       <!-- profile toggle -->
       <div class="inline-flex items-center gap-2 text-[11px] mb-1">
         <span class="text-slate-500">Profile view:</span>
@@ -434,10 +451,28 @@
       </div>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 reveal">
         <!-- DS 01 -->
+        <article class="project-card rounded-2xl border border-sky-500/30 bg-slate-900/70 p-5 flex flex-col">
+          <div class="flex items-start justify-between mb-3">
+            <span class="inline-flex items-center gap-1.5 rounded-full border border-slate-700/80 bg-slate-900 px-2.5 py-1 text-[10px] font-medium text-slate-300"><span class="h-1.5 w-1.5 rounded-full bg-sky-400 animate-pulse"></span>Model Risk · Fraud Detection</span>
+            <span class="rounded-full bg-sky-500/15 border border-sky-400/40 px-2 py-0.5 text-[10px] font-semibold text-sky-300">NEW</span>
+          </div>
+          <h3 class="text-sm font-semibold text-slate-100 mb-2">Fraud Deployment Validation Project</h3>
+          <p class="text-[12px] text-slate-400 mb-4 flex-1">Built an application-fraud model, then independently validated it against SR 11-7/SR 26-2 model-risk pillars — challenger benchmarking, feature-family ablation, income-perturbation stress, CleanLab, PSI drift, SHAP review. PR-AUC 0.873; validation surfaced 8 risk-rated findings and a fit-for-purpose-with-conditions verdict.</p>
+          <div class="flex flex-wrap gap-1.5 mb-4 text-[10px]">
+            <span class="rounded-full border border-slate-700 bg-slate-900 px-2 py-0.5 text-slate-300">LightGBM</span>
+            <span class="rounded-full border border-slate-700 bg-slate-900 px-2 py-0.5 text-slate-300">SHAP / CleanLab</span>
+            <span class="rounded-full border border-slate-700 bg-slate-900 px-2 py-0.5 text-slate-300">SR 11-7 / SR 26-2</span>
+          </div>
+          <div class="flex gap-3 text-[11px]">
+            <a href="https://github.com/Kriti-Data-Business/fraud-deployment-validation-project" target="_blank" rel="noopener noreferrer" class="text-sky-300 hover:underline">Project ↗</a>
+            <a href="https://github.com/Kriti-Data-Business/fraud-deployment-validation-project/blob/main/docs/validation_report.md" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-sky-300 hover:underline">Validation Report ↗</a>
+          </div>
+        </article>
+        <!-- DS 02 -->
         <article class="project-card rounded-2xl border border-slate-800 bg-slate-900/70 p-5 flex flex-col">
           <div class="flex items-start justify-between mb-3">
             <span class="inline-flex items-center gap-1.5 rounded-full border border-slate-700/80 bg-slate-900 px-2.5 py-1 text-[10px] font-medium text-slate-300"><span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span>AI Governance · Agentic AI</span>
-            <span class="text-[11px] text-slate-600 font-mono">01</span>
+            <span class="text-[11px] text-slate-600 font-mono">02</span>
           </div>
           <h3 class="text-sm font-semibold text-slate-100 mb-2">CGAI - Enterprise AI Compliance Platform</h3>
           <p class="text-[12px] text-slate-400 mb-4 flex-1">Governance engine mapping APRA, OAIC, and ACMA rules into executable guardrails for GenAI systems - policy checks, evidence capture, and audit-ready reporting on GCP &amp; Vertex AI.</p>
@@ -451,11 +486,11 @@
             <a href="https://drive.google.com/file/d/1S0hwniaOtZf6l2iwWaA6ZJGmJnHGvimE/view?usp=drive_link" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-sky-300 hover:underline">System Design ↗</a>
           </div>
         </article>
-        <!-- DS 02 -->
+        <!-- DS 03 -->
         <article class="project-card rounded-2xl border border-slate-800 bg-slate-900/70 p-5 flex flex-col">
           <div class="flex items-start justify-between mb-3">
             <span class="inline-flex items-center gap-1.5 rounded-full border border-slate-700/80 bg-slate-900 px-2.5 py-1 text-[10px] font-medium text-slate-300"><span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span>NLP · Multi-label · LLM-augmented</span>
-            <span class="text-[11px] text-slate-600 font-mono">02</span>
+            <span class="text-[11px] text-slate-600 font-mono">03</span>
           </div>
           <h3 class="text-sm font-semibold text-slate-100 mb-2">TIO Multi-label Complaint Classifier</h3>
           <p class="text-[12px] text-slate-400 mb-4 flex-1">140k+ telecom complaints across 91 tags. DistilBERT + LightGBM, G0–G13 gold dataset, LLM scenario bank, geometric QC. Macro F1 lifted from 0.03 to 0.59.</p>
@@ -473,11 +508,11 @@
             <a href="#demo" class="text-[10px] rounded-full border border-sky-500/40 bg-sky-500/10 px-2 py-0.5 text-sky-300 hover:bg-sky-500/20">Try demo ↓</a>
           </div>
         </article>
-        <!-- DS 03 -->
+        <!-- DS 04 -->
         <article class="project-card rounded-2xl border border-slate-800 bg-slate-900/70 p-5 flex flex-col">
           <div class="flex items-start justify-between mb-3">
             <span class="inline-flex items-center gap-1.5 rounded-full border border-slate-700/80 bg-slate-900 px-2.5 py-1 text-[10px] font-medium text-slate-300"><span class="h-1.5 w-1.5 rounded-full bg-sky-400 animate-pulse"></span>LLM Eval · IR · SGCI 2026</span>
-            <span class="text-[11px] text-slate-600 font-mono">03</span>
+            <span class="text-[11px] text-slate-600 font-mono">04</span>
           </div>
           <h3 class="text-sm font-semibold text-slate-100 mb-2">LLM Evaluation for Code-Centric IR - RMIT</h3>
           <p class="text-[12px] text-slate-400 mb-4 flex-1">Research on LLMs in software design and code retrieval. 450+ task evaluation harness across prompt strategies and ranking. Workshop paper to be submitted for SGCI 2026.</p>
@@ -491,11 +526,11 @@
             <a href="https://github.com/Kriti-Data-Business/Research-LLM-Code-Eval-Strategy-Competitive-Programming" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-sky-300 hover:underline">Code ↗</a>
           </div>
         </article>
-        <!-- DS 04 -->
+        <!-- DS 05 -->
         <article class="project-card rounded-2xl border border-slate-800 bg-slate-900/70 p-5 flex flex-col">
           <div class="flex items-start justify-between mb-3">
             <span class="inline-flex items-center gap-1.5 rounded-full border border-slate-700/80 bg-slate-900 px-2.5 py-1 text-[10px] font-medium text-slate-300"><span class="h-1.5 w-1.5 rounded-full bg-amber-400"></span>Healthcare · Forecasting · Pharma</span>
-            <span class="text-[11px] text-slate-600 font-mono">04</span>
+            <span class="text-[11px] text-slate-600 font-mono">05</span>
           </div>
           <h3 class="text-sm font-semibold text-slate-100 mb-2">Pharma Patient &amp; Sales Analytics - Axtria</h3>
           <p class="text-[12px] text-slate-400 mb-4 flex-1">ARIMAX / SARIMA forecasting and patient-journey analytics for J&amp;J, Gilead, and Sanofi. Executive Power BI dashboards driving 18.3% sales uplift in target brands.</p>
@@ -508,11 +543,11 @@
             <a href="https://medium.com/@datasciencebusiness/translating-pharmaceutical-complexity-into-precision-how-data-driven-pricing-strategy-delivered-18-bc25e0814e1b" target="_blank" rel="noopener noreferrer" class="text-sky-300 hover:underline">Healthcare analytics demo ↗</a>
           </div>
         </article>
-        <!-- DS 05 -->
+        <!-- DS 06 -->
         <article class="project-card rounded-2xl border border-slate-800 bg-slate-900/70 p-5 flex flex-col">
           <div class="flex items-start justify-between mb-3">
             <span class="inline-flex items-center gap-1.5 rounded-full border border-slate-700/80 bg-slate-900 px-2.5 py-1 text-[10px] font-medium text-slate-300"><span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span>Property · BI Dashboard</span>
-            <span class="text-[11px] text-slate-600 font-mono">05</span>
+            <span class="text-[11px] text-slate-600 font-mono">06</span>
           </div>
           <h3 class="text-sm font-semibold text-slate-100 mb-2">Time Series Forecasting: Australian Residential Property Prices</h3>
           <p class="text-[12px] text-slate-400 mb-4 flex-1">How accurately can we forecast the Australian real RPPI for the next 10 quarters using seasonal ARIMA‑class models, and what do the residual diagnostics imply about remaining seasonal structure and conditional volatility?
