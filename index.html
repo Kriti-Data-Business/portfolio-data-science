@@ -16,7 +16,7 @@
     ::-webkit-scrollbar-thumb { background: #334155; border-radius: 9999px; }
     .reveal { opacity: 0; transform: translateY(28px); transition: opacity .65s ease, transform .65s ease; }
     .reveal.visible { opacity: 1; transform: none; }
-    .grad { background: linear-gradient(135deg, #38bdf8 0%, #2dd4bf 55%, #818cf8 100%);
+    .grad { background: linear-gradient(135deg, #38bdf8 0%, #2dd4bf 100%);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
     .hero-glow {
       background: radial-gradient(ellipse 70% 55% at 30% 30%, rgba(56,189,248,.13) 0%, transparent 70%),
@@ -36,6 +36,7 @@
     .timeline-line { position:absolute; left:18px; top:0; bottom:0; width:1px; background:linear-gradient(180deg,transparent,#334155 15%,#334155 85%,transparent); }
     .nav-link { font-size:.78rem; color:#94a3b8; letter-spacing:.06em; text-transform:uppercase; transition:color .2s; }
     .nav-link:hover { color:#e0f2fe; }
+    .nav-link.active { color:#38bdf8; }
     .demo-card { background:rgba(15,23,42,.7); border:1px solid rgba(51,65,85,.7); border-radius:.75rem; padding:1rem; }
     .scenario-chip { display:inline-block; border:1px solid #334155; border-radius:9999px; padding:.15rem .6rem; font-size:.65rem; color:#94a3b8; margin:.15rem; }
     .badge-both-correct  { background:rgba(16,185,129,.1); border-color:#10b981; color:#6ee7b7; }
@@ -233,11 +234,11 @@
         Technical Business Analyst &amp; Market Research Specialist - translating complex data and LLM outputs into measurable business outcomes, executive dashboards, and stakeholder-ready reporting.
       </p>
       <!-- stat bar -->
-      <div class="flex flex-wrap gap-x-3 gap-y-1 text-[11px] text-slate-500 mb-5">
-        <span>4.5+ yrs experience</span><span class="hidden sm:inline text-slate-700">·</span>
-        <span>50M+ records analysed</span><span class="hidden sm:inline text-slate-700">·</span>
-        <span>18.3% sales lift</span><span class="hidden sm:inline text-slate-700">·</span>
-        <span>90% process automation</span>
+      <div class="flex flex-wrap gap-x-3 gap-y-1 text-[11px] text-slate-400 mb-5">
+        <span><span class="text-sky-300 font-semibold">4.5+ yrs</span> experience</span><span class="hidden sm:inline text-slate-700">·</span>
+        <span><span class="text-sky-300 font-semibold">50M+</span> records analysed</span><span class="hidden sm:inline text-slate-700">·</span>
+        <span><span class="text-amber-300 font-semibold">18.3%</span> sales lift</span><span class="hidden sm:inline text-slate-700">·</span>
+        <span><span class="text-amber-300 font-semibold">90%</span> process automation</span>
       </div>
       <!-- CTA -->
       <div class="flex flex-wrap gap-3 mb-5">
@@ -251,30 +252,25 @@
       </div>
       <!-- latest project highlight -->
       <a href="https://github.com/Kriti-Data-Business/fraud-deployment-validation-project" target="_blank" rel="noopener noreferrer"
-         class="group block rounded-2xl border border-sky-500/30 bg-gradient-to-r from-sky-500/10 to-teal-500/10 px-5 py-4 mb-5 hover:border-sky-400/60 hover:from-sky-500/15 hover:to-teal-500/15 transition-all">
-        <div class="flex items-center gap-2 mb-1.5">
-          <span class="flex-shrink-0 rounded-full bg-sky-500/20 border border-sky-400/40 px-2 py-0.5 text-[10px] font-semibold text-sky-300 uppercase tracking-wide">Latest project</span>
-          <span class="text-[10px] text-slate-500">Model Risk · Fraud Detection</span>
+         class="group flex items-center gap-3 rounded-xl border border-sky-500/30 bg-gradient-to-r from-sky-500/10 to-teal-500/10 px-4 py-2.5 mb-4 hover:border-sky-400/60 hover:from-sky-500/15 hover:to-teal-500/15 transition-all">
+        <span class="flex-shrink-0 rounded-full bg-sky-500/20 border border-sky-400/40 px-2 py-0.5 text-[10px] font-semibold text-sky-300 uppercase tracking-wide">New</span>
+        <div class="flex-1 min-w-0">
+          <p class="text-[12.5px] font-semibold text-slate-100 truncate">Fraud Deployment Validation Project</p>
+          <p class="text-[11px] text-slate-400 truncate"><span class="text-sky-300 font-semibold">0.873</span> PR-AUC · <span class="text-sky-300 font-semibold">8</span> findings · validated like a bank's Model Risk team would</p>
         </div>
-        <p class="text-[13.5px] font-semibold text-slate-100 mb-1">A trained model isn't a finished model — it's a hypothesis. I built a fraud model, then independently validated it the way a bank's Model Risk team would.</p>
-        <div class="flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-slate-400 mb-2">
-          <span><span class="text-sky-300 font-semibold">0.873</span> PR-AUC</span>
-          <span><span class="text-sky-300 font-semibold">8</span> risk-rated findings</span>
-          <span><span class="text-sky-300 font-semibold">Fit for purpose</span> — with conditions</span>
-        </div>
-        <span class="inline-flex items-center gap-1.5 text-[11.5px] font-semibold text-sky-300 group-hover:gap-2.5 transition-all">
-          Read the validation report <i class="fas fa-arrow-right text-[10px]"></i>
-        </span>
+        <i class="fas fa-arrow-right text-sky-400 text-xs group-hover:translate-x-0.5 transition-transform flex-shrink-0"></i>
       </a>
-      <!-- profile toggle -->
-      <div class="inline-flex items-center gap-2 text-[11px] mb-1">
-        <span class="text-slate-500">Profile view:</span>
-        <div class="inline-flex rounded-full border border-slate-700 bg-slate-900/80 p-1 gap-1">
-          <button data-profile-toggle="technical" class="profile-btn active rounded-full px-3 py-1 text-[11px] text-slate-100">Data Science &amp; AI</button>
-          <button data-profile-toggle="business" class="profile-btn rounded-full px-3 py-1 text-[11px] text-slate-400">Technical BA &amp; Consulting</button>
+      <!-- profile toggle + visa -->
+      <div class="flex flex-wrap items-center gap-3 text-[11px] mb-4">
+        <div class="inline-flex items-center gap-2">
+          <span class="text-slate-500">Profile view:</span>
+          <div class="inline-flex rounded-full border border-slate-700 bg-slate-900/80 p-1 gap-1">
+            <button data-profile-toggle="technical" class="profile-btn active rounded-full px-3 py-1 text-[11px] text-slate-100">Data Science &amp; AI</button>
+            <button data-profile-toggle="business" class="profile-btn rounded-full px-3 py-1 text-[11px] text-slate-400">Technical BA &amp; Consulting</button>
+          </div>
         </div>
+        <span class="text-slate-600">485 post-study visa · Open to sponsorship</span>
       </div>
-      <p class="text-[11px] text-slate-600">485 post-study visa · Open to sponsorship</p>
 
       <!-- quick action circles -->
       <div class="quick-actions">
@@ -406,8 +402,8 @@
         <h3 class="text-sm font-semibold text-slate-100 mb-1">ML &amp; NLP Engineering</h3>
         <p class="text-[12px] text-slate-400">Multi-label classification, transformer fine-tuning, feature engineering, and end-to-end ML pipelines at scale.</p>
       </div>
-      <div data-profile="technical" class="group rounded-2xl border border-slate-800 bg-slate-900/60 p-5 hover:border-indigo-500/40 hover:bg-slate-900/90 transition-all">
-        <div class="w-9 h-9 rounded-lg bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center mb-3"><svg class="w-4 h-4 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg></div>
+      <div data-profile="technical" class="group rounded-2xl border border-slate-800 bg-slate-900/60 p-5 hover:border-violet-500/40 hover:bg-slate-900/90 transition-all">
+        <div class="w-9 h-9 rounded-lg bg-violet-500/10 border border-violet-500/20 flex items-center justify-center mb-3"><svg class="w-4 h-4 text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg></div>
         <h3 class="text-sm font-semibold text-slate-100 mb-1">Data Science &amp; Analytics</h3>
         <p class="text-[12px] text-slate-400">Time series forecasting, multivariate modelling, and automated reporting for C-suite stakeholders.</p>
       </div>
@@ -422,8 +418,8 @@
         <h3 class="text-sm font-semibold text-slate-100 mb-1">Market Research &amp; Automation</h3>
         <p class="text-[12px] text-slate-400">Systematic market scans, competitive benchmarking, and LLM-powered evidence packs for 50M+ records.</p>
       </div>
-      <div data-profile="business" class="hidden group rounded-2xl border border-slate-800 bg-slate-900/60 p-5 hover:border-indigo-500/40 hover:bg-slate-900/90 transition-all">
-        <div class="w-9 h-9 rounded-lg bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center mb-3"><svg class="w-4 h-4 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg></div>
+      <div data-profile="business" class="hidden group rounded-2xl border border-slate-800 bg-slate-900/60 p-5 hover:border-rose-500/40 hover:bg-slate-900/90 transition-all">
+        <div class="w-9 h-9 rounded-lg bg-rose-500/10 border border-rose-500/20 flex items-center justify-center mb-3"><svg class="w-4 h-4 text-rose-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg></div>
         <h3 class="text-sm font-semibold text-slate-100 mb-1">AI Governance &amp; Compliance</h3>
         <p class="text-[12px] text-slate-400">APRA / OAIC / ACMA-aligned governance frameworks, audit trails, and responsible AI guardrails.</p>
       </div>
@@ -451,10 +447,10 @@
       </div>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 reveal">
         <!-- DS 01 -->
-        <article class="project-card rounded-2xl border border-sky-500/30 bg-slate-900/70 p-5 flex flex-col">
+        <article class="project-card rounded-2xl border border-rose-500/30 bg-slate-900/70 p-5 flex flex-col">
           <div class="flex items-start justify-between mb-3">
-            <span class="inline-flex items-center gap-1.5 rounded-full border border-slate-700/80 bg-slate-900 px-2.5 py-1 text-[10px] font-medium text-slate-300"><span class="h-1.5 w-1.5 rounded-full bg-sky-400 animate-pulse"></span>Model Risk · Fraud Detection</span>
-            <span class="rounded-full bg-sky-500/15 border border-sky-400/40 px-2 py-0.5 text-[10px] font-semibold text-sky-300">NEW</span>
+            <span class="inline-flex items-center gap-1.5 rounded-full border border-slate-700/80 bg-slate-900 px-2.5 py-1 text-[10px] font-medium text-slate-300"><span class="h-1.5 w-1.5 rounded-full bg-rose-400 animate-pulse"></span>Model Risk · Fraud Detection</span>
+            <span class="rounded-full bg-rose-500/15 border border-rose-400/40 px-2 py-0.5 text-[10px] font-semibold text-rose-300">NEW</span>
           </div>
           <h3 class="text-sm font-semibold text-slate-100 mb-2">Fraud Deployment Validation Project</h3>
           <p class="text-[12px] text-slate-400 mb-4 flex-1">Built an application-fraud model, then independently validated it against SR 11-7/SR 26-2 model-risk pillars — challenger benchmarking, feature-family ablation, income-perturbation stress, CleanLab, PSI drift, SHAP review. PR-AUC 0.873; validation surfaced 8 risk-rated findings and a fit-for-purpose-with-conditions verdict.</p>
@@ -471,7 +467,7 @@
         <!-- DS 02 -->
         <article class="project-card rounded-2xl border border-slate-800 bg-slate-900/70 p-5 flex flex-col">
           <div class="flex items-start justify-between mb-3">
-            <span class="inline-flex items-center gap-1.5 rounded-full border border-slate-700/80 bg-slate-900 px-2.5 py-1 text-[10px] font-medium text-slate-300"><span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span>AI Governance · Agentic AI</span>
+            <span class="inline-flex items-center gap-1.5 rounded-full border border-slate-700/80 bg-slate-900 px-2.5 py-1 text-[10px] font-medium text-slate-300"><span class="h-1.5 w-1.5 rounded-full bg-rose-400"></span>AI Governance · Agentic AI</span>
             <span class="text-[11px] text-slate-600 font-mono">02</span>
           </div>
           <h3 class="text-sm font-semibold text-slate-100 mb-2">CGAI - Enterprise AI Compliance Platform</h3>
@@ -489,7 +485,7 @@
         <!-- DS 03 -->
         <article class="project-card rounded-2xl border border-slate-800 bg-slate-900/70 p-5 flex flex-col">
           <div class="flex items-start justify-between mb-3">
-            <span class="inline-flex items-center gap-1.5 rounded-full border border-slate-700/80 bg-slate-900 px-2.5 py-1 text-[10px] font-medium text-slate-300"><span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span>NLP · Multi-label · LLM-augmented</span>
+            <span class="inline-flex items-center gap-1.5 rounded-full border border-slate-700/80 bg-slate-900 px-2.5 py-1 text-[10px] font-medium text-slate-300"><span class="h-1.5 w-1.5 rounded-full bg-teal-400"></span>NLP · Multi-label · LLM-augmented</span>
             <span class="text-[11px] text-slate-600 font-mono">03</span>
           </div>
           <h3 class="text-sm font-semibold text-slate-100 mb-2">TIO Multi-label Complaint Classifier</h3>
@@ -511,11 +507,11 @@
         <!-- DS 04 -->
         <article class="project-card rounded-2xl border border-slate-800 bg-slate-900/70 p-5 flex flex-col">
           <div class="flex items-start justify-between mb-3">
-            <span class="inline-flex items-center gap-1.5 rounded-full border border-slate-700/80 bg-slate-900 px-2.5 py-1 text-[10px] font-medium text-slate-300"><span class="h-1.5 w-1.5 rounded-full bg-sky-400 animate-pulse"></span>LLM Eval · IR · SGCI 2026</span>
+            <span class="inline-flex items-center gap-1.5 rounded-full border border-slate-700/80 bg-slate-900 px-2.5 py-1 text-[10px] font-medium text-slate-300"><span class="h-1.5 w-1.5 rounded-full bg-violet-400 animate-pulse"></span>LLM Eval · IR · SGCI 2026</span>
             <span class="text-[11px] text-slate-600 font-mono">04</span>
           </div>
           <h3 class="text-sm font-semibold text-slate-100 mb-2">LLM Evaluation for Code-Centric IR - RMIT</h3>
-          <p class="text-[12px] text-slate-400 mb-4 flex-1">Research on LLMs in software design and code retrieval. 450+ task evaluation harness across prompt strategies and ranking. Workshop paper to be submitted for SGCI 2026.</p>
+          <p class="text-[12px] text-slate-400 mb-4 flex-1">Research on LLMs in software design and code retrieval. 1350+ task evaluation harness across prompt strategies and ranking. Workshop paper to be submitted for SGCI 2026.</p>
           <div class="flex flex-wrap gap-1.5 mb-4 text-[10px]">
             <span class="rounded-full border border-slate-700 bg-slate-900 px-2 py-0.5 text-slate-300">GPT-4o</span>
             <span class="rounded-full border border-slate-700 bg-slate-900 px-2 py-0.5 text-slate-300">RAG / IR</span>
@@ -546,7 +542,7 @@
         <!-- DS 06 -->
         <article class="project-card rounded-2xl border border-slate-800 bg-slate-900/70 p-5 flex flex-col">
           <div class="flex items-start justify-between mb-3">
-            <span class="inline-flex items-center gap-1.5 rounded-full border border-slate-700/80 bg-slate-900 px-2.5 py-1 text-[10px] font-medium text-slate-300"><span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span>Property · BI Dashboard</span>
+            <span class="inline-flex items-center gap-1.5 rounded-full border border-slate-700/80 bg-slate-900 px-2.5 py-1 text-[10px] font-medium text-slate-300"><span class="h-1.5 w-1.5 rounded-full bg-amber-400"></span>Property · BI Dashboard</span>
             <span class="text-[11px] text-slate-600 font-mono">06</span>
           </div>
           <h3 class="text-sm font-semibold text-slate-100 mb-2">Time Series Forecasting: Australian Residential Property Prices</h3>
@@ -581,7 +577,7 @@ The analysis follows the standard five‑step modelling pipeline from the course
         <!-- BA 01 -->
         <article class="project-card rounded-2xl border border-slate-800 bg-slate-900/70 p-5 flex flex-col">
           <div class="flex items-start justify-between mb-3">
-            <span class="inline-flex items-center gap-1.5 rounded-full border border-slate-700/80 bg-slate-900 px-2.5 py-1 text-[10px] font-medium text-slate-300"><span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span>Property · Power BI</span>
+            <span class="inline-flex items-center gap-1.5 rounded-full border border-slate-700/80 bg-slate-900 px-2.5 py-1 text-[10px] font-medium text-slate-300"><span class="h-1.5 w-1.5 rounded-full bg-amber-400"></span>Property · Power BI</span>
             <span class="text-[11px] text-slate-600 font-mono">BA01</span>
           </div>
           <h3 class="text-sm font-semibold text-slate-100 mb-2">Victorian Property Market Dashboard</h3>
@@ -609,7 +605,7 @@ The analysis follows the standard five‑step modelling pipeline from the course
         <!-- BA 03 -->
         <article class="project-card rounded-2xl border border-slate-800 bg-slate-900/70 p-5 flex flex-col">
           <div class="flex items-start justify-between mb-3">
-            <span class="inline-flex items-center gap-1.5 rounded-full border border-slate-700/80 bg-slate-900 px-2.5 py-1 text-[10px] font-medium text-slate-300"><span class="h-1.5 w-1.5 rounded-full bg-sky-400"></span>Automotive · Digital</span>
+            <span class="inline-flex items-center gap-1.5 rounded-full border border-slate-700/80 bg-slate-900 px-2.5 py-1 text-[10px] font-medium text-slate-300"><span class="h-1.5 w-1.5 rounded-full bg-amber-400"></span>Automotive · Digital</span>
             <span class="text-[11px] text-slate-600 font-mono">BA03</span>
           </div>
           <h3 class="text-sm font-semibold text-slate-100 mb-2">Ford Campaign Analytics - WPP</h3>
@@ -623,7 +619,7 @@ The analysis follows the standard five‑step modelling pipeline from the course
         <!-- BA 04 -->
         <article class="project-card rounded-2xl border border-slate-800 bg-slate-900/70 p-5 flex flex-col">
           <div class="flex items-start justify-between mb-3">
-            <span class="inline-flex items-center gap-1.5 rounded-full border border-slate-700/80 bg-slate-900 px-2.5 py-1 text-[10px] font-medium text-slate-300"><span class="h-1.5 w-1.5 rounded-full bg-teal-400"></span>Market Research · LLM Agents</span>
+            <span class="inline-flex items-center gap-1.5 rounded-full border border-slate-700/80 bg-slate-900 px-2.5 py-1 text-[10px] font-medium text-slate-300"><span class="h-1.5 w-1.5 rounded-full bg-violet-400"></span>Market Research · LLM Agents</span>
             <span class="text-[11px] text-slate-600 font-mono">BA04</span>
           </div>
           <h3 class="text-sm font-semibold text-slate-100 mb-2">LLM-Augmented Market Research &amp; Automation</h3>
@@ -750,7 +746,7 @@ The analysis follows the standard five‑step modelling pipeline from the course
                 <div class="h-8 rounded bg-teal-500/10 border border-teal-500/20 flex items-center justify-center"><span class="text-[9px] text-teal-400">LLM+</span></div>
                 <div class="h-8 rounded bg-violet-500/10 border border-violet-500/20 flex items-center justify-center"><span class="text-[9px] text-violet-400">Oracle</span></div>
               </div>
-              <div class="h-2 rounded bg-slate-800 w-2/3 overflow-hidden"><div class="h-full bg-gradient-to-r from-violet-500/30 to-pink-500/30 animate-pulse"></div></div>
+              <div class="h-2 rounded bg-slate-800 w-2/3 overflow-hidden"><div class="h-full bg-gradient-to-r from-violet-500/30 to-emerald-500/30 animate-pulse"></div></div>
             </div>
           </div>
           <a href="Complaint_Tagging_Pipeline_Interactive_Demo.html" target="_blank" rel="noopener noreferrer"
@@ -821,41 +817,101 @@ The analysis follows the standard five‑step modelling pipeline from the course
 <!-- ═══ EXPERIENCE ═══ -->
 <section id="experience" class="relative py-14 bg-[#030a14]">
   <div class="max-w-6xl mx-auto px-5">
-    <div class="reveal mb-8"><p class="text-[11px] uppercase tracking-[.18em] text-slate-500 mb-2">Career</p><h2 class="text-2xl md:text-3xl font-semibold tracking-tight">Experience</h2></div>
-    <div class="relative pl-10 reveal">
+    <div class="reveal mb-6"><p class="text-[11px] uppercase tracking-[.18em] text-slate-500 mb-2">Career</p><h2 class="text-2xl md:text-3xl font-semibold tracking-tight">Experience</h2></div>
+
+    <!-- impact summary strip -->
+    <div class="reveal grid grid-cols-2 sm:grid-cols-4 gap-3 mb-10">
+      <div class="rounded-xl border border-slate-800 bg-slate-900/60 px-4 py-3 text-center">
+        <p class="text-xl font-bold text-sky-300">4.5+ yrs</p>
+        <p class="text-[11px] text-slate-500 mt-0.5">Across 4 industries</p>
+      </div>
+      <div class="rounded-xl border border-slate-800 bg-slate-900/60 px-4 py-3 text-center">
+        <p class="text-xl font-bold text-teal-300">140k+</p>
+        <p class="text-[11px] text-slate-500 mt-0.5">Records classified · TIO</p>
+      </div>
+      <div class="rounded-xl border border-slate-800 bg-slate-900/60 px-4 py-3 text-center">
+        <p class="text-xl font-bold text-amber-300">18.3%</p>
+        <p class="text-[11px] text-slate-500 mt-0.5">Sales uplift · Axtria</p>
+      </div>
+      <div class="rounded-xl border border-slate-800 bg-slate-900/60 px-4 py-3 text-center">
+        <p class="text-xl font-bold text-amber-300">90%</p>
+        <p class="text-[11px] text-slate-500 mt-0.5">Faster delivery · WPP</p>
+      </div>
+    </div>
+
+    <div class="relative pl-10">
       <div class="timeline-line"></div>
-      <div class="relative mb-8">
-        <div class="absolute left-[-1.85rem] top-1 w-4 h-4 rounded-full border-2 border-sky-400 bg-slate-950"></div>
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-2"><div><h3 class="text-sm font-semibold text-slate-100">ML Engineer Intern · Data Scientist</h3><p class="text-[12px] text-sky-300">Telecommunications Industry Ombudsman (TIO)</p></div><span class="text-[11px] text-slate-500 whitespace-nowrap">2026 · Melbourne</span></div>
+      <div class="relative mb-8 reveal" style="transition-delay:0ms">
+        <div class="absolute left-[-1.85rem] top-1 w-4 h-4 rounded-full border-2 border-teal-400 bg-slate-950"></div>
+        <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-2 mb-2">
+          <div>
+            <h3 class="text-sm font-semibold text-slate-100">ML Engineer Intern · Data Scientist</h3>
+            <p class="text-[12px] text-teal-300">Telecommunications Industry Ombudsman (TIO)</p>
+          </div>
+          <div class="flex items-center gap-2 flex-shrink-0">
+            <span class="inline-flex items-center rounded-lg border border-teal-500/30 bg-teal-500/10 px-2.5 py-1 text-[11px] font-semibold text-teal-300">F1 0.03 → 0.59</span>
+            <span class="text-[11px] text-slate-500 whitespace-nowrap">2026 · Melbourne</span>
+          </div>
+        </div>
         <ul class="space-y-1.5 text-[12px] text-slate-400">
-          <li class="flex gap-2"><span class="mt-[5px] h-1 w-2.5 rounded-full bg-slate-600 flex-shrink-0"></span>Built end-to-end multi-label classification pipeline (140k+ complaints, 91 tags) using DistilBERT, LightGBM, and one-vs-rest; lifted Macro F1 from 0.03 to 0.59.</li>
+          <li class="flex gap-2"><span class="mt-[5px] h-1 w-2.5 rounded-full bg-slate-600 flex-shrink-0"></span>Built end-to-end multi-label classification pipeline (140k+ complaints, 91 tags) using DistilBERT, LightGBM, and one-vs-rest.</li>
           <li class="flex gap-2"><span class="mt-[5px] h-1 w-2.5 rounded-full bg-slate-600 flex-shrink-0"></span>Designed LLM-augmented pipeline: GPT-4o scenario bank generation, geometric QC, and oracle vs model comparison (BOTH_CORRECT / ORACLE_WINS taxonomy).</li>
           <li class="flex gap-2"><span class="mt-[5px] h-1 w-2.5 rounded-full bg-slate-600 flex-shrink-0"></span>Mapped 188 raw tag variants to 91 canonical labels; applied CleanLab for label noise detection; built G0–G13 gold dataset pipeline.</li>
         </ul>
       </div>
-      <div class="relative mb-8">
-        <div class="absolute left-[-1.85rem] top-1 w-4 h-4 rounded-full border-2 border-teal-400 bg-slate-950"></div>
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-2"><div><h3 class="text-sm font-semibold text-slate-100">Postgraduate Researcher · Research Scientist</h3><p class="text-[12px] text-teal-300">RMIT University · GenAI &amp; Agentic AI</p></div><span class="text-[11px] text-slate-500 whitespace-nowrap">2025 - Present · Melbourne</span></div>
+      <div class="relative mb-8 reveal" style="transition-delay:100ms">
+        <div class="absolute left-[-1.85rem] top-1 w-4 h-4 rounded-full border-2 border-violet-400 bg-slate-950"></div>
+        <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-2 mb-2">
+          <div>
+            <h3 class="text-sm font-semibold text-slate-100">Postgraduate Researcher · Research Scientist</h3>
+            <p class="text-[12px] text-violet-300">RMIT University · GenAI &amp; Agentic AI</p>
+          </div>
+          <div class="flex items-center gap-2 flex-shrink-0">
+            <span class="inline-flex items-center rounded-lg border border-violet-500/30 bg-violet-500/10 px-2.5 py-1 text-[11px] font-semibold text-violet-300">1350+ tasks evaluated</span>
+            <span class="text-[11px] text-slate-500 whitespace-nowrap">2025 - Present · Melbourne</span>
+          </div>
+        </div>
         <ul class="space-y-1.5 text-[12px] text-slate-400">
-          <li class="flex gap-2"><span class="mt-[5px] h-1 w-2.5 rounded-full bg-slate-600 flex-shrink-0"></span>Research on LLM-assisted software design and information retrieval; built 1350+ problem based task evaluation harness. Platform x difficulty x Prompt Design Analysis</li>
-          <li class="flex gap-2"><span class="mt-[5px] h-1 w-2.5 rounded-full bg-slate-600 flex-shrink-0"></span>Workshop paper taregt SGCI 2026 on LLM evaluation methodology for code-centric IR.</li>
+          <li class="flex gap-2"><span class="mt-[5px] h-1 w-2.5 rounded-full bg-slate-600 flex-shrink-0"></span>Research on LLM-assisted software design and information retrieval — platform × difficulty × prompt-design analysis.</li>
+          <li class="flex gap-2"><span class="mt-[5px] h-1 w-2.5 rounded-full bg-slate-600 flex-shrink-0"></span>Workshop paper targeting SGCI 2026 on LLM evaluation methodology for code-centric IR.</li>
         </ul>
       </div>
-      <div class="relative mb-8">
-        <div class="absolute left-[-1.85rem] top-1 w-4 h-4 rounded-full border-2 border-indigo-400 bg-slate-950"></div>
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-2"><div><h3 class="text-sm font-semibold text-slate-100">Data Scientist · Senior Analyst</h3><p class="text-[12px] text-indigo-300">Axtria Inc · Healthcare Analytics</p></div><span class="text-[11px] text-slate-500 whitespace-nowrap">2022 - 2024</span></div>
+      <div class="relative mb-8 reveal" style="transition-delay:200ms">
+        <div class="absolute left-[-1.85rem] top-1 w-4 h-4 rounded-full border-2 border-amber-400 bg-slate-950"></div>
+        <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-2 mb-2">
+          <div>
+            <h3 class="text-sm font-semibold text-slate-100">Data Scientist · Senior Analyst</h3>
+            <p class="text-[12px] text-amber-300">Axtria Inc · Healthcare Analytics</p>
+          </div>
+          <div class="flex items-center gap-2 flex-shrink-0 flex-wrap justify-end">
+            <span class="inline-flex items-center rounded-lg border border-amber-500/30 bg-amber-500/10 px-2.5 py-1 text-[11px] font-semibold text-amber-300">18.3% sales uplift</span>
+            <span class="inline-flex items-center rounded-lg border border-amber-500/30 bg-amber-500/10 px-2.5 py-1 text-[11px] font-semibold text-amber-300">8.3% revenue uplift</span>
+            <span class="text-[11px] text-slate-500 whitespace-nowrap">2022 - 2024</span>
+          </div>
+        </div>
         <ul class="space-y-1.5 text-[12px] text-slate-400">
-          <li class="flex gap-2"><span class="mt-[5px] h-1 w-2.5 rounded-full bg-slate-600 flex-shrink-0"></span>Developed Recommendation models and patient-journey analytics for J&amp;J, Gilead, Sanofi - driving 18.3% sales uplift in target brands.</li>
+          <li class="flex gap-2"><span class="mt-[5px] h-1 w-2.5 rounded-full bg-slate-600 flex-shrink-0"></span>Developed recommendation models and patient-journey analytics for J&amp;J, Gilead, and Sanofi.</li>
           <li class="flex gap-2"><span class="mt-[5px] h-1 w-2.5 rounded-full bg-slate-600 flex-shrink-0"></span>Led analytics roadmaps and KPI design as Technical BA across 3 cross-functional product teams.</li>
-          <li class="flex gap-2"><span class="mt-[5px] h-1 w-2.5 rounded-full bg-slate-600 flex-shrink-0"></span>Designed, built, and deployed an agentic Next Best Action recommendation engine (XGBoost, LSTM/RNN, Reinforcement Learning) that orchestrated multi-step customer journey sequences replacing static promotion rules with journey-aware personalisation that made tool-use decisions across brand and channel contexts. 8.3% revenue uplift across brand- and region-specific pipelines. End-to-end ownership from design through C-suite production sign-off.</li>
+          <li class="flex gap-2"><span class="mt-[5px] h-1 w-2.5 rounded-full bg-slate-600 flex-shrink-0"></span>Designed and deployed an agentic Next Best Action recommendation engine (XGBoost, LSTM/RNN, reinforcement learning) — journey-aware personalisation replacing static promotion rules across brand and channel contexts.</li>
+          <li class="flex gap-2"><span class="mt-[5px] h-1 w-2.5 rounded-full bg-slate-600 flex-shrink-0"></span>Owned the initiative end-to-end, from design through C-suite production sign-off.</li>
         </ul>
       </div>
-      <div class="relative">
-        <div class="absolute left-[-1.85rem] top-1 w-4 h-4 rounded-full border-2 border-slate-500 bg-slate-950"></div>
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-2"><div><h3 class="text-sm font-semibold text-slate-100">Data Analyst · Digital Analytics</h3><p class="text-[12px] text-slate-300">Wunderman Thompson (WPP)</p></div><span class="text-[11px] text-slate-500 whitespace-nowrap">2020 - 2022</span></div>
+      <div class="relative reveal" style="transition-delay:300ms">
+        <div class="absolute left-[-1.85rem] top-1 w-4 h-4 rounded-full border-2 border-amber-400 bg-slate-950"></div>
+        <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-2 mb-2">
+          <div>
+            <h3 class="text-sm font-semibold text-slate-100">Data Analyst · Digital Analytics</h3>
+            <p class="text-[12px] text-amber-300">Wunderman Thompson (WPP)</p>
+          </div>
+          <div class="flex items-center gap-2 flex-shrink-0">
+            <span class="inline-flex items-center rounded-lg border border-amber-500/30 bg-amber-500/10 px-2.5 py-1 text-[11px] font-semibold text-amber-300">90% faster delivery</span>
+            <span class="text-[11px] text-slate-500 whitespace-nowrap">2020 - 2022</span>
+          </div>
+        </div>
         <ul class="space-y-1.5 text-[12px] text-slate-400">
-          <li class="flex gap-2"><span class="mt-[5px] h-1 w-2.5 rounded-full bg-slate-600 flex-shrink-0"></span>Built Tablea reporting DBs for Ford Motor Company campaigns; automated monthly pipelines cutting delivery time by 90%.</li>
-          <li class="flex gap-2"><span class="mt-[5px] h-1 w-2.5 rounded-full bg-slate-600 flex-shrink-0"></span>•	Built automated ETL pipelines and analytical infrastructure integrating web analytics, CRM, ad spend, and e-commerce data across Ford's global footprint and Pfizer's 7-country rollouts 90% reduction in manual workflows, >60% error reduction, >99% data accuracy. Delivered A/B testing, segmentation, and purchasing behaviour insights that directly influenced go-to-market and media investment decisions for C-level stakeholders.</li>
+          <li class="flex gap-2"><span class="mt-[5px] h-1 w-2.5 rounded-full bg-slate-600 flex-shrink-0"></span>Built Tableau reporting databases for Ford Motor Company campaigns; automated monthly pipelines.</li>
+          <li class="flex gap-2"><span class="mt-[5px] h-1 w-2.5 rounded-full bg-slate-600 flex-shrink-0"></span>Built automated ETL pipelines integrating web analytics, CRM, ad spend, and e-commerce data across Ford's global footprint and Pfizer's 7-country rollouts.</li>
+          <li class="flex gap-2"><span class="mt-[5px] h-1 w-2.5 rounded-full bg-slate-600 flex-shrink-0"></span>Delivered &gt;60% error reduction and &gt;99% data accuracy; A/B testing and segmentation insights directly influenced go-to-market and media investment decisions for C-level stakeholders.</li>
         </ul>
       </div>
     </div>
@@ -969,6 +1025,22 @@ var revealObs = new IntersectionObserver(function(entries) {
   entries.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('visible'); });
 }, { threshold: 0.08 });
 revealEls.forEach(function(el) { revealObs.observe(el); });
+
+// ── Nav scrollspy ──
+var navLinks = document.querySelectorAll('.nav-link');
+var spySections = Array.prototype.map.call(navLinks, function(a) {
+  return document.querySelector(a.getAttribute('href'));
+}).filter(Boolean);
+var spyObs = new IntersectionObserver(function(entries) {
+  entries.forEach(function(entry) {
+    if (!entry.isIntersecting) return;
+    var id = '#' + entry.target.id;
+    navLinks.forEach(function(a) {
+      a.classList.toggle('active', a.getAttribute('href') === id);
+    });
+  });
+}, { rootMargin: '-40% 0px -55% 0px', threshold: 0 });
+spySections.forEach(function(sec) { spyObs.observe(sec); });
 
 // ── Mobile nav ──
 document.getElementById('burger').addEventListener('click', function() {
