@@ -186,20 +186,31 @@ footer .links{display:flex;gap:var(--s-3);flex-wrap:wrap;margin-top:.5rem;font-w
   .now,.tl-panel{grid-template-columns:minmax(0,1fr)}
   .proj-head{grid-template-columns:minmax(0,1fr)}
   .p-proof{text-align:left;justify-items:start}
-  .bar nav{display:none}
-  .count{margin-left:0;padding-bottom:0}
+    .count{margin-left:0;padding-bottom:0}
 }
 @media (prefers-reduced-motion: reduce){
   html{scroll-behavior:auto}
   .layer,.pipe .pulse,.tl-panel{animation:none}
   .detail,.flow-bar span,.tl-prog span{transition:none}
 }
+
+.menu-btn{display:none;font:inherit;font-weight:600;font-size:.9rem;border:1px solid var(--line);background:var(--surface);color:var(--fg);border-radius:8px;padding:.35rem .8rem;cursor:pointer}
+.progress{position:fixed;top:0;left:0;height:3px;width:0;background:var(--accent);z-index:40}
+@media (max-width:760px){
+  .menu-btn{display:inline-block}
+  .bar nav{display:none;order:5;width:100%;flex-direction:column;gap:0;padding:.25rem 0 .5rem;border-top:1px solid var(--line)}
+  .bar.open nav{display:flex}
+  .bar nav a{padding:.7rem 0;font-size:1.05rem;border-bottom:1px solid var(--line)}
+}
 </style>
 
+</head>
+<body>
+<div class="progress" id="progress" aria-hidden="true"></div>
 <div class="bar">
   <div class="bar-in">
     <a class="brand" href="index.html">Kriti Yadav</a>
-    <nav aria-label="Sections">
+    <nav aria-label="Sections" id="nav">
       <a href="index.html">Home</a>
       <a href="index.html#case-studies">Case studies</a>
       <a href="#domains">Domains</a>
@@ -207,6 +218,7 @@ footer .links{display:flex;gap:var(--s-3);flex-wrap:wrap;margin-top:.5rem;font-w
       <a href="#now">Building now</a>
       <a href="#timeline">Timeline</a>
     </nav>
+    <button class="menu-btn" id="menu" type="button" aria-expanded="false" aria-controls="nav">Menu</button>
     <button class="btn small" id="theme" type="button" aria-label="Switch colour theme">Theme</button>
   </div>
 </div>
@@ -617,6 +629,13 @@ else document.querySelectorAll("[data-count]").forEach(function(n){
 });
 
 applyFilters(); select(STOPS.length-1, false);
+
+(function(){var bar=document.querySelector(".bar"),mb=document.getElementById("menu");if(!mb)return;
+ mb.addEventListener("click",function(){var o=bar.classList.toggle("open");mb.setAttribute("aria-expanded",String(o));mb.textContent=o?"Close":"Menu"});
+ bar.querySelectorAll("nav a").forEach(function(a){a.addEventListener("click",function(){bar.classList.remove("open");mb.setAttribute("aria-expanded","false");mb.textContent="Menu"})});
+ var pg=document.getElementById("progress");
+ function upd(){var h=document.documentElement.scrollHeight-innerHeight;if(pg)pg.style.width=(h>0?scrollY/h*100:0)+"%"}
+ addEventListener("scroll",upd,{passive:true});upd();})();
 </script>
 
 </body>
