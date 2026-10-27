@@ -1,0 +1,622 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kriti Yadav AI Projects</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="AI projects by Kriti Yadav: domains, projects, career timeline and current work.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Instrument+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* Layout: restrained monochrome with one navy accent. Sticky bar, hero with a live pipeline strip, a searchable project ledger whose rows open into a step-through flow, and a company timeline driven by tabs. */
+:root{
+  --bg:#f6f7f9; --surface:#ffffff; --fg:#12181f; --muted:#55616d; --line:#d9dee4;
+  --accent:#1f4e79; --accent-soft:#e4ecf5; --on-accent:#ffffff;
+  --f-display:"Bricolage Grotesque","Avenir Next","Segoe UI",system-ui,sans-serif;
+  --f-body:"Instrument Sans","Segoe UI",system-ui,-apple-system,sans-serif;
+  --f-mono:"DM Mono",ui-monospace,Menlo,Consolas,monospace;
+  --s-1:.5rem; --s-2:1rem; --s-3:1.5rem; --s-4:2.5rem; --s-5:4rem;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0d1117; --surface:#151b23; --fg:#e7ecf1; --muted:#9aa6b2; --line:#27303a;
+  --accent:#7fb0e6; --accent-soft:#1a2a3d; --on-accent:#0d1117; color-scheme:dark;}}
+:root[data-theme="dark"]{
+  --bg:#0d1117; --surface:#151b23; --fg:#e7ecf1; --muted:#9aa6b2; --line:#27303a;
+  --accent:#7fb0e6; --accent-soft:#1a2a3d; --on-accent:#0d1117; color-scheme:dark;}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:4.5rem}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:1.0625rem;line-height:1.6;padding-block:0;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--bg)}
+h1,h2,h3,h4{font-family:var(--f-display);line-height:1.1;text-wrap:balance;margin:0;font-weight:700;letter-spacing:-.01em}
+p{margin:0}
+a{color:var(--accent);text-underline-offset:3px}
+a:hover{text-decoration-thickness:2px}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:4px}
+.wrap{max-width:70rem;margin-inline:auto}
+section{padding-block:var(--s-5)}
+.sec-head{display:grid;gap:var(--s-1);margin-bottom:var(--s-4);max-width:42rem}
+.sec-head h2{font-size:clamp(1.75rem,4vw,2.5rem)}
+.sec-head p{color:var(--muted)}
+
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);border-bottom:1px solid var(--line);margin-inline:calc(-1 * max(16px,env(safe-area-inset-left,0px)));padding-inline:max(16px,env(safe-area-inset-left,0px))}
+.bar-in{display:flex;align-items:center;gap:var(--s-3);padding-block:.7rem;max-width:70rem;margin-inline:auto;flex-wrap:wrap}
+.brand{font-family:var(--f-display);font-weight:700;color:var(--fg);text-decoration:none;margin-right:auto}
+.bar nav{display:flex;gap:var(--s-3);flex-wrap:wrap}
+.bar nav a{color:var(--muted);text-decoration:none;font-size:.95rem;font-weight:500}
+.bar nav a:hover{color:var(--fg)}
+.btn{display:inline-block;font:inherit;font-weight:600;font-size:.95rem;text-decoration:none;padding:.65rem 1.15rem;border-radius:8px;border:1.5px solid var(--accent);cursor:pointer}
+.btn.primary{background:var(--accent);color:var(--on-accent)}
+.btn.primary:hover{filter:brightness(1.1)}
+.btn.ghost{color:var(--accent);background:transparent}
+.btn.ghost:hover{background:var(--accent-soft)}
+.btn.small{padding:.3rem .8rem;font-size:.85rem;font-weight:500;color:var(--fg);border-color:var(--line);background:var(--surface)}
+.btn.small:hover{border-color:var(--accent)}
+
+.hero{padding-block:var(--s-5) var(--s-4)}
+.roles{font-family:var(--f-mono);font-size:.85rem;color:var(--muted);margin-bottom:var(--s-2)}
+.hero h1{font-size:clamp(2.4rem,7vw,4.75rem);max-width:15ch}
+.hero .lede{max-width:40rem;margin-top:var(--s-3);color:var(--muted);font-size:1.15rem}
+.hero .lede b{color:var(--fg);font-weight:600}
+.cta{display:flex;gap:var(--s-2);flex-wrap:wrap;margin-top:var(--s-3)}
+.pipe{margin-top:var(--s-4);border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:var(--s-2) var(--s-2) var(--s-1);overflow-x:auto}
+.pipe svg{display:block;min-width:640px;width:100%;height:auto}
+.pipe-cap{color:var(--muted);font-size:.9rem;margin-top:.4rem;min-width:640px}
+.pipe .node rect{fill:var(--bg);stroke:var(--line);stroke-width:1.5}
+.pipe .node.check rect{stroke:var(--accent);stroke-width:2}
+.pipe text{fill:var(--fg);font-family:var(--f-mono);font-size:13px}
+.pipe .rail{stroke:var(--line);stroke-width:2}
+.pipe .pk{fill:var(--accent)}
+.pipe .pulse{fill:none;stroke:var(--accent);stroke-width:2;transform-box:fill-box;transform-origin:center;animation:pulse 3.2s ease-out infinite}
+@keyframes pulse{0%{opacity:.9;transform:scale(1)}70%,100%{opacity:0;transform:scale(1.35)}}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(11rem,1fr));gap:var(--s-3);margin-top:var(--s-4)}
+.fact{border-top:2px solid var(--fg);padding-top:var(--s-1)}
+.fact b{display:block;font-family:var(--f-display);font-size:2rem;line-height:1.1}
+.fact span{color:var(--muted);font-size:.95rem}
+
+.domains{display:grid;grid-template-columns:repeat(auto-fit,minmax(18rem,1fr));gap:0 var(--s-4)}
+.dom{display:grid;gap:.25rem;padding-block:var(--s-2);border-top:1px solid var(--line);align-content:start}
+.dom h3{font-size:1.2rem}
+.dom p{color:var(--muted);font-size:.98rem}
+.dom button{justify-self:start;margin-top:.25rem;font:inherit;font-size:.9rem;font-weight:600;color:var(--accent);background:none;border:0;padding:.15rem 0;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+
+/* toolbar */
+.tools{display:grid;gap:var(--s-2);margin-bottom:var(--s-3)}
+.tool-row{display:flex;gap:var(--s-2);flex-wrap:wrap;align-items:center}
+.field{display:grid;gap:.2rem;min-width:0}
+.field label{font-family:var(--f-mono);font-size:.75rem;color:var(--muted)}
+.field input,.field select{font:inherit;font-size:.95rem;color:var(--fg);background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:.5rem .75rem;min-width:0}
+.field input{width:min(18rem,100%)}
+.field input:focus,.field select:focus{border-color:var(--accent)}
+.grow{flex:1}
+.count{font-family:var(--f-mono);font-size:.8rem;color:var(--muted);margin-left:auto;align-self:end;padding-bottom:.6rem}
+.filters{display:flex;gap:.5rem;flex-wrap:wrap}
+.chip{font:inherit;font-size:.9rem;font-weight:500;border:1px solid var(--line);background:var(--surface);color:var(--fg);border-radius:999px;padding:.3rem .85rem;cursor:pointer}
+.chip:hover{border-color:var(--accent)}
+.chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+
+/* ledger */
+.ledger{border-top:2px solid var(--fg)}
+.proj{border-bottom:1px solid var(--line)}
+.proj[hidden]{display:none}
+.proj-head{all:unset;box-sizing:border-box;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:.5rem var(--s-3);width:100%;padding-block:var(--s-3);cursor:pointer}
+.proj-head:hover h3{color:var(--accent)}
+.proj-head:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.p-main{display:grid;gap:.45rem;min-width:0}
+.p-title{display:flex;gap:.75rem;align-items:center;flex-wrap:wrap}
+.p-title h3{font-size:1.5rem}
+.status{display:inline-flex;align-items:center;gap:.4rem;font-family:var(--f-mono);font-size:.75rem;padding:.15rem .6rem;border-radius:999px;border:1px solid var(--line);color:var(--muted);white-space:nowrap}
+.status i{width:.55rem;height:.55rem;border-radius:50%;border:1.5px solid var(--accent);display:inline-block}
+.status.full i{background:var(--accent)}
+.status.half i{background:linear-gradient(90deg,var(--accent) 50%,transparent 50%)}
+.p-sum{color:var(--muted);max-width:46rem}
+.p-tags{display:flex;gap:.4rem 1rem;flex-wrap:wrap}
+.p-tags span{font-family:var(--f-mono);font-size:.78rem;color:var(--muted)}
+.p-proof{text-align:right;display:grid;gap:.25rem;justify-items:end;align-content:start;min-width:8rem}
+.p-proof b{font-family:var(--f-display);font-size:1.25rem;line-height:1.15}
+.p-proof small{color:var(--muted);font-size:.8rem}
+.caret{font-family:var(--f-mono);font-size:.78rem;color:var(--accent)}
+.detail{display:grid;grid-template-rows:0fr;transition:grid-template-rows .3s ease}
+.proj.open .detail{grid-template-rows:1fr}
+.detail>div{overflow:hidden;min-height:0}
+.flow{margin:0 0 var(--s-3);padding:var(--s-2);background:var(--surface);border:1px solid var(--line);border-radius:10px}
+.flow-t{font-family:var(--f-mono);font-size:.75rem;color:var(--muted);margin-bottom:.6rem}
+.steps-row{display:flex;gap:.4rem;flex-wrap:wrap;position:relative}
+.step{font:inherit;font-size:.88rem;font-weight:500;border:1px solid var(--line);background:var(--bg);color:var(--fg);border-radius:8px;padding:.4rem .7rem;cursor:pointer;display:flex;gap:.5rem;align-items:center}
+.step b{font-family:var(--f-mono);font-size:.72rem;color:var(--muted);font-weight:500}
+.step:hover{border-color:var(--accent)}
+.step[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.step[aria-pressed="true"] b{color:var(--on-accent)}
+.flow-bar{height:2px;background:var(--line);margin:.8rem 0 .7rem;position:relative}
+.flow-bar span{position:absolute;left:0;top:0;height:100%;background:var(--accent);width:0;transition:width .45s ease}
+.flow-txt{min-height:1.6em;font-size:.98rem}
+.d-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:var(--s-3);padding-bottom:var(--s-3)}
+.d-grid h4{font-family:var(--f-mono);font-size:.78rem;font-weight:500;color:var(--muted);margin:0 0 .35rem}
+.d-grid p{font-size:.98rem}
+.stack{display:flex;gap:.4rem;flex-wrap:wrap;margin:0;padding:0;list-style:none}
+.stack li{font-family:var(--f-mono);font-size:.78rem;background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:.15rem .5rem}
+.d-links{display:flex;gap:var(--s-3);flex-wrap:wrap;padding-bottom:var(--s-3);font-weight:600}
+.empty{padding:var(--s-3) 0;color:var(--muted)}
+
+/* now */
+.now{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--s-4);align-items:start}
+.layers{display:grid;gap:.5rem}
+.layer{display:grid;grid-template-columns:auto 1fr;gap:.2rem 1rem;align-items:baseline;border:1px solid var(--line);border-left:4px solid var(--accent);background:var(--surface);border-radius:8px;padding:.65rem 1rem;animation:glow 7.5s infinite}
+.layer b{font-family:var(--f-display)}
+.layer span{color:var(--muted);font-size:.92rem}
+.layer:nth-child(2){animation-delay:1.5s}.layer:nth-child(3){animation-delay:3s}.layer:nth-child(4){animation-delay:4.5s}.layer:nth-child(5){animation-delay:6s}
+@keyframes glow{0%,18%,100%{box-shadow:none}6%{box-shadow:0 0 0 3px var(--accent-soft);border-color:var(--accent)}}
+.nsteps{list-style:none;margin:0;padding:0;display:grid;gap:.9rem}
+.nsteps li{display:grid;grid-template-columns:auto 1fr;gap:.75rem;align-items:start}
+.nsteps .dot{width:1.1rem;height:1.1rem;border-radius:50%;border:2px solid var(--accent);margin-top:.3rem;display:grid;place-items:center;font-size:.7rem;color:var(--on-accent)}
+.nsteps .done .dot{background:var(--accent)}
+.nsteps .next .dot{border-style:dashed}
+.nsteps h3{font-size:1.1rem;margin-bottom:.3rem}
+
+/* timeline tabs */
+.tl{display:grid;gap:var(--s-3)}
+.tl-rail{position:relative;overflow-x:auto;padding-bottom:.4rem}
+.tl-tabs{display:flex;gap:.5rem;min-width:max-content;position:relative}
+.tl-tab{font:inherit;text-align:left;border:1px solid var(--line);background:var(--surface);color:var(--fg);border-radius:10px;padding:.6rem .9rem;cursor:pointer;display:grid;gap:.1rem;min-width:7.5rem}
+.tl-tab small{font-family:var(--f-mono);font-size:.72rem;color:var(--muted)}
+.tl-tab b{font-family:var(--f-display);font-size:1.05rem}
+.tl-tab:hover{border-color:var(--accent)}
+.tl-tab[aria-selected="true"]{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.tl-tab[aria-selected="true"] small{color:var(--on-accent);opacity:.85}
+.tl-prog{height:3px;background:var(--line);border-radius:2px;margin-top:.7rem;position:relative;min-width:max-content}
+.tl-prog span{position:absolute;left:0;top:0;height:100%;background:var(--accent);border-radius:2px;width:0;transition:width .5s ease}
+.tl-panel{border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:var(--s-3);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:var(--s-3);animation:rise .35s ease}
+@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.tl-panel h3{font-size:1.6rem;margin:.2rem 0 .3rem}
+.tl-org{color:var(--muted)}
+.tl-meta{font-family:var(--f-mono);font-size:.8rem;color:var(--muted)}
+.tl-panel ul{margin:0;padding:0;list-style:none;display:grid;gap:.7rem}
+.tl-panel li{padding-left:1.1rem;position:relative}
+.tl-panel li::before{content:"";position:absolute;left:0;top:.65em;width:.45rem;height:.45rem;border-radius:50%;background:var(--accent)}
+.tl-skills{display:flex;gap:.4rem;flex-wrap:wrap;margin-top:var(--s-2)}
+.tl-skills span{font-family:var(--f-mono);font-size:.76rem;border:1px solid var(--line);border-radius:6px;padding:.1rem .5rem;color:var(--muted)}
+.tl-nav{display:flex;gap:.5rem;justify-content:flex-end}
+
+footer{border-top:1px solid var(--line);padding-block:var(--s-4);color:var(--muted)}
+footer .links{display:flex;gap:var(--s-3);flex-wrap:wrap;margin-top:.5rem;font-weight:600}
+
+@media (max-width:760px){
+  section{padding-block:var(--s-4)}
+  .now,.tl-panel{grid-template-columns:minmax(0,1fr)}
+  .proj-head{grid-template-columns:minmax(0,1fr)}
+  .p-proof{text-align:left;justify-items:start}
+  .bar nav{display:none}
+  .count{margin-left:0;padding-bottom:0}
+}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  .layer,.pipe .pulse,.tl-panel{animation:none}
+  .detail,.flow-bar span,.tl-prog span{transition:none}
+}
+</style>
+
+<div class="bar">
+  <div class="bar-in">
+    <a class="brand" href="index.html">Kriti Yadav</a>
+    <nav aria-label="Sections">
+      <a href="index.html">Portfolio home</a>
+      <a href="#domains">Domains</a>
+      <a href="#projects">Projects</a>
+      <a href="#now">Building now</a>
+      <a href="#timeline">Timeline</a>
+    </nav>
+    <button class="btn small" id="theme" type="button" aria-label="Switch colour theme">Theme</button>
+  </div>
+</div>
+
+<main class="wrap" id="top">
+  <header class="hero">
+    <p class="roles">Data scientist · AI engineer · Analytics and automation</p>
+    <h1>AI systems that show their working.</h1>
+    <p class="lede"><b>Melbourne-based, with 4.8 years across pharma, marketing and telecommunications.</b> I build document, forecasting and assurance systems for regulated work, then test them the way a model risk team would.</p>
+    <div class="cta">
+      <a class="btn primary" href="#projects">See the projects</a>
+      <a class="btn ghost" href="https://github.com/Kriti-Data-Business">GitHub</a>
+      <a class="btn ghost" href="https://www.linkedin.com/in/kriti-yadav-data-science/">LinkedIn</a>
+    </div>
+
+    <div class="pipe" role="img" aria-label="Pipeline: data, model, validate, decide, audit. Every project here follows this path.">
+      <svg id="pipesvg" viewBox="0 0 900 120" xmlns="http://www.w3.org/2000/svg">
+        <line class="rail" x1="60" y1="50" x2="840" y2="50"/>
+        <g class="node"><rect x="10" y="28" width="100" height="44" rx="8"/><text x="60" y="55" text-anchor="middle">data</text></g>
+        <g class="node"><rect x="190" y="28" width="100" height="44" rx="8"/><text x="240" y="55" text-anchor="middle">model</text></g>
+        <g class="node check"><rect x="370" y="28" width="100" height="44" rx="8"/><text x="420" y="55" text-anchor="middle">validate</text><circle class="pulse" cx="420" cy="50" r="30"/></g>
+        <g class="node"><rect x="550" y="28" width="100" height="44" rx="8"/><text x="600" y="55" text-anchor="middle">decide</text></g>
+        <g class="node"><rect x="730" y="28" width="100" height="44" rx="8"/><text x="780" y="55" text-anchor="middle">audit</text></g>
+        <circle class="pk" r="5"><animateMotion dur="6s" repeatCount="indefinite" path="M60 50H780"/></circle>
+        <circle class="pk" r="5"><animateMotion dur="6s" begin="-2s" repeatCount="indefinite" path="M60 50H780"/></circle>
+        <circle class="pk" r="5"><animateMotion dur="6s" begin="-4s" repeatCount="indefinite" path="M60 50H780"/></circle>
+        <text x="420" y="104" text-anchor="middle" style="fill:var(--muted)">where most of my effort goes</text>
+      </svg>
+      <p class="pipe-cap">Each project below runs on this path. The validation step is where I spend the most time.</p>
+    </div>
+
+    <div class="facts">
+      <div class="fact"><b data-count="4.8" data-dec="1">4.8</b><span>years across pharma, marketing and telecommunications</span></div>
+      <div class="fact"><b data-count="9">9</b><span>AI and analytics projects on GitHub</span></div>
+      <div class="fact"><b data-count="7">7</b><span>domains where I have applied AI</span></div>
+      <div class="fact"><b>July 2026</b><span>Master of Data Science, RMIT, with Distinction</span></div>
+    </div>
+  </header>
+
+  <section id="domains">
+    <div class="sec-head">
+      <h2>Where I have applied AI</h2>
+      <p>Seven domains, each with the kind of AI that fit the problem. Choose one to see its projects.</p>
+    </div>
+    <div class="domains" id="domlist"></div>
+  </section>
+
+  <section id="projects">
+    <div class="sec-head">
+      <h2>Projects</h2>
+      <p>Search, filter or sort. Open a row to step through how the system works, then read its limits.</p>
+    </div>
+    <div class="tools">
+      <div class="tool-row">
+        <div class="field grow"><label for="q">Search</label><input id="q" type="search" placeholder="RAG, fraud, Azure, forecasting" autocomplete="off"></div>
+        <div class="field"><label for="st">Status</label>
+          <select id="st"><option value="all">All statuses</option><option value="deployed">Deployed</option><option value="shipped">Shipped</option><option value="building">In progress</option><option value="research">Research</option></select></div>
+        <div class="field"><label for="so">Sort</label>
+          <select id="so"><option value="featured">Featured order</option><option value="status">Status</option><option value="name">Name</option></select></div>
+        <button class="btn small" id="toggleall" type="button" style="align-self:end">Expand all</button>
+        <span class="count" id="count" aria-live="polite"></span>
+      </div>
+      <div class="filters" id="filters" role="group" aria-label="Filter projects by domain"></div>
+    </div>
+    <div class="ledger" id="ledger"></div>
+    <p class="empty" id="empty" hidden>No projects match. Clear the search or choose another domain.</p>
+  </section>
+
+  <section id="now">
+    <div class="sec-head">
+      <h2>Building now: Housing Delivery Risk Intelligence</h2>
+      <p>A five-layer reporting stack for delivery risk. The pipeline, forecast, AI assurance module and CI are built. Production deployment is next.</p>
+    </div>
+    <div class="now">
+      <div>
+        <h3 style="font-size:1.1rem;margin-bottom:.6rem">The five layers, top to bottom</h3>
+        <div class="layers" aria-label="Five layers">
+          <div class="layer"><b>5 AI assurance</b><span>Tagger, routing, audit log</span></div>
+          <div class="layer"><b>4 Risk and forecast</b><span>Risk scores, Monte Carlo, scenarios</span></div>
+          <div class="layer"><b>3 Model</b><span>SQL views and Power BI measures</span></div>
+          <div class="layer"><b>2 Clean</b><span>Six quality rules, reconciled</span></div>
+          <div class="layer"><b>1 Raw</b><span>Never modified</span></div>
+        </div>
+      </div>
+      <div>
+        <ul class="nsteps">
+          <li class="done"><span class="dot" aria-hidden="true">✓</span><div><h3>Done</h3><p>Data generator, pipeline with reconciliation, risk scoring, Monte Carlo forecast, AI assurance module, 15 tests and a CI workflow.</p></div></li>
+          <li class="next"><span class="dot" aria-hidden="true"></span><div><h3>Next</h3><p>Run the Fabric and Power BI deployment from the runbook, score the AI tagger on varied human-written commentary, and calibrate risk weights against outcomes.</p></div></li>
+        </ul>
+        <p style="margin-top:var(--s-3)"><a href="https://github.com/Kriti-Data-Business/Housing-delivery-risk-intelligence-reporting-live-ai">Read the repository</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section id="timeline">
+    <div class="sec-head">
+      <h2>Timeline</h2>
+      <p>Choose a stop, or use the arrow keys, to see what I did there.</p>
+    </div>
+    <div class="tl">
+      <div class="tl-rail">
+        <div class="tl-tabs" id="tabs" role="tablist" aria-label="Career timeline"></div>
+        <div class="tl-prog"><span id="prog"></span></div>
+      </div>
+      <div class="tl-panel" id="panel" role="tabpanel" aria-live="polite"></div>
+      <div class="tl-nav">
+        <button class="btn small" id="prev" type="button">Previous</button>
+        <button class="btn small" id="next" type="button">Next</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>Kriti Yadav, Melbourne, Australia. Open to data scientist, AI engineer and AI developer roles, and consulting work.</p>
+    <div class="links">
+      <a href="https://github.com/Kriti-Data-Business">GitHub</a>
+      <a href="https://www.linkedin.com/in/kriti-yadav-data-science/">LinkedIn</a>
+      <a href="https://medium.com/@datasciencebusiness">Medium</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* All content lives in the three arrays below. Edit them to update the page. */
+var G = "https://github.com/Kriti-Data-Business/";
+var DOMAINS = {
+  fin:{name:"Financial services and risk", line:"Fraud modelling, independent model validation and retrieval-based assistants for money questions."},
+  gov:{name:"Public sector and telecommunications", line:"Complaint-text NLP in telecommunications and delivery-risk reporting for housing programmes."},
+  ins:{name:"Insurance and claims", line:"Turning claims and complaint documents into validated, routed and audited decisions."},
+  pharma:{name:"Pharma and healthcare", line:"Next-best-action recommendations, marketing mix modelling and sentiment analysis of sales conversations."},
+  retail:{name:"Marketing and retail", line:"Cross-channel recommendation with A/B testing, and marketing and e-commerce analytics."},
+  comp:{name:"Compliance", line:"AI for Australian compliance work."},
+  res:{name:"Research and forecasting", line:"Measuring whether prompt engineering improves LLM code, and forecasting Australian property prices."}
+};
+var STATUS = {deployed:{l:"Deployed",c:"full",o:0}, shipped:{l:"Shipped",c:"full",o:1}, building:{l:"In progress",c:"half",o:2}, research:{l:"Research",c:"",o:3}};
+var PROJECTS = [
+ {name:"Housing Delivery Risk Intelligence", d:["gov"], st:"building", stl:"In progress",
+  sum:"Delivery reporting built in five layers, from untouched raw data to risk scores, a Monte Carlo forecast and audited AI commentary.",
+  proof:"15 tests", proofSub:"5 layers, CI on every push",
+  flow:[["Raw","Source extracts, never modified."],["Clean","Six quality rules, reconciled back to raw."],["Model","SQL views and Power BI measures."],["Risk and forecast","Risk scores and a Monte Carlo delivery forecast."],["AI assurance","Commentary is tagged, routed and logged."]],
+  problem:"Dashboards lose trust when nobody can trace a number back to its source.",
+  approach:"Keep raw data untouched, clean it through a quality gate, model it for Power BI, then put risk scoring, a forecast and AI commentary assurance on top.",
+  stack:["Python","SQL","Power BI (DAX)","Monte Carlo","GitHub Actions"],
+  limits:"Synthetic data. Risk weights and the 90% target are assumptions. Fabric and Power BI deployment are documented, not yet executed.",
+  links:[["Repository",G+"Housing-delivery-risk-intelligence-reporting-live-ai"]]},
+ {name:"Two Hats: fraud model, then its independent validation", d:["fin"], st:"shipped", stl:"Parts A and B shipped",
+  sum:"An application-fraud model with entity-linkage features, then a full validation package written the way a bank model risk team would write it.",
+  proof:"PR-AUC 0.873", proofSub:"8 risk-rated findings",
+  flow:[["Data","Synthetic applications with known fraud patterns."],["Features","Point-in-time entity velocity, entity degree and affordability ratios."],["Model","Time-ordered split, LightGBM, isotonic calibration."],["Validate","Challenger, ablation, income perturbation, drift and SHAP checks."],["Findings","Eight risk-rated findings and a fit-for-purpose-with-conditions verdict."]],
+  problem:"Most portfolio models only get built. This one is also challenged, which is the part banks hire for.",
+  approach:"The validation found a simpler challenger beating the champion and 92% of the top investigation queue changing when income was understated by 20%.",
+  stack:["Python","LightGBM","SHAP","CleanLab","PSI drift"],
+  limits:"Synthetic data with known ground truth. Part C, an LLM fraud-triage assistant with its own validation, is planned.",
+  links:[["Repository",G+"fraud-deployment-validation-project"]]},
+ {name:"Document-to-Action Platform", d:["ins"], st:"building", stl:"Engine built, Azure layer next",
+  sum:"One engine that extracts, validates, routes and audits documents. A new domain is a new YAML file.",
+  proof:"2 domain packs", proofSub:"hash-chained audit trail",
+  flow:[["Document","Contract, claim or complaint text."],["Extract","The fields a domain pack defines."],["Validate","Required fields, types and per-field rules."],["Route","Auto-action, human review or reject."],["Audit","A hash-chained record of the decision."]],
+  problem:"Operations teams read every document to decide what happens next, and the reasoning is rarely recorded.",
+  approach:"A domain pack defines fields, validation rules, routing rules and a small knowledge base. The engine stays the same for every domain.",
+  stack:["Python","YAML packs","pytest","Azure OpenAI (planned)","Service Bus (planned)"],
+  limits:"Extraction is rule-based today. The Azure OpenAI extractor, search retrieval and evaluation harness are on the roadmap.",
+  links:[["Repository",G+"Azure-Claims-Intake-Platform"]]},
+ {name:"Australian Financial Assistant", d:["fin"], st:"shipped", stl:"Shipped",
+  sum:"A retrieval-augmented planning assistant for Australian personal finance that runs locally with open models.",
+  proof:"No API keys", proofSub:"runs on a laptop",
+  flow:[["Question","Profile plus chat message."],["Embed","MiniLM sentence embedding."],["Retrieve","Nearest Australian passages from ChromaDB."],["Generate","flan-t5-large writes the plan or answer."],["Answer","The response lists the sources used."]],
+  problem:"Generic chatbots answer Australian money questions with overseas rules, and hosted APIs send personal data off the machine.",
+  approach:"Retrieve Australian passages from a local vector store and generate with an open model. Users can add their own documents through the API.",
+  stack:["FastAPI","ChromaDB","MiniLM embeddings","flan-t5-large","React"],
+  limits:"General information only. Small model, small knowledge base, figures written for 2024-25, and no evaluation set yet.",
+  links:[["Repository",G+"Australian-Financial-AI-RAG-Application"],["Demo video","https://youtu.be/Uq2Wj7rgJBU"]]},
+ {name:"Aura: Compliance AI for Australia", d:["comp"], st:"building", stl:"In progress",
+  sum:"Compliance AI built for Australian requirements.",
+  proof:"", proofSub:"", flow:null, problem:"", approach:"", stack:[], limits:"",
+  links:[["Repository",G+"Aura-Compliance-AI-for-Australia"]]},
+ {name:"Next Best Action recommendation system", d:["pharma","retail"], st:"deployed", stl:"Deployed",
+  sum:"A multi-channel recommendation engine on Databricks that chooses the next action for each customer.",
+  proof:"8.3% revenue uplift", proofSub:"reported from live use",
+  flow:[["History","Ordered customer interactions across channels."],["Sequence","An LSTM encodes each customer journey."],["Classify","XGBoost chooses the next best channel."],["Test","A/B tests against rule-based and random baselines."],["Monitor","Live performance tracking."]],
+  problem:"Teams contact customers across email, mobile, web, in-store and direct mail without coordinating what to say next.",
+  approach:"A sequence model feeds a gradient-boosted classifier, evaluated with A/B tests, backtesting and baselines.",
+  stack:["PySpark","Databricks","XGBoost","LSTM","A/B testing"],
+  limits:"The uplift figure is as reported by the project.",
+  links:[["Repository",G+"NBA-LLM-Recommendation-System-"]]},
+ {name:"Pharmaceutical Sales Sentiment Analyzer", d:["pharma"], st:"shipped", stl:"Prototype",
+  sum:"Reads sales representative communications and returns a score, risks, competitor mentions and follow-up actions for each stakeholder type.",
+  proof:"5 stakeholder types", proofSub:"structured JSON output",
+  flow:[["Message","A sales representative's communication."],["Prompt","A framework for the stakeholder type."],["Analyse","Claude returns a fixed JSON schema."],["Dashboard","Score, risks and follow-ups in Streamlit."]],
+  problem:"Generic sentiment tools cannot tell a clinical concern from a commercial objection.",
+  approach:"Stakeholder-specific prompts for physicians, hospitals, insurers, clinics and retail customers.",
+  stack:["Claude API","Python","Streamlit","Plotly"],
+  limits:"Prototype. Benefit ranges in the repository are projections, not measurements.",
+  links:[["Repository",G+"Sales-Sentiment-Analyser"]]},
+ {name:"Does prompt engineering improve LLM code?", d:["res"], st:"research", stl:"Research",
+  sum:"A study of whether prompting strategies improve the functional correctness of generated code across platforms and difficulty levels.",
+  proof:"3,131 observations", proofSub:"workshop paper in preparation",
+  flow:[["Problems","LiveCodeBench tasks from AtCoder and LeetCode at three difficulty tiers."],["Prompts","Three prompt strategies."],["Runs","LLaMA-3.3-70B across 3,131 observations."],["Score","Functional correctness."],["Analyse","Variance by difficulty, platform and prompt strategy."]],
+  problem:"Claims that prompting helps are often tested on one platform at one difficulty.",
+  approach:"Difficulty explained most of the variation and platform had a smaller confirmed effect. Prompt strategy explained almost none.",
+  stack:["Python","LLM evaluation"],
+  limits:"One model family. The paper is being prepared.",
+  links:[["Repository",G+"Research-LLM-Code-Eval-Strategy-Competitive-Programming"]]},
+ {name:"Forecasting Australian residential property prices", d:["res"], st:"research", stl:"Research",
+  sum:"Ten-quarter forecasts of the real residential property price index with seasonal ARIMA models and residual diagnostics.",
+  proof:"1.37% MAPE", proofSub:"on the holdout period",
+  flow:[["Series","The real residential property price index."],["Fit","Seasonal ARIMA-class models."],["Diagnose","Residual checks for leftover seasonality."],["Forecast","The next 10 quarters."]],
+  problem:"How accurately can seasonal models forecast the real index, and what do the residuals say about missed structure?",
+  approach:"Fit and compare models, then read the residual diagnostics.",
+  stack:["R","SARIMA","GARCH"],
+  limits:"A statistical forecast for study, not investment advice.",
+  links:[["Repository",G+"Time-Series-Forecasting-Australian-Residential-Property-Prices"]]}
+];
+var STOPS = [
+ {tab:"Education", sub:"2016 to 2020", role:"Bachelor of Technology, Computer Science", org:"The NorthCap University, India", meta:"2016 to 2020",
+  pts:["Computer science degree with a focus on building software.","Built a Tableau project as part of the degree."], skills:["Computer science","Tableau"]},
+ {tab:"Axtria", sub:"Pharma analytics", role:"Pharma analytics", org:"Axtria", meta:"Fortune 500 pharma clients",
+  pts:["Built a next-best-action engine on Databricks and PySpark. An LSTM encodes each customer journey and XGBoost picks the next channel. Reported 8.3% revenue uplift.",
+       "Built marketing mix models in R with ridge regression and saturation curves, then optimised channel spend within budget limits. Reported 18.3% sales uplift.",
+       "Segmented healthcare professionals into priority tiers to guide channel focus."],
+  skills:["Python","PySpark","Databricks","R","SQL Server","Power BI"]},
+ {tab:"WPP", sub:"Marketing analytics", role:"Automation Analyst", org:"Wunderman Thompson, WPP", meta:"Ford and Pfizer accounts",
+  pts:["Marketing and e-commerce analytics and automation for automotive and pharma accounts."], skills:["Marketing analytics","E-commerce analytics","Automation"]},
+ {tab:"TIO", sub:"Telecommunications", role:"AI Engineer, contract", org:"Telecommunications Industry Ombudsman", meta:"12-week production contract",
+  pts:["Sole AI engineer on the project.","Built and deployed an NLP pipeline that classifies complaint text, with fine-tuned transformer models and model versioning on Azure ML."],
+  skills:["Python","DistilBERT","LightGBM","Azure ML"]},
+ {tab:"RMIT", sub:"Graduated July 2026", role:"Master of Data Science, with Distinction", org:"RMIT University", meta:"Graduated July 2026",
+  pts:["High Distinction results in advanced subjects, including Applied Analytics and Computational Machine Learning.",
+       "Minor thesis evaluating LLaMA-3.3-70B on LiveCodeBench. Difficulty dominated and prompt strategy explained almost none of the variance. Paper in preparation.",
+       "Top 9 at the Google DeepMind x GDG Melbourne AI Sprint."],
+  skills:["R","Python","LLM evaluation"]},
+ {tab:"Now", sub:"2026", role:"Building an assurance-minded AI portfolio", org:"Independent", meta:"Now",
+  pts:["Housing Delivery Risk Intelligence: a five-layer reporting stack with risk scoring, forecast and AI assurance.",
+       "Next: validate an LLM triage assistant end to end, and deploy Document-to-Action on Azure.",
+       "Open to data scientist, AI engineer and AI developer roles."],
+  skills:["Python","SQL","Azure","LLM evaluation"]}
+];
+
+function el(tag, attrs, kids){
+  var n = document.createElement(tag);
+  for (var k in (attrs||{})) { if (k === "text") n.textContent = attrs[k]; else n.setAttribute(k, attrs[k]); }
+  (kids||[]).forEach(function(c){ n.appendChild(c); });
+  return n;
+}
+var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+var state = {q:"", domain:"all", status:"all", sort:"featured"};
+var rows = [];
+
+/* domains */
+function countFor(key){ return PROJECTS.filter(function(p){return p.d.indexOf(key)>-1;}).length; }
+(function(){
+  var box = document.getElementById("domlist");
+  Object.keys(DOMAINS).forEach(function(key){
+    var d = DOMAINS[key], c = countFor(key);
+    var b = el("button",{type:"button", text:"Show "+c+(c===1?" project":" projects")});
+    b.addEventListener("click", function(){ state.domain = key; applyFilters(); document.getElementById("projects").scrollIntoView(); });
+    box.appendChild(el("div",{"class":"dom"},[el("h3",{text:d.name}), el("p",{text:d.line}), b]));
+  });
+})();
+
+/* domain chips */
+function buildChips(){
+  var box = document.getElementById("filters"); box.textContent = "";
+  ["all"].concat(Object.keys(DOMAINS)).forEach(function(k){
+    var label = k==="all" ? "All domains" : DOMAINS[k].name;
+    var b = el("button",{type:"button","class":"chip","aria-pressed":String(state.domain===k), text:label});
+    b.addEventListener("click", function(){ state.domain = k; applyFilters(); });
+    box.appendChild(b);
+  });
+}
+
+/* project rows */
+function buildRow(p, i){
+  var id = "p"+i, timer = null, cur = 0, auto = true;
+  var tags = el("div",{"class":"p-tags"}, p.d.map(function(k){ return el("span",{text:DOMAINS[k].name}); }));
+  var S = STATUS[p.st];
+  var status = el("span",{"class":"status "+S.c},[el("i"), document.createTextNode(p.stl)]);
+  var title = el("div",{"class":"p-title"},[el("h3",{text:p.name}), status]);
+  var main = el("div",{"class":"p-main"},[title, el("p",{"class":"p-sum", text:p.sum}), tags]);
+  var caret = el("span",{"class":"caret", text:"Details"});
+  var proof = el("div",{"class":"p-proof"}, p.proof ? [el("b",{text:p.proof}), el("small",{text:p.proofSub}), caret] : [caret]);
+  var head = el("button",{type:"button","class":"proj-head","aria-expanded":"false","aria-controls":id+"-d"},[main, proof]);
+  var inner = el("div");
+  if (p.flow){
+    var stepsRow = el("div",{"class":"steps-row"}), barFill = el("span"), txt = el("p",{"class":"flow-txt"});
+    var btns = p.flow.map(function(s, j){
+      var b = el("button",{type:"button","class":"step","aria-pressed":"false"},[el("b",{text:String(j+1)}), document.createTextNode(s[0])]);
+      b.addEventListener("click", function(){ auto = false; stop(); show(j); });
+      stepsRow.appendChild(b); return b;
+    });
+    var show = function(j){
+      cur = j;
+      btns.forEach(function(b,k){ b.setAttribute("aria-pressed", String(k===j)); });
+      txt.textContent = p.flow[j][1];
+      barFill.style.width = ((j+1)/p.flow.length*100)+"%";
+    };
+    var stop = function(){ if (timer){ clearInterval(timer); timer = null; } };
+    var play = function(){ stop(); if (reduce || !auto) return; timer = setInterval(function(){ show((cur+1)%p.flow.length); }, 2600); };
+    inner.appendChild(el("div",{"class":"flow"},[el("div",{"class":"flow-t", text:"How it works. Select a step."}), stepsRow, el("div",{"class":"flow-bar"},[barFill]), txt]));
+    show(0);
+    p._play = play; p._stop = stop; p._reset = function(){ auto = true; show(0); };
+  }
+  var grid = el("div",{"class":"d-grid"});
+  function block(h, node){ var w = el("div"); w.appendChild(el("h4",{text:h})); w.appendChild(node); grid.appendChild(w); }
+  if (p.problem) block("Problem", el("p",{text:p.problem}));
+  if (p.approach) block("What I found or built", el("p",{text:p.approach}));
+  if (p.stack.length) block("Stack", el("ul",{"class":"stack"}, p.stack.map(function(s){ return el("li",{text:s}); })));
+  if (p.limits) block("Limits", el("p",{text:p.limits}));
+  inner.appendChild(grid);
+  inner.appendChild(el("div",{"class":"d-links"}, p.links.map(function(l){ return el("a",{href:l[1], text:l[0]}); })));
+  var detail = el("div",{"class":"detail", id:id+"-d", role:"region","aria-label":p.name+" details"},[inner]);
+  var row = el("article",{"class":"proj"},[head, detail]);
+  p._row = row; p._caret = caret; p._i = i;
+  p._set = function(open){
+    row.classList.toggle("open", open);
+    head.setAttribute("aria-expanded", String(open));
+    caret.textContent = open ? "Close" : "Details";
+    if (p._play){ if (open){ p._reset(); p._play(); } else p._stop(); }
+  };
+  head.addEventListener("click", function(){ p._set(!row.classList.contains("open")); syncToggle(); });
+  return row;
+}
+var ledger = document.getElementById("ledger");
+PROJECTS.forEach(function(p,i){ ledger.appendChild(buildRow(p,i)); });
+
+function matches(p){
+  if (state.domain!=="all" && p.d.indexOf(state.domain)<0) return false;
+  if (state.status!=="all" && p.st!==state.status) return false;
+  if (state.q){
+    var hay = (p.name+" "+p.sum+" "+p.stack.join(" ")+" "+p.problem+" "+p.approach+" "+p.d.map(function(k){return DOMAINS[k].name;}).join(" ")).toLowerCase();
+    if (hay.indexOf(state.q.toLowerCase())<0) return false;
+  }
+  return true;
+}
+function applyFilters(){
+  var list = PROJECTS.slice();
+  if (state.sort==="status") list.sort(function(a,b){ return STATUS[a.st].o-STATUS[b.st].o || a._i-b._i; });
+  else if (state.sort==="name") list.sort(function(a,b){ return a.name.localeCompare(b.name); });
+  else list.sort(function(a,b){ return a._i-b._i; });
+  var shown = 0;
+  list.forEach(function(p){ var ok = matches(p); p._row.hidden = !ok; if (ok) shown++; ledger.appendChild(p._row); });
+  document.getElementById("count").textContent = "Showing "+shown+" of "+PROJECTS.length;
+  document.getElementById("empty").hidden = shown>0;
+  buildChips(); syncToggle();
+}
+function visible(){ return PROJECTS.filter(function(p){ return !p._row.hidden; }); }
+function syncToggle(){
+  var v = visible(), allOpen = v.length>0 && v.every(function(p){ return p._row.classList.contains("open"); });
+  document.getElementById("toggleall").textContent = allOpen ? "Collapse all" : "Expand all";
+}
+document.getElementById("q").addEventListener("input", function(e){ state.q = e.target.value.trim(); applyFilters(); });
+document.getElementById("st").addEventListener("change", function(e){ state.status = e.target.value; applyFilters(); });
+document.getElementById("so").addEventListener("change", function(e){ state.sort = e.target.value; applyFilters(); });
+document.getElementById("toggleall").addEventListener("click", function(){
+  var v = visible(), allOpen = v.every(function(p){ return p._row.classList.contains("open"); });
+  v.forEach(function(p){ p._set(!allOpen); }); syncToggle();
+});
+
+/* timeline */
+var tabs = document.getElementById("tabs"), panel = document.getElementById("panel"), prog = document.getElementById("prog"), sel = 0;
+var tabEls = STOPS.map(function(s,i){
+  var b = el("button",{type:"button","class":"tl-tab",role:"tab","aria-selected":"false",id:"tab"+i,"aria-controls":"panel",tabindex:"-1"},[el("small",{text:s.sub}), el("b",{text:s.tab})]);
+  b.addEventListener("click", function(){ select(i, true); });
+  b.addEventListener("keydown", function(e){
+    if (e.key==="ArrowRight"){ e.preventDefault(); select(Math.min(STOPS.length-1, sel+1), true); }
+    if (e.key==="ArrowLeft"){ e.preventDefault(); select(Math.max(0, sel-1), true); }
+    if (e.key==="Home"){ e.preventDefault(); select(0, true); }
+    if (e.key==="End"){ e.preventDefault(); select(STOPS.length-1, true); }
+  });
+  tabs.appendChild(b); return b;
+});
+function select(i, focus){
+  sel = i; var s = STOPS[i];
+  tabEls.forEach(function(b,k){ b.setAttribute("aria-selected", String(k===i)); b.tabIndex = k===i ? 0 : -1; });
+  if (focus) tabEls[i].focus({preventScroll:true});
+  tabEls[i].scrollIntoView({inline:"nearest", block:"nearest", behavior: reduce ? "auto" : "smooth"});
+  prog.style.width = ((i+1)/STOPS.length*100)+"%";
+  panel.setAttribute("aria-labelledby","tab"+i);
+  var left = el("div",{},[el("div",{"class":"tl-meta", text:s.meta}), el("h3",{text:s.role}), el("p",{"class":"tl-org", text:s.org}), el("div",{"class":"tl-skills"}, s.skills.map(function(k){ return el("span",{text:k}); }))]);
+  var right = el("ul",{}, s.pts.map(function(t){ return el("li",{text:t}); }));
+  var np = panel.cloneNode(false); np.appendChild(left); np.appendChild(right);
+  panel.parentNode.replaceChild(np, panel); panel = np;
+  document.getElementById("prev").disabled = i===0;
+  document.getElementById("next").disabled = i===STOPS.length-1;
+}
+document.getElementById("prev").addEventListener("click", function(){ select(Math.max(0, sel-1), false); });
+document.getElementById("next").addEventListener("click", function(){ select(Math.min(STOPS.length-1, sel+1), false); });
+
+/* theme */
+var root = document.documentElement;
+try { var saved = localStorage.getItem("kt-theme"); if (saved) root.setAttribute("data-theme", saved); } catch(e){}
+document.getElementById("theme").addEventListener("click", function(){
+  var cur = root.getAttribute("data-theme");
+  if (!cur) cur = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  var next = cur==="dark" ? "light" : "dark";
+  root.setAttribute("data-theme", next);
+  try { localStorage.setItem("kt-theme", next); } catch(e){}
+});
+
+/* motion */
+if (reduce){ var sv = document.getElementById("pipesvg"); if (sv && sv.pauseAnimations) sv.pauseAnimations(); }
+else document.querySelectorAll("[data-count]").forEach(function(n){
+  var end = parseFloat(n.getAttribute("data-count")), dec = parseInt(n.getAttribute("data-dec")||"0",10), t0 = null;
+  function tick(t){ if(!t0) t0=t; var p=Math.min(1,(t-t0)/900); n.textContent=(end*p).toFixed(dec); if(p<1) requestAnimationFrame(tick); }
+  requestAnimationFrame(tick);
+});
+
+applyFilters(); select(STOPS.length-1, false);
+</script>
+
+</body>
+</html>
