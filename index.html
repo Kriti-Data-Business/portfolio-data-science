@@ -302,10 +302,33 @@ footer .links{display:flex;gap:var(--s-3);flex-wrap:wrap;margin-top:.5rem;font-w
   .bar.open nav{display:flex}
   .bar nav a{padding:.7rem 0;font-size:1.05rem;border-bottom:1px solid var(--line)}
 }
+/* 3D studio announcement strip + hover glimpse */
+.studio-strip{background:#111518;color:#f4f1e8;font-size:.92rem;position:relative;z-index:60;margin-inline:calc(-1 * max(16px,env(safe-area-inset-left,0px)))}
+.studio-strip .in{max-width:72rem;margin:0 auto;padding:.55rem 1.25rem;display:flex;align-items:center;justify-content:center;gap:.6rem;flex-wrap:wrap;text-align:center}
+.studio-strip .tag{font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:#fff2a0;color:#111518;border-radius:999px;padding:.12rem .55rem}
+.studio-link{position:relative;color:#fff2a0;font-weight:600;text-decoration:underline;text-underline-offset:3px}
+.studio-link:hover,.studio-link:focus-visible{color:#ffffff}
+.studio-peek{position:absolute;top:calc(100% + .7rem);left:50%;width:min(23rem,86vw);transform:translate(-50%,6px);opacity:0;visibility:hidden;pointer-events:none;
+  background:#ffffff;color:#12181f;border-radius:12px;box-shadow:0 18px 50px rgba(0,0,0,.28);overflow:hidden;text-align:left;transition:opacity .18s,transform .18s,visibility .18s}
+.studio-peek img{display:block;width:100%;height:auto;aspect-ratio:2/1;object-fit:cover}
+.studio-peek span{display:block;padding:.6rem .8rem .7rem;font-size:.85rem;font-weight:500;line-height:1.4;color:#334}
+.studio-link:hover .studio-peek,.studio-link:focus-visible .studio-peek{opacity:1;visibility:visible;transform:translate(-50%,0)}
+@media (hover:none){.studio-peek{display:none}}
+@media (prefers-reduced-motion:reduce){.studio-peek{transition:none}}
 </style>
 </head>
 <body>
 <div class="progress" id="progress" aria-hidden="true"></div>
+
+<div class="studio-strip">
+  <div class="in">
+    <span class="tag">New</span>
+    <span>Prefer to explore? Step into my interactive 3D studio:</span>
+    <a class="studio-link" href="https://studio.kritiacchonda.workers.dev/" target="_blank" rel="noopener">Open the studio &nearr;
+      <span class="studio-peek" aria-hidden="true"><img src="assets/studio-preview.jpg" alt="" loading="lazy" width="960" height="480"><span>A morning studio in Melbourne. Click the desk, drives, bookshelf, laptop and notepad to explore my work, skills and writing.</span></span>
+    </a>
+  </div>
+</div>
 
 <div class="bar">
   <div class="bar-in">
@@ -318,6 +341,7 @@ footer .links{display:flex;gap:var(--s-3);flex-wrap:wrap;margin-top:.5rem;font-w
       <a href="#skills">Skills</a>
       <a href="#certifications">Certifications</a>
       <a class="hl" href="ai-projects.html">AI projects &rarr;</a>
+      <a href="https://studio.kritiacchonda.workers.dev/" target="_blank" rel="noopener">3D studio &nearr;</a>
     </nav>
     <button class="menu-btn" id="menu" type="button" aria-expanded="false" aria-controls="nav">Menu</button>
     <button class="btn small" id="theme" type="button" aria-label="Switch colour theme">Theme</button>
