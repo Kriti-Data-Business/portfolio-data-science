@@ -302,33 +302,23 @@ footer .links{display:flex;gap:var(--s-3);flex-wrap:wrap;margin-top:.5rem;font-w
   .bar.open nav{display:flex}
   .bar nav a{padding:.7rem 0;font-size:1.05rem;border-bottom:1px solid var(--line)}
 }
-/* 3D studio announcement strip + hover glimpse */
-.studio-strip{background:#111518;color:#f4f1e8;font-size:.92rem;position:relative;z-index:60;margin-inline:calc(-1 * max(16px,env(safe-area-inset-left,0px)))}
-.studio-strip .in{max-width:72rem;margin:0 auto;padding:.55rem 1.25rem;display:flex;align-items:center;justify-content:center;gap:.6rem;flex-wrap:wrap;text-align:center}
-.studio-strip .tag{font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:#fff2a0;color:#111518;border-radius:999px;padding:.12rem .55rem}
-.studio-link{position:relative;color:#fff2a0;font-weight:600;text-decoration:underline;text-underline-offset:3px}
-.studio-link:hover,.studio-link:focus-visible{color:#ffffff}
-.studio-peek{position:absolute;top:calc(100% + .7rem);left:50%;width:min(23rem,86vw);transform:translate(-50%,6px);opacity:0;visibility:hidden;pointer-events:none;
-  background:#ffffff;color:#12181f;border-radius:12px;box-shadow:0 18px 50px rgba(0,0,0,.28);overflow:hidden;text-align:left;transition:opacity .18s,transform .18s,visibility .18s}
-.studio-peek img{display:block;width:100%;height:auto;aspect-ratio:2/1;object-fit:cover}
-.studio-peek span{display:block;padding:.6rem .8rem .7rem;font-size:.85rem;font-weight:500;line-height:1.4;color:#334}
-.studio-link:hover .studio-peek,.studio-link:focus-visible .studio-peek{opacity:1;visibility:visible;transform:translate(-50%,0)}
-@media (hover:none){.studio-peek{display:none}}
-@media (prefers-reduced-motion:reduce){.studio-peek{transition:none}}
+/* hero studio card */
+.studio-card{position:relative;display:block;border-radius:12px;overflow:hidden;border:1px solid var(--line);aspect-ratio:16/9;background:#111518;text-decoration:none;color:#fff;box-shadow:0 10px 30px rgba(17,21,24,.12)}
+.studio-card img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+.studio-card .sc-shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 40%,rgba(0,0,0,.72) 100%)}
+.studio-card .sc-text{position:absolute;left:1rem;right:1rem;bottom:.9rem;display:flex;flex-wrap:wrap;align-items:center;gap:.4rem .8rem}
+.studio-card .sc-tag{font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:#fff2a0;color:#111518;border-radius:999px;padding:.12rem .55rem}
+.studio-card b{flex-basis:100%;font-family:var(--f-display);font-size:clamp(1.15rem,2.4vw,1.5rem);line-height:1.2;text-shadow:0 1px 10px rgba(0,0,0,.5)}
+.studio-card .sc-btn{font-weight:600;font-size:.9rem;background:#fff;color:#111518;border-radius:8px;padding:.45rem .85rem}
+.studio-card:hover img,.studio-card:focus-visible img{transform:scale(1.035)}
+.studio-card:hover .sc-btn,.studio-card:focus-visible .sc-btn{background:#fff2a0}
+.studio-card:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+@media (prefers-reduced-motion:reduce){.studio-card img{transition:none}}
+.intro-vid{max-width:40rem}
 </style>
 </head>
 <body>
 <div class="progress" id="progress" aria-hidden="true"></div>
-
-<div class="studio-strip">
-  <div class="in">
-    <span class="tag">New</span>
-    <span>Prefer to explore? Step into my interactive 3D studio:</span>
-    <a class="studio-link" href="https://studio.kritiacchonda.workers.dev/" target="_blank" rel="noopener">Open the studio &nearr;
-      <span class="studio-peek" aria-hidden="true"><img src="assets/studio-preview.jpg" alt="" loading="lazy" width="960" height="480"><span>A morning studio in Melbourne. Click the desk, drives, bookshelf, laptop and notepad to explore my work, skills and writing.</span></span>
-    </a>
-  </div>
-</div>
 
 <div class="bar">
   <div class="bar-in">
@@ -363,12 +353,12 @@ footer .links{display:flex;gap:var(--s-3);flex-wrap:wrap;margin-top:.5rem;font-w
         </div>
       </div>
       <div>
-        <div class="vid" id="vid">
-          <video id="introvid" muted loop playsinline autoplay controls preload="metadata" poster="assets/video/intro-poster.jpg"><source src="assets/video/intro.mp4" type="video/mp4"></video>
-          <button class="snd" id="snd" type="button" aria-pressed="false">Sound on</button>
-          <button class="vid-play" id="vidplay" type="button" aria-label="Play the introduction video" hidden><span class="tri" aria-hidden="true"></span><b>Watch the introduction</b></button>
-        </div>
-        <p class="vid-cap">Introduction, 32 seconds</p>
+        <a class="studio-card" href="https://studio.kritiacchonda.workers.dev/" target="_blank" rel="noopener" aria-label="Open my interactive 3D studio in a new tab">
+          <img src="assets/studio-hero.jpg" alt="My 3D studio: an oak desk with a large screen showing my work, a laptop with my writing, drives for each project and a bookshelf of skills, in front of a Melbourne window" width="1280" height="720">
+          <span class="sc-shade" aria-hidden="true"></span>
+          <span class="sc-text"><span class="sc-tag">Interactive</span><b>Step inside my 3D studio</b><span class="sc-btn">Open the studio &nearr;</span></span>
+        </a>
+        <p class="vid-cap">Click the screen, drives, laptop and bookshelf to explore. Best on a laptop or desktop.</p>
       </div>
     </div>
     <div class="facts">
@@ -456,6 +446,22 @@ footer .links{display:flex;gap:var(--s-3);flex-wrap:wrap;margin-top:.5rem;font-w
         <button class="btn small" id="prev" type="button">Previous</button>
         <button class="btn small" id="next" type="button">Next</button>
       </div>
+    </div>
+  </section>
+
+
+  <section id="intro">
+    <div class="sec-head">
+      <h2>Meet me</h2>
+      <p>A 32-second introduction to who I am and how I work.</p>
+    </div>
+    <div class="intro-vid">
+        <div class="vid" id="vid">
+          <video id="introvid" muted loop playsinline controls preload="metadata" poster="assets/video/intro-poster.jpg"><source src="assets/video/intro.mp4" type="video/mp4"></video>
+          <button class="snd" id="snd" type="button" aria-pressed="false">Sound on</button>
+          <button class="vid-play" id="vidplay" type="button" aria-label="Play the introduction video"><span class="tri" aria-hidden="true"></span><b>Watch the introduction</b></button>
+        </div>
+        
     </div>
   </section>
 
@@ -614,7 +620,6 @@ document.querySelectorAll("[data-o]").forEach(function(a){a.addEventListener("cl
 /* intro video: autoplays muted, falls back to a play button if the browser blocks it */
 (function(){var v=document.getElementById("introvid"),pb=document.getElementById("vidplay"),sb=document.getElementById("snd");
  function fb(){pb.hidden=false}
- var pr=v.play();if(pr&&pr.catch)pr.catch(fb);
  pb.addEventListener("click",function(){pb.hidden=true;v.play().catch(function(){})});
  sb.addEventListener("click",function(){v.muted=!v.muted;sb.textContent=v.muted?"Sound on":"Sound off";sb.setAttribute("aria-pressed",String(!v.muted));if(!v.muted){v.currentTime=0;v.play().catch(function(){})}});
  if(reduce){v.removeAttribute("autoplay");v.pause()}})();
