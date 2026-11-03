@@ -1,6 +1,6 @@
 # Kriti Yadav: Data Science and AI portfolio
 
-Data scientist and AI engineer based in Melbourne. Almost 5 years across pharma, marketing and telecommunications, including 2.3 years in AI engineering (research completed and 2 production deliveries). Master of Data Science, RMIT (Distinction, July 2026).
+Data scientist and AI engineer based in Melbourne. 5 years in data science and AI across pharma, marketing and telecommunications, including 2.3 years in AI engineering (research completed and 2 production deliveries). Master of Data Science, RMIT (Distinction, July 2026).
 
 **Live site:** https://kriti-data-business.github.io/portfolio-data-science/
 **AI projects page:** https://kriti-data-business.github.io/portfolio-data-science/ai-projects.html
